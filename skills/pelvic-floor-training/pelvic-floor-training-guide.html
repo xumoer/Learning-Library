@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pelvic Floor Training Guide — Postpartum Prolapse to Lifting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Archivo:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f2ea;
+    --paper:#fffdf9;
+    --ink:#2a2520;
+    --ink-soft:#5b5249;
+    --line:#e4dccf;
+    --sage:#6d7f63;
+    --sage-soft:#eef0e8;
+    --gold:#b07d39;
+    --gold-soft:#f6ecd9;
+    --clay:#a85a43;
+    --clay-soft:#f6e4dc;
+    --rose:#9c3b3b;
+    --rose-soft:#f7e2df;
+    --shadow:0 1px 2px rgba(42,37,32,.04),0 8px 28px rgba(42,37,32,.07);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    font-size:18px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- Header ---------- */
+  header.hero{
+    background:
+      radial-gradient(120% 90% at 85% -10%, rgba(109,127,99,.18), transparent 60%),
+      radial-gradient(90% 80% at 0% 0%, rgba(176,125,57,.10), transparent 55%),
+      var(--paper);
+    border-bottom:1px solid var(--line);
+    padding:74px 0 60px;
+  }
+  .eyebrow{
+    font-family:"Archivo",sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.22em;
+    font-size:12px;
+    font-weight:600;
+    color:var(--sage);
+    margin:0 0 18px;
+  }
+  h1{
+    font-family:"Fraunces",serif;
+    font-weight:600;
+    font-size:clamp(34px,5.5vw,54px);
+    line-height:1.04;
+    letter-spacing:-.015em;
+    margin:0 0 22px;
+  }
+  h1 em{font-style:italic;color:var(--sage);}
+  .lede{
+    font-size:20px;
+    color:var(--ink-soft);
+    max-width:62ch;
+    margin:0 0 28px;
+  }
+  .meta-row{
+    display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;
+  }
+  .pill{
+    font-family:"Archivo",sans-serif;font-size:12.5px;font-weight:600;
+    letter-spacing:.03em;
+    padding:7px 14px;border-radius:100px;border:1px solid var(--line);
+    background:var(--paper);color:var(--ink-soft);
+  }
+
+  /* ---------- Phase nav ---------- */
+  nav.phases{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+    margin:34px 0 8px;
+  }
+  nav.phases a{
+    text-decoration:none;color:inherit;display:block;
+    background:var(--paper);border:1px solid var(--line);border-radius:14px;
+    padding:18px 18px 16px;transition:transform .15s ease,box-shadow .15s ease;
+  }
+  nav.phases a:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+  nav.phases .pn{font-family:"Archivo",sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;}
+  nav.phases .pt{font-family:"Fraunces",serif;font-size:18px;font-weight:600;margin-top:6px;line-height:1.2;}
+  nav.phases .p1 .pn{color:var(--sage);} nav.phases .p1{border-top:3px solid var(--sage);}
+  nav.phases .p2 .pn{color:var(--gold);} nav.phases .p2{border-top:3px solid var(--gold);}
+  nav.phases .p3 .pn{color:var(--clay);} nav.phases .p3{border-top:3px solid var(--clay);}
+
+  main{padding:18px 0 40px;}
+
+  /* ---------- Section scaffolding ---------- */
+  section{padding:46px 0;border-bottom:1px solid var(--line);}
+  .sec-label{
+    font-family:"Archivo",sans-serif;text-transform:uppercase;letter-spacing:.2em;
+    font-size:12px;font-weight:700;margin:0 0 10px;
+  }
+  h2{
+    font-family:"Fraunces",serif;font-weight:600;font-size:clamp(26px,4vw,38px);
+    line-height:1.1;letter-spacing:-.01em;margin:0 0 12px;
+  }
+  h3{
+    font-family:"Fraunces",serif;font-weight:600;font-size:23px;margin:34px 0 6px;letter-spacing:-.005em;
+  }
+  .goal{color:var(--ink-soft);font-size:18px;margin:0 0 8px;max-width:64ch;}
+  p{margin:0 0 16px;}
+  a{color:var(--sage);text-underline-offset:2px;}
+  strong{font-weight:600;}
+
+  .phase-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;}
+  .phase-num{
+    font-family:"Fraunces",serif;font-weight:700;font-size:15px;
+    padding:4px 12px;border-radius:8px;color:#fff;
+  }
+  .s1 .phase-num{background:var(--sage);} .s1 .sec-label{color:var(--sage);}
+  .s2 .phase-num{background:var(--gold);} .s2 .sec-label{color:var(--gold);}
+  .s3 .phase-num{background:var(--clay);} .s3 .sec-label{color:var(--clay);}
+
+  /* ---------- Callout boxes ---------- */
+  .box{
+    border-radius:16px;padding:26px 28px;margin:24px 0;border:1px solid var(--line);
+    box-shadow:var(--shadow);
+  }
+  .box h4{font-family:"Fraunces",serif;font-size:19px;font-weight:600;margin:0 0 12px;}
+  .tldr{background:var(--sage-soft);border-color:#d9e0cf;}
+  .tldr ul{margin:0;padding-left:20px;}
+  .tldr li{margin-bottom:12px;}
+  .evidence{background:var(--paper);border-left:4px solid var(--gold);}
+  .evidence .src{font-family:"Archivo",sans-serif;font-size:12.5px;color:var(--ink-soft);letter-spacing:.02em;}
+
+  /* ---------- Video player ---------- */
+  .video-card{
+    background:var(--paper);border:1px solid var(--line);border-radius:16px;
+    overflow:hidden;margin:22px 0;box-shadow:var(--shadow);
+  }
+  .video-frame{position:relative;width:100%;padding-top:56.25%;background:#1c1a17;}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+  .video-meta{padding:16px 20px 18px;}
+  .video-meta .vtitle{font-family:"Fraunces",serif;font-weight:600;font-size:17px;line-height:1.25;margin:0 0 4px;}
+  .video-meta .vcred{font-family:"Archivo",sans-serif;font-size:12.5px;color:var(--ink-soft);letter-spacing:.02em;margin:0 0 8px;}
+  .video-meta .vwhy{font-size:16px;color:var(--ink-soft);margin:0 0 10px;}
+  .video-meta a.vlink{font-family:"Archivo",sans-serif;font-size:13px;font-weight:600;text-decoration:none;}
+  .video-meta a.vlink:hover{text-decoration:underline;}
+
+  /* ---------- Exercise cards ---------- */
+  .ex{
+    background:var(--paper);border:1px solid var(--line);border-radius:16px;
+    padding:24px 26px;margin:20px 0;box-shadow:var(--shadow);
+  }
+  .ex-title{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;}
+  .ex-no{
+    font-family:"Archivo",sans-serif;font-weight:700;font-size:13px;color:#fff;
+    background:var(--ink);border-radius:7px;padding:3px 9px;flex:none;letter-spacing:.04em;
+  }
+  .ex-title h4{font-family:"Fraunces",serif;font-weight:600;font-size:21px;margin:0;line-height:1.2;}
+  .ex dl{margin:0;display:grid;grid-template-columns:128px 1fr;gap:6px 18px;}
+  .ex dt{
+    font-family:"Archivo",sans-serif;font-size:11.5px;font-weight:700;text-transform:uppercase;
+    letter-spacing:.1em;color:var(--ink-soft);padding-top:4px;
+  }
+  .ex dd{margin:0;font-size:16.5px;}
+  .ex dd.caution{color:var(--clay);}
+  @media(max-width:620px){.ex dl{grid-template-columns:1fr;gap:2px 0;}.ex dt{margin-top:10px;}}
+
+  /* ---------- Safety ---------- */
+  .safety{background:var(--rose-soft);border:1px solid #eccfc9;border-radius:18px;padding:30px 30px 8px;margin:24px 0;}
+  .safety h2{color:var(--rose);}
+  .safety h4{font-family:"Fraunces",serif;font-size:18px;color:var(--rose);margin:22px 0 6px;}
+  .safety ul{margin:0 0 18px;padding-left:20px;}
+  .safety li{margin-bottom:8px;}
+
+  /* ---------- Plan timeline ---------- */
+  .plan{list-style:none;margin:0;padding:0;counter-reset:step;}
+  .plan li{
+    position:relative;padding:0 0 26px 56px;border-left:2px solid var(--line);margin-left:18px;
+  }
+  .plan li:last-child{border-left:2px solid transparent;}
+  .plan li::before{
+    counter-increment:step;content:counter(step);
+    position:absolute;left:-19px;top:-4px;width:36px;height:36px;border-radius:50%;
+    background:var(--sage);color:#fff;font-family:"Fraunces",serif;font-weight:700;
+    display:flex;align-items:center;justify-content:center;font-size:16px;
+  }
+  .plan li .pl-title{font-family:"Fraunces",serif;font-weight:600;font-size:19px;display:block;margin-bottom:4px;}
+
+  .ref-list{columns:2;column-gap:36px;font-size:16px;}
+  .ref-list li{margin-bottom:12px;break-inside:avoid;}
+  @media(max-width:620px){.ref-list{columns:1;}}
+
+  footer{padding:40px 0 70px;color:var(--ink-soft);font-size:14.5px;}
+  footer .disc{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px 26px;}
+  footer h4{font-family:"Archivo",sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:12px;color:var(--ink);margin:0 0 10px;}
+
+  @media(max-width:620px){
+    nav.phases{grid-template-columns:1fr;}
+    .wrap{padding:0 20px;}
+    header.hero{padding:52px 0 44px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Postpartum Pelvic Health · A Progressive Plan</p>
+    <h1>From symptom relief <em>back to the barbell</em></h1>
+    <p class="lede">A three-phase pelvic floor training guide for postpartum pelvic organ prolapse — rebuilding coordination and strength, then returning safely to lifting. Cleared by your OB; built to be symptom-led.</p>
+    <div class="meta-row">
+      <span class="pill">Phase 1 · Foundation</span>
+      <span class="pill">Phase 2 · Functional strength</span>
+      <span class="pill">Phase 3 · Return to lifting</span>
+      <span class="pill">Physio-led video library</span>
+    </div>
+
+    <nav class="phases">
+      <a href="#phase1" class="p1"><span class="pn">Phase 01</span><span class="pt">Symptom Relief &amp; Foundation</span></a>
+      <a href="#phase2" class="p2"><span class="pn">Phase 02</span><span class="pt">Functional Strengthening</span></a>
+      <a href="#phase3" class="p3"><span class="pn">Phase 03</span><span class="pt">Back Toward Lifting</span></a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===== Overview ===== -->
+  <section id="overview" style="border-bottom:none;padding-bottom:14px;">
+    <p class="sec-label" style="color:var(--sage);">The Short Version</p>
+    <h2>What this plan does</h2>
+    <div class="box tldr">
+      <h4>At a glance</h4>
+      <ul>
+        <li><strong>A real path back to lifting.</strong> Three phases: (1) re-learn correct pelvic floor activation <em>and</em> full relaxation plus 360° breathing, (2) integrate the pelvic floor with the deep core through bridges, bird dogs, dead bugs, heel slides and clams, then (3) reintroduce load using an exhale-on-effort pressure strategy — light first, progressing slowly.</li>
+        <li><strong>The non-negotiable rule.</strong> Never bear down or hold the breath against a closed throat under load while rebuilding. Stop or regress any exercise that brings on increased heaviness, bulging, dragging or new leakage during or after the session. Prolapse tolerance is highly individual.</li>
+        <li><strong>The evidence is encouraging.</strong> A 6-month pelvic floor training program improved prolapse symptoms and produced measurable anatomical improvement in a blinded trial — and large survey data shows women who lift heavy do not report more prolapse symptoms. A careful return to lifting is a research-supported goal.</li>
+      </ul>
+    </div>
+
+    <div class="box evidence">
+      <h4>The research, in plain terms</h4>
+      <p>In an assessor-blinded randomized trial of 109 women with stage I–III prolapse, six months of pelvic floor muscle training improved symptoms and helped lift the prolapse by one stage in roughly one in five women, versus far fewer in the untrained group.</p>
+      <p class="src">Brækken, Majida, Ellström Engh &amp; Bø — <em>American Journal of Obstetrics &amp; Gynecology</em>, 2010.</p>
+      <p style="margin-top:18px;">In a survey of 3,934 women who lift for exercise, those lifting the heaviest loads did not report prolapse symptoms more often than those lifting light — the authors found no increased prevalence of prolapse symptoms among heavy lifters.</p>
+      <p class="src">Forner, Beckman &amp; Smith — <em>International Urogynecology Journal</em>, 2020. (Associational, self-reported — read as "not clearly harmful," not "protective.")</p>
+    </div>
+  </section>
+
+  <!-- ===== PHASE 1 ===== -->
+  <section id="phase1" class="s1">
+    <div class="phase-head">
+      <span class="phase-num">PHASE 01</span>
+      <p class="sec-label" style="margin:0;">Weeks 1+ · Start here</p>
+    </div>
+    <h2>Symptom Relief &amp; Foundation</h2>
+    <p class="goal">Reconnect with the pelvic floor, learn to both contract <strong>and</strong> fully relax it, establish 360° breathing, fix posture, and stop the habits that push pressure downward. Spend at least 2–4 weeks here; it can run alongside everything that follows.</p>
+
+    <h3>Watch first</h3>
+
+    <div class="video-card">
+      <div class="video-frame">
+        <iframe src="https://www.youtube.com/embed/-1lViRMMdJg" title="Pelvic Floor Exercises for Beginners in 3 Easy Steps" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="video-meta">
+        <p class="vtitle">Pelvic Floor Exercises for Beginners in 3 Easy Steps</p>
+        <p class="vcred">Michelle Kenway · Pelvic Health Physiotherapist · ~8 min</p>
+        <p class="vwhy">The clearest free, physio-led tutorial on finding, squeezing/lifting, and — crucially — fully relaxing the correct muscles.</p>
+        <a class="vlink" href="https://www.youtube.com/watch?v=-1lViRMMdJg" target="_blank" rel="noopener">Open on YouTube ↗</a>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <div class="video-frame">
+        <iframe src="https://www.youtube.com/embed/1tbMgkmYoo8" title="3-Minute Miracle: Three Steps for Pelvic Health" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="video-meta">
+        <p class="vtitle">The 3-Minute Miracle: Three Steps for Pelvic Health</p>
+        <p class="vcred">Dr. Bri (Brianne Grogan, PT, DPT) · ~3 min</p>
+        <p class="vwhy">A quick daily "hips-up" decompression position to relieve heaviness and dragging at the end of the day.</p>
+        <a class="vlink" href="https://www.youtube.com/watch?v=1tbMgkmYoo8" target="_blank" rel="noopener">Open on YouTube ↗</a>
+      </div>
+    </div>
+
+    <div class="ex">
+      <div class="ex-title"><span class="ex-no">01</span><h4>Diaphragmatic / 360° "Connection" Breath</h4></div>
+      <dl>
+        <dt>Targets</dt><dd>Diaphragm–pelvic floor coordination; teaches relaxation and the pressure system that protects against prolapse.</dd>
+        <dt>How-to</dt><dd>Lie on your back, knees bent (or sit tall). One hand on the lower ribs, one on the belly. Inhale slowly through the nose into the lower ribs, belly and back so the ribcage expands in all directions — feel the pelvic floor gently relax and drop. Exhale slowly through the mouth, as if through a straw, and feel the pelvic floor and lower belly gently recoil upward.</dd>
+        <dt>Dosage</dt><dd>5–10 slow breaths, 2–3× per day. Use any time you notice tension or breath-holding.</dd>
+        <dt>Avoid</dt><dd>Belly-only "puffing" that pushes the abdomen forward; chest-only shallow breathing; forcing the breath.</dd>
+        <dt>Prolapse note</dt><dd class="caution">Keep the exhale gentle — never bear down. This is your relaxation tool; ease off if pressure increases.</dd>
+      </dl>
+    </div>
+
+    <div class="ex">
+      <div class="ex-title"><span class="ex-no">02</span><h4>The Kegel — done correctly (contract <em>and</em> fully relax)</h4></div>
+      <dl>
+        <dt>Targets</dt><dd>Pelvic floor strength, endurance and coordination.</dd>
+        <dt>How-to</dt><dd>On an exhale, squeeze and lift the muscles around the back passage, vagina and urethra — as if stopping wind and the flow of urine, drawing up and in. Then <strong>fully release</strong> back to resting length on the inhale; the "letting go" matters as much as the squeeze. Keep buttocks, thighs and upper belly relaxed; keep breathing.</dd>
+        <dt>Dosage</dt><dd>Build toward holds of 6–8 sec with an equal-length full relaxation between — working up to 3 sets of 8–12 near-maximal contractions daily, in different positions with legs apart. Finish each set with 3–4 fast "quick-flicks" (sharp squeeze, instant release) for the cough/sneeze reflex. Begin lying down; progress to sitting, then standing.</dd>
+        <dt>Avoid</dt><dd>Holding the breath; squeezing glutes or inner thighs instead; bearing <em>down</em> rather than lifting <em>up</em>; never relaxing fully (over-gripping); doing so many that form fails.</dd>
+        <dt>Prolapse note</dt><dd class="caution">If heaviness or bulging increases, you may be bearing down rather than lifting, or doing too many — reduce volume. Don't routinely stop urine mid-stream (a one-off test only).</dd>
+      </dl>
+    </div>
+
+    <div class="ex">
+      <div class="ex-title"><span class="ex-no">03</span><h4>"The Knack" — pre-contraction before pressure</h4></div>
+      <dl>
+        <dt>Targets</dt><dd>Reflexive pelvic floor support during coughs, sneezes and lifts.</dd>
+        <dt>How-to</dt><dd>Just before — and during — a cough, sneeze or lift, exhale and lift the pelvic floor; relax afterward.</dd>
+        <dt>Dosage</dt><dd>Use it functionally, all day, before any effort.</dd>
+        <dt>Prolapse note</dt><dd class="caution">This builds the exact habit you'll need for lifting. Keep it a lift, never a downward push.</dd>
+      </dl>
+    </div>
+
+    <div class="ex">
+      <div class="ex-title"><span class="ex-no">04</span><h4>Posture, Alignment &amp; Toilet Habits</h4></div>
+      <dl>
+        <dt>Targets</dt><dd>Reduces chronic downward pressure on the pelvic organs.</dd>
+        <dt>How-to</dt><dd>Stack ribs over pelvis — avoid tucking the tailbone or over-arching with a flared ribcage. "Come tall," as if gently lifting the organs. On the toilet, use a footstool (knees above hips), lean forward, breathe out, and never strain. Manage constipation with fluids and fibre.</dd>
+        <dt>Prolapse note</dt><dd class="caution">Straining on the toilet is one of the most common drivers of prolapse worsening — treat it as seriously as any exercise.</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ===== PHASE 2 ===== -->
+  <section id="phase2" class="s2">
+    <div class="phase-head">
+      <span class="phase-num">PHASE 02</span>
+      <p class="sec-label" style="margin:0;">Weeks 3–8+ · Overlaps Phase 1</p>
+    </div>
+    <h2>Functional Strengthening</h2>
+    <p class="goal">Connect the pelvic floor to the transverse abdominis, glutes and hips with controlled, low-pressure movement. The rule for every rep: <strong>exhale and gently lift the pelvic floor on the effort; inhale to return.</strong> Only progress an exercise once it's symptom-free during <em>and</em> after.</p>
+
+    <h3>Watch first</h3>
+
+    <div class="video-card">
+      <div class="video-frame">
+        <iframe src="https://www.youtube.com/embed/aFjWYbXW0Vk" title="5 Prolapse Safe Core Abdominal Exercises" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="video-meta">
+        <p class="vtitle">5 Prolapse-Safe Core Exercises — Guided Beginner Workout</p>
+        <p class="vcred">Michelle Kenway · Pelvic Health Physiotherapist</p>
+        <p class="vwhy">A physio-designed deep-core routine that deliberately avoids pelvic-floor overload — no crunches or sit-ups.</p>
+        <a class="vlink" href="https://www.youtube.com/watch?v=aFjWYbXW0Vk" target="_blank" rel="noopener">Open on YouTube ↗</a>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <div class="video-frame">
+        <iframe src="https://www.youtube.com/embed/-2gdZyGpyic" title="Physio Safe Hips, Butt and Thighs Exercises for Prolapse" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="video-meta">
+        <p class="vtitle">Physio-Safe Hips, Butt &amp; Thighs Exercises for Prolapse</p>
+        <p class="vcred">Michelle Kenway · Pelvic Health Physiotherapist · ~7.5 min</p>
+        <p class="vwhy">Concise glute/hip strengthening — mini-squats, lunges, wall squat, bridge, clam — all prolapse-screened.</p>
+        <a class="vlink" href="https://www.youtube.com/watch?v=-2gdZyGpyic" target="_blank" rel="noopener">Open on YouTube ↗</a>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <div class="video-frame">
+        <iframe src="https://www.youtube.com/embed/q2LWxk94EeQ" title="Core Primer Workout" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="video-meta">
+        <p class="vtitle">Core Primer Workout</p>
+        <p class="vcred">Dr. Bri (Brianne Grogan, PT, DPT) · Vibrant Pelvic Health</p>
+        <p class="vwhy">A gentle full-system core activation routine focused on prolapse and leak support.</p>
+        <a class="vlink" href="https://www.youtube.com/watch?v=q2LWxk94EeQ" target="_blank" rel="noopener">Open on YouTube ↗</a>
+      </div>
+    </div>
+
+    <div class="ex">
+      <div class="ex-title"><span class="ex-no">05</span><h4>Glute Bridge with Deep-Core + Pelvic Floor Lift</h4></div>
+      <dl>
+        <dt>Targets</dt><dd>Glutes, hamstrings, transverse abdominis, pelvic floor.</dd>
+        <dt>How-to</dt><dd>On your back, knees bent, feet flat hip-width. <strong>Exhale</strong>, gently lift the pelvic floor and draw the lower belly in, squeeze the glutes and lift the hips until shoulders–hips–knees align. Hold ~3–6 sec while breathing. <strong>Inhale</strong> to lower.</dd>
+        <dt>Dosage</dt><dd>8–12 reps, 1–3 sets; ~6-sec holds.</dd>
+        <dt>Avoid</dt><dd>Arching the low back / over-lifting; pushing the belly out; holding the breath; initiating with the back instead of the glutes.</dd>
+        <dt>Prolapse note</dt><dd class="caution">Exhale on the lift (the effort). A helpful cue: perform a Kegel as the hips rise. Stop if heaviness or a bulge appears.</dd>
+      </dl>
+    </div>
+
+    <div class="ex">
+      <div class="ex-title"><span class="ex-no">06</span><h4>Heel Slides</h4></div>
+      <dl>
+        <dt>Targets</dt><dd>Transverse abdominis + pelvic floor coordination with limb movement.</dd>
+        <dt>How-to</dt><dd>On your back, knees bent. Exhale, gently engage the pelvic floor and lower belly, and slide one heel along the floor until the leg is straight — keeping the low back still and neutral. Inhale to slide back. Alternate legs.</dd>
+        <dt>Dosage</dt><dd>8–12 per leg; progress range as control improves.</dd>
+        <dt>Avoid</dt><dd>Low back popping or arching off the floor; chest flaring; breath-holding; losing core engagement as the leg extends.</dd>
+        <dt>Prolapse note</dt><dd class="caution">Only extend as far as you can keep the back stable and symptom-free.</dd>
+      </dl>
+    </div>
+
+    <div class="ex">
+      <div class="ex-title"><span class="ex-no">07</span><h4>Dead Bug</h4></div>
+      <dl>
+        <dt>Targets</dt><dd>Deep-core anti-extension stability without spinal flexion — safer than crunches.</dd>
+        <dt>How-to</dt><dd>On your back, arms reaching to the ceiling, knees stacked over hips (tabletop). Exhale, brace gently, and lower the opposite arm and leg toward the floor while keeping the low back lightly pressed down. Inhale to return; alternate.</dd>
+        <dt>Dosage</dt><dd>5–10 per side, building slowly.</dd>
+        <dt>Avoid</dt><dd>Low back arching up; breath-holding; rushing the movement.</dd>
+        <dt>Prolapse note</dt><dd class="caution">Keep the range small enough to hold a neutral, stable spine with no downward pressure.</dd>
+      </dl>
+    </div>
+
+    <div class="ex">
+      <div class="ex-title"><span class="ex-no">08</span><h4>Bird Dog</h4></div>
+      <dl>
+        <dt>Targets</dt><dd>Transverse abdominis, multifidus, glutes, spinal stabilizers; balance and coordination.</dd>
+        <dt>How-to</dt><dd>Tabletop position (hands under shoulders, knees under hips). Exhale and gently engage core and pelvic floor; extend the opposite arm and leg to body height, keeping the pelvis level and spine neutral. Inhale to return; alternate.</dd>
+        <dt>Dosage</dt><dd>5–10 per side, 1–2 sets.</dd>
+        <dt>Avoid</dt><dd>Rotating or dropping a hip; arching the low back; lifting the limb too high.</dd>
+        <dt>Prolapse note</dt><dd class="caution">Don't let the belly sag — that increases downward load. Keep it controlled.</dd>
+      </dl>
+    </div>
+
+    <div class="ex">
+      <div class="ex-title"><span class="ex-no">09</span><h4>Clamshells &amp; Side-Lying Hip Work</h4></div>
+      <dl>
+        <dt>Targets</dt><dd>Gluteus medius / outer hips — the "side walls" that support the pelvis.</dd>
+        <dt>How-to</dt><dd>Side-lying, knees bent ~90°, feet together, back neutral. Exhale, keep the feet together and lift the top knee a small amount without rolling the pelvis back. Lower with control.</dd>
+        <dt>Dosage</dt><dd>10–15 per side, 1–2 sets.</dd>
+        <dt>Avoid</dt><dd>Rolling the torso backward; using momentum; opening too far.</dd>
+        <dt>Prolapse note</dt><dd class="caution">Low-pressure and well tolerated — a reliable staple.</dd>
+      </dl>
+    </div>
+
+    <div class="ex">
+      <div class="ex-title"><span class="ex-no">10</span><h4>Modified Plank (wall → knees) — only when ready</h4></div>
+      <dl>
+        <dt>Targets</dt><dd>Whole-core stabilization and shoulders.</dd>
+        <dt>How-to</dt><dd>Start as a <strong>wall plank</strong> (forearms on wall, body straight, feet back); progress to knees-down on the floor. Exhale, gently lift the pelvic floor and draw the belly in, hold a straight line head-to-knees, breathing throughout. Hold 10–15 sec, building gradually.</dd>
+        <dt>Dosage</dt><dd>3–5 holds of 10–15 sec.</dd>
+        <dt>Avoid</dt><dd>Sagging belly or low back; breath-holding; pushing pressure down.</dd>
+        <dt>Prolapse note</dt><dd class="caution">Skip full floor planks early. Regress to the wall at any sign of heaviness; progress only when symptom-free.</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ===== PHASE 3 ===== -->
+  <section id="phase3" class="s3">
+    <div class="phase-head">
+      <span class="phase-num">PHASE 03</span>
+      <p class="sec-label" style="margin:0;">Weeks 8–12+ · The lifting goal</p>
+    </div>
+    <h2>Progression Back Toward Lifting</h2>
+    <p class="goal">Reintroduce external load with a deliberate breathing and pressure strategy. This is where the bodybuilding goal lives — and it's realistic, provided progression is led by symptoms rather than a calendar.</p>
+
+    <h3>Watch first</h3>
+
+    <div class="video-card">
+      <div class="video-frame">
+        <iframe src="https://www.youtube.com/embed/Z9usj_Ub3Cs" title="Unsafe Prolapse Exercises and Physio Safe Alternatives" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="video-meta">
+        <p class="vtitle">Unsafe Prolapse Exercises + Physio-Safe Toning Alternatives</p>
+        <p class="vcred">Michelle Kenway · Pelvic Health Physiotherapist</p>
+        <p class="vwhy">Shows exactly how to modify common lower-body lifts that can overload the pelvic floor.</p>
+        <a class="vlink" href="https://www.youtube.com/watch?v=Z9usj_Ub3Cs" target="_blank" rel="noopener">Open on YouTube ↗</a>
+      </div>
+    </div>
+
+    <div class="box" style="background:var(--clay-soft);border-color:#ecd3c8;">
+      <h4>The breathing strategy: "exhale on exertion" / "blow before you go"</h4>
+      <p><strong>How.</strong> Inhale during the easy phase (lowering into a squat); <strong>begin the exhale just before, and continue it through, the hard phase</strong> (standing up), gently lifting the pelvic floor as you exhale. Never hold the breath against a closed throat early in your return to lifting.</p>
+      <p><strong>Why.</strong> Breath-holding and straining drive intra-abdominal pressure down onto the pelvic floor; a timed exhale lets pressure vent upward and recruits the deep core reflexively.</p>
+      <p style="margin-bottom:0;"><strong>The nuance.</strong> Exhale-on-exertion is the right default for rebuilding. For very heavy near-max lifting, some lifters eventually use a controlled brace (Valsalva) — which is <em>not</em> the same as bearing down. That's an advanced step to try only once symptom-free at submaximal loads, ideally after a pelvic-floor PT assessment. Bearing down — pushing the pelvic floor down — is always wrong.</p>
+    </div>
+
+    <h3>How to structure the return</h3>
+    <ol style="padding-left:22px;">
+      <li style="margin-bottom:12px;"><strong>Start light, rebuild patterns.</strong> Bodyweight or light dumbbells, higher reps, perfect technique, exhale every rep. The Kenway leg and upper-body routines are the on-ramp.</li>
+      <li style="margin-bottom:12px;"><strong>Master the movement before adding load.</strong> Box squats / sit-to-stand, hip hinges to a comfortable depth, supported rows and presses.</li>
+      <li style="margin-bottom:12px;"><strong>Progress load gradually.</strong> Small increments (e.g. step up every few weeks) only when fully symptom-free during <em>and</em> after the prior level. Avoid big jumps.</li>
+      <li style="margin-bottom:12px;"><strong>Modify the highest-pressure movements first.</strong> Be cautious with heavy overhead pressing, maximal deadlifts/back squats, breath-holding/Valsalva, and high-impact (jumping, running). A shallower squat or slightly lighter load often removes symptoms while keeping training effective.</li>
+      <li><strong>Consider support tools.</strong> Many women lift more comfortably with a fitted pessary (prescribed by a GP/gynaecologist) and/or supportive compression garments — useful bridges while strength builds.</li>
+    </ol>
+  </section>
+
+  <!-- ===== SAFETY ===== -->
+  <section id="safety" style="border-bottom:none;">
+    <p class="sec-label" style="color:var(--rose);">Applies to every phase</p>
+    <div class="safety">
+      <h2>Safety &amp; Warning Signs</h2>
+
+      <h4>Signs you're doing too much — stop or regress the exercise</h4>
+      <ul>
+        <li>Increased heaviness, pressure, dragging, or a "bulge" / "stuck tampon" sensation in the vagina — during or after exercise, sometimes lingering a day or two.</li>
+        <li>A visible or palpable bulge that worsens or doesn't settle with rest.</li>
+        <li>New or increased urinary or bowel leakage with a specific exercise.</li>
+        <li>A period-like ache or low-back/pelvic ache that worsens with the workout (often eased by lying down with legs elevated).</li>
+      </ul>
+
+      <h4>Core rules</h4>
+      <ul>
+        <li><strong>Never bear down or strain</strong> — not into exercise, not on the toilet.</li>
+        <li><strong>Don't hold the breath under load</strong> while rebuilding; exhale on the effort.</li>
+        <li><strong>Symptoms, not the calendar, guide progression.</strong> A symptom means back off that load or movement and rebuild.</li>
+        <li><strong>Tolerance is individual</strong> — compare yourself only to your own symptom response.</li>
+        <li><strong>Manage the basics:</strong> avoid constipation/straining, use a toilet footstool, keep loads close to the body, lift from a lunge or kneel for floor pickups, and avoid lifting from below the knee or above the shoulder where possible.</li>
+      </ul>
+
+      <h4>When to consult a doctor or seek further care</h4>
+      <ul>
+        <li>Symptoms worsen despite correct technique, or a bulge becomes constant or protrudes outside the vagina.</li>
+        <li>Inability to empty the bladder or bowel, severe pain, or heavy bleeding — <strong>urgent</strong>.</li>
+        <li>Before attempting heavy/maximal lifting or Valsalva — ideally get a one-off pelvic-floor PT assessment (in person or via telehealth) to confirm the muscles can support the loads she wants to train.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== PLAN ===== -->
+  <section id="plan">
+    <p class="sec-label" style="color:var(--sage);">Put it together</p>
+    <h2>The staged plan</h2>
+    <ol class="plan">
+      <li>
+        <span class="pl-title">Weeks 1–4 · Foundation</span>
+        Daily 360° breathing (5–10 breaths ×2–3), the corrected Kegel protocol building toward 3×8–12 long holds + quick-flicks, "the Knack," posture and toilet habits, plus Dr. Bri's 3-minute hips-up decompression at day's end. <em>Advance when:</em> you can reliably contract <strong>and</strong> fully relax the pelvic floor and breathe without bearing down.
+      </li>
+      <li>
+        <span class="pl-title">Weeks 3–8+ · Functional strength (overlapping)</span>
+        Add the Phase 2 exercises (bridge, heel slide, dead bug, bird dog, clam, wall→knee plank), 2–4 sessions/week, exhaling on effort. <em>Advance when:</em> all are symptom-free during and after, with good form.
+      </li>
+      <li>
+        <span class="pl-title">Weeks 8–12+ · Return to lifting</span>
+        Begin light loaded patterns from Kenway's leg/upper-body routines; master the movement, then add weight in small increments every few weeks while symptom-free. Be cautious with heavy overhead, max deadlift/squat, Valsalva, and impact. A pessary or support garment can help. <em>Note:</em> guidance commonly suggests waiting ~12 weeks postpartum before intense lifting after an uncomplicated vaginal birth — let symptoms and your OB confirm timing.
+      </li>
+      <li>
+        <span class="pl-title">Throughout · Track it</span>
+        Keep a simple symptom log (heaviness/leakage 0–10, during and after each session). Any rise means regress that movement or load.
+      </li>
+      <li>
+        <span class="pl-title">Escalate when needed</span>
+        Return to medical care at the warning signs above; strongly consider at least one telehealth pelvic-floor PT visit before maximal lifting.
+      </li>
+    </ol>
+  </section>
+
+  <!-- ===== REFERENCES ===== -->
+  <section id="references">
+    <p class="sec-label" style="color:var(--sage);">Trustworthy &amp; free</p>
+    <h2>Further reading</h2>
+    <ul class="ref-list">
+      <li><strong>POGP</strong> — <em>Pelvic Organ Prolapse: A Physiotherapy Guide for Women</em> (free PDF + self-assessment). <a href="https://thepogp.co.uk/resources/9/pelvic_organ_prolapse_a_physiotherapy_guide_for_women/" target="_blank" rel="noopener">thepogp.co.uk ↗</a></li>
+      <li><strong>NHS</strong> — Your post-pregnancy body &amp; the <em>Squeezy</em> app. <a href="https://www.nhs.uk/baby/support-and-services/your-post-pregnancy-body/" target="_blank" rel="noopener">nhs.uk ↗</a></li>
+      <li><strong>Mayo Clinic</strong> — Kegel exercises: a how-to guide for women. <a href="https://www.mayoclinic.org/healthy-lifestyle/womens-health/in-depth/kegel-exercises/art-20045283" target="_blank" rel="noopener">mayoclinic.org ↗</a></li>
+      <li><strong>ACOG</strong> — Physical Activity &amp; Exercise During Pregnancy and the Postpartum Period. <a href="https://www.acog.org/clinical/clinical-guidance/committee-opinion/articles/2020/04/physical-activity-and-exercise-during-pregnancy-and-the-postpartum-period" target="_blank" rel="noopener">acog.org ↗</a></li>
+      <li><strong>Michelle Kenway</strong> — written guides at <a href="https://www.pelvicexercises.com.au/pelvic-floor-exercises-for-women/" target="_blank" rel="noopener">pelvicexercises.com.au ↗</a> (safe core, leg, upper-body &amp; lifting articles).</li>
+      <li><strong>Safe lifting with prolapse</strong> — Kenway's illustrated technique guide. <a href="https://www.pelvicexercises.com.au/safe-lifting-techniques/" target="_blank" rel="noopener">pelvicexercises.com.au ↗</a></li>
+    </ul>
+  </section>
+
+  <!-- ===== FOOTER / DISCLAIMER ===== -->
+  <footer>
+    <div class="disc">
+      <h4>A few honest caveats</h4>
+      <p>This guide is educational and is <strong>not</strong> a substitute for individualized assessment. Your wife has OB clearance for pelvic-floor strengthening; even so, a single telehealth pelvic-floor PT visit would meaningfully de-risk the return to heavy lifting.</p>
+      <p>The embedded videos are from credentialed physiotherapists (Michelle Kenway; Dr. Bri / Brianne Grogan, PT, DPT). If any player doesn't load — or doesn't match the title shown — use the "Open on YouTube" link beneath it, or search the title and creator; it's worth confirming each is the intended video before relying on it.</p>
+      <p style="margin-bottom:0;">The lifting-and-prolapse survey evidence is associational and self-reported — read it as "heavy lifting is not clearly harmful," not as proof it's safe or protective for every individual. When in doubt, slow down and let symptoms lead.</p>
+    </div>
+  </footer>
+
+</main>
+</body>
+</html>
