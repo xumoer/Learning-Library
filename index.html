@@ -122,67 +122,14 @@
 
 <div class="wrap">
   <div class="controls" role="group" aria-label="Filter modules by topic">
-    <span class="label">Filter</span>
-    <button class="filter" data-filter="all" aria-pressed="true">All</button>
-    <button class="filter" data-filter="3D" aria-pressed="false">3D</button>
-    <button class="filter" data-filter="Music" aria-pressed="false">Music</button>
-    <button class="filter" data-filter="Dev" aria-pressed="false">Dev</button>
-    <button class="filter" data-filter="Trading" aria-pressed="false">Trading</button>
+    <!-- filter buttons are generated from modules.js -->
   </div>
 </div>
 
 <main>
 <div class="wrap">
   <div class="grid" id="grid">
-
-    <!-- ===== ACTIVE MODULE: Blender ===== -->
-    <article class="card active" data-tags="3D" tabindex="0" role="link" aria-label="Open: Rigging & Animation in Blender 5.1">
-      <a class="card-link" href="skills/blender-rigging/index.html" aria-hidden="true" tabindex="-1"></a>
-      <div class="card-top">
-        <span class="callno">3D · 01</span>
-        <span class="status learning">Learning</span>
-      </div>
-      <h2>Rigging &amp; Animation<br>in Blender 5.1</h2>
-      <p class="blurb">Zero to animating a monster: armatures, weight painting, FK/IK, Rigify, walk cycles, and creature-specific techniques — with every 5.1 change flagged.</p>
-      <div class="tags"><span class="tag">3D</span><span class="tag">rigging</span><span class="tag">animation</span><span class="tag">blender</span></div>
-      <div class="pbar"><i style="width:8%"></i></div>
-      <div class="card-foot"><span class="open">Open module ↗</span><span class="muted">10 steps</span></div>
-    </article>
-
-    <!-- ===== PLANNED PLACEHOLDERS — duplicate a card to add a real one ===== -->
-    <article class="card planned" data-tags="Music" aria-label="Planned module">
-      <div class="card-top"><span class="callno">MUS · 02</span><span class="status planned">Planned</span></div>
-      <h2>FL Studio<br>Production</h2>
-      <p class="blurb">Mixing, automation, and arrangement workflow — a reference you can build up as you go.</p>
-      <div class="tags"><span class="tag">Music</span><span class="tag">FL Studio</span><span class="tag">mixing</span></div>
-      <div class="pbar"><i style="width:0%"></i></div>
-      <div class="card-foot"><span class="muted">Not started</span><span class="muted">—</span></div>
-    </article>
-
-    <article class="card planned" data-tags="Dev" aria-label="Planned module">
-      <div class="card-top"><span class="callno">DEV · 03</span><span class="status planned">Planned</span></div>
-      <h2>AutoHotkey v2<br>Patterns</h2>
-      <p class="blurb">Hotkeys, GUIs, JSON config, and the v2 idioms worth keeping in one place.</p>
-      <div class="tags"><span class="tag">Dev</span><span class="tag">AHK v2</span><span class="tag">windows</span></div>
-      <div class="pbar"><i style="width:0%"></i></div>
-      <div class="card-foot"><span class="muted">Not started</span><span class="muted">—</span></div>
-    </article>
-
-    <article class="card planned" data-tags="Trading" aria-label="Planned module">
-      <div class="card-top"><span class="callno">TRD · 04</span><span class="status planned">Planned</span></div>
-      <h2>Futures Trading<br>Systems</h2>
-      <p class="blurb">Backtesting, execution, and risk concepts — notes-to-self as the bot architecture comes together.</p>
-      <div class="tags"><span class="tag">Trading</span><span class="tag">python</span><span class="tag">futures</span></div>
-      <div class="pbar"><i style="width:0%"></i></div>
-      <div class="card-foot"><span class="muted">Not started</span><span class="muted">—</span></div>
-    </article>
-
-    <!-- ===== TEMPLATE: copy this folder pattern for a new skill ===== -->
-    <article class="card add" data-tags="all" aria-label="How to add a new module">
-      <div class="plus">+</div>
-      <div>Add a skill: drop an<br><code>index.html</code> in <code>skills/your-skill/</code><br>then copy a card above.</div>
-    </article>
-
+    <!-- cards (and the "Add a skill" template card) are generated from modules.js -->
   </div>
   <p class="empty" id="empty">No modules with that tag yet.</p>
 </div>
@@ -191,39 +138,116 @@
 <footer>
   <div class="wrap">
     <h3>How this library works</h3>
-    <p>Each skill is its own folder under <code>skills/</code> with an <code>index.html</code> inside it. The card grid above just links to them. To add one: create <code>skills/&lt;name&gt;/index.html</code>, then duplicate a card in this file and point it there. Commit, push, and it's live.</p>
+    <p>Each skill is its own folder under <code>skills/</code> with its guide inside it. The card grid above is generated from <code>modules.js</code>. To add one: create your page under <code>skills/&lt;name&gt;/</code>, then add one entry to the <code>MODULES</code> array in <code>modules.js</code> (copy the template at the top of that file). Commit, push, and it's live.</p>
     <p style="margin-top:16px;color:var(--ink-dim)">Served over HTTPS by GitHub Pages, so embedded videos and external resources load exactly like any website — no local server, no Node, nothing to run.</p>
     <p style="margin-top:16px"><span class="muted">Replace this with your repo:</span> <a href="#" id="repolink">github.com/your-username/learning-library</a></p>
   </div>
 </footer>
 
+<script src="modules.js"></script>
 <script>
-  // tag filtering
   (function(){
+    var grid = document.getElementById('grid');
+    var modules = window.MODULES || [];
+
+    function pad(n){ return n < 10 ? '0' + n : '' + n; }
+    function esc(s){ return String(s).replace(/[&<>"]/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+    function codeFor(m){ return m.code || String(m.category).slice(0,3).toUpperCase(); }
+
+    var statusLabels = { solid:'Solid', learning:'Learning', planned:'Planned' };
+    var counters = {};
+    var html = '';
+
+    modules.forEach(function(m){
+      var cat = m.category;
+      counters[cat] = (counters[cat] || 0) + 1;
+      var callno = codeFor(m) + ' · ' + pad(counters[cat]);
+      var status = m.status || 'planned';
+      var active = !!m.href && status !== 'planned';
+      var tags = (m.tags || []).map(function(t){ return '<span class="tag">' + esc(t) + '</span>'; }).join('');
+      var cls = 'card' + (active ? ' active' : '') + (status === 'planned' ? ' planned' : '');
+
+      var attrs = 'class="' + cls + '" data-cat="' + esc(cat) + '"';
+      attrs += active
+        ? ' tabindex="0" role="link" aria-label="Open: ' + esc(m.title) + '"'
+        : ' aria-label="Planned module"';
+
+      var link = active
+        ? '<a class="card-link" href="' + esc(m.href) + '" aria-hidden="true" tabindex="-1"></a>'
+        : '';
+
+      var pbar = '<div class="pbar"><i style="width:' + (active ? (m.progress || 0) : 0) + '%"></i></div>';
+      var foot = active
+        ? '<div class="card-foot"><span class="open">Open module ↗</span><span class="muted">' + (m.steps ? esc(m.steps) + ' steps' : '—') + '</span></div>'
+        : '<div class="card-foot"><span class="muted">Not started</span><span class="muted">—</span></div>';
+
+      html += '<article ' + attrs + '>'
+        + link
+        + '<div class="card-top"><span class="callno">' + esc(callno) + '</span>'
+        + '<span class="status ' + esc(status) + '">' + esc(statusLabels[status] || status) + '</span></div>'
+        + '<h2>' + esc(m.title) + '</h2>'
+        + '<p class="blurb">' + esc(m.blurb || '') + '</p>'
+        + '<div class="tags">' + tags + '</div>'
+        + pbar
+        + foot
+        + '</article>';
+    });
+
+    // "Add a skill" template card — always last, always visible.
+    html += '<article class="card add" data-cat="__add__" aria-label="How to add a new module">'
+      + '<div class="plus">+</div>'
+      + '<div>Add a skill: drop your page in<br><code>skills/your-skill/</code><br>then add an entry to <code>modules.js</code>.</div>'
+      + '</article>';
+
+    grid.innerHTML = html;
+
+    // ledger counts
+    var total = modules.length;
+    var activeCount = modules.filter(function(m){ return m.status !== 'planned'; }).length;
+    document.getElementById('count-active').textContent = activeCount;
+    document.getElementById('count-total').textContent = total;
+    document.getElementById('updated').textContent = new Date().getFullYear();
+
+    // filter buttons: "All" + distinct categories in order of appearance
+    var cats = [];
+    modules.forEach(function(m){ if (cats.indexOf(m.category) < 0) cats.push(m.category); });
+    var filterHtml = '<span class="label">Filter</span>'
+      + '<button class="filter" data-filter="all" aria-pressed="true">All</button>';
+    cats.forEach(function(c){
+      filterHtml += '<button class="filter" data-filter="' + esc(c) + '" aria-pressed="false">' + esc(c) + '</button>';
+    });
+    document.querySelector('.controls').innerHTML = filterHtml;
+
+    // wire filtering
     var buttons = document.querySelectorAll('.filter');
-    var cards = document.querySelectorAll('.card[data-tags]');
+    var cards = document.querySelectorAll('.card[data-cat]');
     var empty = document.getElementById('empty');
     buttons.forEach(function(btn){
       btn.addEventListener('click', function(){
         var f = btn.getAttribute('data-filter');
-        buttons.forEach(function(b){b.setAttribute('aria-pressed', b===btn ? 'true':'false');});
+        buttons.forEach(function(b){ b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
         var shown = 0;
         cards.forEach(function(c){
-          var tags = c.getAttribute('data-tags');
-          var show = (f==='all') || (tags && tags.split(/\s+/).indexOf(f)>-1) || c.classList.contains('add');
+          var isAdd = c.classList.contains('add');
+          var show = (f === 'all') || (c.getAttribute('data-cat') === f) || isAdd;
           c.style.display = show ? '' : 'none';
-          if(show && !c.classList.contains('add')) shown++;
+          if (show && !isAdd) shown++;
         });
-        empty.style.display = shown===0 ? 'block' : 'none';
+        empty.style.display = shown === 0 ? 'block' : 'none';
       });
     });
-    // make active cards keyboard-activatable
+
+    // keyboard activation of active cards
     document.querySelectorAll('.card.active').forEach(function(c){
       c.addEventListener('keydown', function(e){
-        if(e.key==='Enter'||e.key===' '){ e.preventDefault(); var l=c.querySelector('.card-link'); if(l) l.click(); }
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          var l = c.querySelector('.card-link');
+          if (l) l.click();
+        }
       });
     });
-    document.getElementById('updated').textContent = new Date().getFullYear();
   })();
 </script>
 </body>
