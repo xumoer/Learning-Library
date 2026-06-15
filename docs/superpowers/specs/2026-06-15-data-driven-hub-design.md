@@ -66,6 +66,25 @@ window.MODULES = [ /* …module objects… */ ];
 }
 ```
 
+### Second example (a real, already-built guide)
+
+This demonstrates a different category and an `href` that is **not**
+`index.html` — module pages may use any filename inside their folder.
+
+```js
+{
+  title:    "Pelvic Floor Training — Postpartum Prolapse to Lifting",
+  blurb:    "From symptom relief to confident lifting: a staged pelvic-floor program covering prolapse recovery and load progression.",
+  category: "Health",       // new category → adds a "Health" filter button automatically
+  code:     "HLT",          // call-no prefix → "HLT · 01"
+  tags:     ["Health","pelvic floor","postpartum","prolapse"],
+  status:   "solid",        // green badge; demonstrates the "solid" status
+  href:     "skills/pelvic-floor-training/pelvic-floor-training-guide.html",
+  steps:    8,
+  progress: 100
+}
+```
+
 ### Field semantics
 
 - **`href` present** → card is "active": clickable, keyboard-activatable
@@ -102,7 +121,11 @@ window.MODULES = [ /* …module objects… */ ];
 The current four cards (Blender = learning/active; FL Studio, AutoHotkey,
 Futures = planned) become the seed entries in `modules.js`, with `code` values
 set to match the existing prefixes (`3D`, `MUS`, `DEV`, `TRD`). After the change
-the rendered page is visually identical to today.
+the existing four render visually identical to today.
+
+In addition, the already-built **Pelvic Floor Training** guide (see second
+example above) is seeded as a real `solid`/active card in the `Health` category
+— it exists on disk but is not yet listed on the hub, so this surfaces it.
 
 ## Out of scope
 
