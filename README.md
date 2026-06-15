@@ -1,6 +1,6 @@
 # Learning Library
 
-A personal collection of self-contained, work-through-it HTML guides — one folder per skill. Hosted on GitHub Pages so embedded videos and external resources load over HTTPS and just work (no local server, no Node).
+A collection of self-contained, work-through-it HTML guides — one folder per skill. Hosted on GitHub Pages so embedded videos and external resources load over HTTPS and just work.
 
 ## Structure
 
@@ -16,26 +16,6 @@ learning-library/
 
 Each skill lives in its own folder under `skills/` and is named `index.html`, so it gets a clean URL like `…/skills/blender-rigging/`.
 
-## Publish on GitHub Pages (one time, ~3 minutes)
-
-1. Create a new repository on GitHub, e.g. `learning-library` (public).
-2. Put these files in it and push:
-   ```bash
-   cd learning-library
-   git init
-   git add .
-   git commit -m "Initial learning library"
-   git branch -M main
-   git remote add origin https://github.com/YOUR-USERNAME/learning-library.git
-   git push -u origin main
-   ```
-3. On GitHub: **Settings → Pages**. Under *Build and deployment*, set **Source = Deploy from a branch**, **Branch = main**, **folder = / (root)**. Save.
-4. Wait ~1 minute. Your library is live at:
-   ```
-   https://YOUR-USERNAME.github.io/learning-library/
-   ```
-   The Blender tutorial is at `…/learning-library/skills/blender-rigging/`.
-5. Edit the repo link at the bottom of `index.html` to point at your repo.
 
 ## Add a new skill
 
@@ -46,16 +26,4 @@ Each skill lives in its own folder under `skills/` and is named `index.html`, so
 
 The three gray "Planned" cards in the hub are placeholders. Edit or delete them freely.
 
-## Preview locally before pushing (optional)
 
-From inside the `learning-library` folder:
-
-```bash
-python -m http.server 8000
-```
-
-Then open `http://localhost:8000/`. Serving over `http://` (instead of double-clicking the file, which opens it as `file://`) is what makes the embedded YouTube videos play locally. GitHub Pages does the same thing over `https://` once it's published.
-
-## Why the videos broke as a plain file
-
-A file opened directly from disk runs as `file://`, which has no real origin or referrer. Browsers and YouTube's embed checks treat that as untrusted, so some embeds refuse to load. Any real web origin — `http://localhost` for testing, or `https://…github.io` in production — solves it. No backend is involved; the embeds are just iframes.
