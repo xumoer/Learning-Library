@@ -138,7 +138,7 @@
 <footer>
   <div class="wrap">
     <h3>How this library works</h3>
-    <p>Each skill is its own folder under <code>skills/</code> with its guide inside it. The card grid above is generated from <code>modules.js</code>. To add one: create your page under <code>skills/&lt;name&gt;/</code>, then add one entry to the <code>MODULES</code> array in <code>modules.js</code> (copy the template at the top of that file). Commit, push, and it's live.</p>
+    <p>Each document is its own folder under <code>library/</code> with its guide inside it. The card grid above is generated from <code>modules.js</code>. To add one: create your page under <code>library/&lt;name&gt;/</code>, then add one entry to the <code>MODULES</code> array in <code>modules.js</code> (copy the template at the top of that file). Commit, push, and it's live.</p>
     <p style="margin-top:16px;color:var(--ink-dim)">Served over HTTPS by GitHub Pages, so embedded videos and external resources load exactly like any website — no local server, no Node, nothing to run.</p>
     <p style="margin-top:16px"><span class="muted">Replace this with your repo:</span> <a href="#" id="repolink">github.com/your-username/learning-library</a></p>
   </div>
@@ -197,7 +197,7 @@
     // "Add a skill" template card — always last, always visible.
     html += '<article class="card add" data-cat="__add__" aria-label="How to add a new module">'
       + '<div class="plus">+</div>'
-      + '<div>Add a skill: drop your page in<br><code>skills/your-skill/</code><br>then add an entry to <code>modules.js</code>.</div>'
+      + '<div>Add a document: drop your page in<br><code>library/your-skill/</code><br>then add an entry to <code>modules.js</code>.</div>'
       + '</article>';
 
     grid.innerHTML = html;

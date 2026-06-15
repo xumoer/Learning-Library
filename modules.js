@@ -12,7 +12,7 @@
  *   code:     "DEV",                        // optional; call-no prefix. Default = category, first 3 chars, uppercased
  *   tags:     ["Dev", "topic", "topic"],  // optional; chips shown on the card
  *   status:   "learning",                  // required; one of: "solid" | "learning" | "planned"
- *   href:     "skills/your-skill/index.html", // optional. Omit (or use status:"planned") for a placeholder card
+ *   href:     "library/your-skill/index.html", // optional. Omit (or use status:"planned") for a placeholder card
  *   steps:    10,                           // optional; shown in the footer, e.g. "10 steps"
  *   progress: 0                             // optional; 0–100; progress-bar fill %
  * }
@@ -25,7 +25,7 @@ window.MODULES = [
     code:     "3D",
     tags:     ["3D", "rigging", "animation", "blender"],
     status:   "learning",
-    href:     "skills/blender-rigging/index.html",
+    href:     "library/blender-rigging/index.html",
     steps:    10,
     progress: 8
   },
@@ -36,7 +36,7 @@ window.MODULES = [
     code:     "HLT",
     tags:     ["Health", "pelvic floor", "postpartum", "prolapse"],
     status:   "solid",
-    href:     "skills/pelvic-floor-training/pelvic-floor-training-guide.html",
+    href:     "library/pelvic-floor-training/pelvic-floor-training-guide.html",
     steps:    8,
     progress: 100
   }
