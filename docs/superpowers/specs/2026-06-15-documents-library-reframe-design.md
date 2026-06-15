@@ -75,10 +75,35 @@ The template comment block at the top of `modules.js` is rewritten to document
 
 ## Hub rendering (`index.html`)
 
-- **Filter bar** is generated from distinct `type` values (in order of
-  appearance): `All` + one button per type present. Same auto-generation and
-  filtering logic as today, re-keyed from `category` to `type` (the per-card
-  `data-cat` attribute becomes `data-type`, or equivalent).
+### Layout — per-type shelves
+
+Cards are no longer a single growing grid. They are grouped into one **section
+per document type**, in order of first appearance in the data:
+
+- Each section has a **header**: the type name + a count of docs in it
+  (e.g. `TUTORIAL … 2`), styled like the existing call-number/mono treatment.
+- Below the header, cards sit in a **horizontally-scrollable track** (a flex
+  row with `overflow-x:auto`). Cards keep a fixed/min width so the row scrolls
+  sideways instead of wrapping. Use CSS scroll-snap for tidy paging and respect
+  `prefers-reduced-motion`. The scrollbar should be unobtrusive but present.
+- The **"Add a document" card is appended to the end of each shelf**, so every
+  type row ends with a consistent `+` affordance ("add one of this type").
+- Only types **present in the data** get a shelf (an unused type renders
+  nothing — no empty shelves).
+
+### Filtering — show/hide shelves
+
+- **Filter bar** is generated from distinct `type` values: `All` + one button
+  per type present.
+- `All` (default) shows every shelf stacked vertically. Clicking a type filter
+  shows only that type's shelf and hides the others. (This replaces the old
+  per-card show/hide; we now toggle whole sections.)
+- The empty-state message shows only if a selected type somehow has no cards
+  (shouldn't happen given shelves derive from present types, but kept as a
+  guard).
+
+### Card body
+
 - **Card body:**
   - call-number uses the type-derived prefix.
   - status badge renders only when `status` is set.
@@ -131,11 +156,14 @@ No placeholder entries.
 ## Success criteria
 
 - `index.html` opens with no console errors; filter bar shows `All` + `Tutorial`
-  only (the types present); both tutorial cards render with progress bars and
-  step counts.
-- A hand-added `Info`/`Rules`/`Plan` entry with no `steps`/`progress`/`status`
-  renders cleanly (no empty bar, correct call-number prefix, appears under its
-  type filter).
+  only (the types present); a single `TUTORIAL` shelf renders with both cards in
+  a horizontally-scrollable track, each with progress bar + step count, and an
+  "Add a document" card at the end of the shelf.
+- A hand-added `Info`/`Rules`/`Plan` entry creates a new shelf for that type,
+  with the card rendering cleanly (no empty bar, correct call-number prefix);
+  the new type appears as a filter button.
+- Clicking a type filter shows only that type's shelf and hides the others;
+  `All` restores every shelf.
 - No references to the old `skills/` path remain in `index.html`, `modules.js`,
   or `README.md`.
 - The AHK editor can create an entry with a `type` and the result is valid
