@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning Library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1115;
+    --panel:#171a20;
+    --panel-2:#1c2027;
+    --line:#262b33;
+    --line-2:#333a44;
+    --ink:#e9ebef;
+    --ink-dim:#9aa1ab;
+    --ink-faint:#646b75;
+    --signal:#f0a830;       /* shop-light amber */
+    --signal-deep:#cf8a1e;
+    --solid:#5bbf6a;        /* status: solid */
+    --learning:#e0a93b;     /* status: learning */
+    --planned:#6b7280;      /* status: planned */
+    --grid:rgba(120,140,180,.045);
+    --maxw:1120px;
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:.001ms!important}}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Inter",system-ui,sans-serif;font-size:17px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      linear-gradient(var(--grid) 1px,transparent 1px),
+      linear-gradient(90deg,var(--grid) 1px,transparent 1px),
+      radial-gradient(circle at 85% -5%,rgba(240,168,48,.07),transparent 42%);
+    background-size:34px 34px,34px 34px,100% 100%;
+    background-attachment:fixed;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+  a{color:var(--signal);text-decoration:none}
+  a:hover{text-decoration:underline}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:5px}
+  h1,h2,h3{font-family:"Space Grotesk",sans-serif;font-weight:600;line-height:1.1;letter-spacing:-.01em;margin:0}
+  .mono{font-family:"JetBrains Mono",monospace}
+
+  /* ---------- masthead ---------- */
+  header.mast{border-bottom:1px solid var(--line);position:relative}
+  .mast-inner{max-width:var(--maxw);margin:0 auto;padding:62px 26px 40px}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--signal);margin:0 0 18px;display:flex;align-items:center;gap:12px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--signal);display:inline-block}
+  .mast h1{font-size:clamp(2.6rem,6.5vw,4.4rem);font-weight:700}
+  .mast h1 .amp{color:var(--signal)}
+  .mast p.sub{font-size:clamp(1.05rem,2vw,1.28rem);color:var(--ink-dim);max-width:54ch;margin:20px 0 0}
+  .ledger{display:flex;flex-wrap:wrap;gap:22px;margin-top:30px;font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--ink-faint)}
+  .ledger b{color:var(--ink);font-weight:500}
+  .ledger .dot{color:var(--signal)}
+
+  /* ---------- controls ---------- */
+  .controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:26px 0 6px}
+  .controls .label{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-right:4px}
+  .filter{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--ink-dim);background:var(--panel);border:1px solid var(--line);border-radius:100px;padding:7px 15px;cursor:pointer;transition:all .15s}
+  .filter:hover{border-color:var(--line-2);color:var(--ink)}
+  .filter[aria-pressed="true"]{background:var(--signal);border-color:var(--signal);color:#15130c;font-weight:700}
+
+  /* ---------- card grid ---------- */
+  main{padding:8px 0 70px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;margin-top:18px}
+  .card{position:relative;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px 20px;transition:transform .16s,border-color .16s,box-shadow .16s}
+  .card.active{cursor:pointer}
+  .card.active:hover{transform:translateY(-3px);border-color:var(--signal);box-shadow:0 10px 30px -12px rgba(240,168,48,.35)}
+  .card.planned{border-style:dashed;opacity:.66}
+  .card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .callno{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.08em;color:var(--ink-faint)}
+  .status{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:3px 9px;border-radius:100px;border:1px solid}
+  .status.solid{color:var(--solid);border-color:rgba(91,191,106,.4);background:rgba(91,191,106,.08)}
+  .status.learning{color:var(--learning);border-color:rgba(224,169,59,.4);background:rgba(224,169,59,.08)}
+  .status.planned{color:var(--planned);border-color:rgba(107,114,128,.4);background:rgba(107,114,128,.08)}
+  .card h2{font-size:1.32rem;margin-bottom:8px}
+  .card .blurb{color:var(--ink-dim);font-size:14.5px;flex:1;margin:0 0 16px}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+  .tag{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.05em;color:var(--ink-faint);border:1px solid var(--line);border-radius:5px;padding:2px 7px}
+  .pbar{height:5px;background:var(--panel-2);border-radius:4px;overflow:hidden;margin-bottom:14px}
+  .pbar i{display:block;height:100%;background:linear-gradient(90deg,var(--signal-deep),var(--signal));border-radius:4px}
+  .card-foot{display:flex;align-items:center;justify-content:space-between;font-family:"JetBrains Mono",monospace;font-size:12.5px}
+  .open{color:var(--signal);font-weight:500}
+  .card.active:hover .open{text-decoration:underline}
+  .muted{color:var(--ink-faint)}
+  .card-link{position:absolute;inset:0;border-radius:var(--radius)}/* full-card click target */
+
+  /* add-skill template card */
+  .card.add{align-items:center;justify-content:center;text-align:center;min-height:230px;border-style:dashed;color:var(--ink-faint);background:transparent}
+  .card.add .plus{font-size:2rem;color:var(--ink-faint);font-family:"Space Grotesk";line-height:1;margin-bottom:8px}
+  .card.add code{font-size:12px;color:var(--ink-dim);background:var(--panel);border:1px solid var(--line);padding:2px 6px;border-radius:5px}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line);padding:38px 0 60px;color:var(--ink-faint);font-size:14px}
+  footer h3{font-size:1.05rem;color:var(--ink);margin-bottom:10px}
+  footer p{margin:0 0 10px;max-width:70ch}
+  footer code{font-family:"JetBrains Mono",monospace;font-size:12.5px;background:var(--panel);border:1px solid var(--line);padding:2px 6px;border-radius:5px;color:var(--ink-dim)}
+  .empty{display:none;color:var(--ink-faint);font-family:"JetBrains Mono",monospace;font-size:13px;padding:30px 0}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="mast-inner">
+    <p class="eyebrow">Personal learning library</p>
+    <h1>Things I'm<br>teaching myself<span class="amp">.</span></h1>
+    <p class="sub">A growing shelf of self-contained, work-through-it guides — one folder per skill, each with text, diagrams, and videos that actually play. Built to live on the web so nothing breaks.</p>
+    <div class="ledger">
+      <span><span class="dot">●</span> <b id="count-active">1</b> active</span>
+      <span><span class="dot">●</span> <b id="count-total">4</b> modules listed</span>
+      <span>updated <b id="updated">2026</b></span>
+      <span>hosted on <b>GitHub&nbsp;Pages</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="controls" role="group" aria-label="Filter modules by topic">
+    <span class="label">Filter</span>
+    <button class="filter" data-filter="all" aria-pressed="true">All</button>
+    <button class="filter" data-filter="3D" aria-pressed="false">3D</button>
+    <button class="filter" data-filter="Music" aria-pressed="false">Music</button>
+    <button class="filter" data-filter="Dev" aria-pressed="false">Dev</button>
+    <button class="filter" data-filter="Trading" aria-pressed="false">Trading</button>
+  </div>
+</div>
+
+<main>
+<div class="wrap">
+  <div class="grid" id="grid">
+
+    <!-- ===== ACTIVE MODULE: Blender ===== -->
+    <article class="card active" data-tags="3D" tabindex="0" role="link" aria-label="Open: Rigging & Animation in Blender 5.1">
+      <a class="card-link" href="skills/blender-rigging/index.html" aria-hidden="true" tabindex="-1"></a>
+      <div class="card-top">
+        <span class="callno">3D · 01</span>
+        <span class="status learning">Learning</span>
+      </div>
+      <h2>Rigging &amp; Animation<br>in Blender 5.1</h2>
+      <p class="blurb">Zero to animating a monster: armatures, weight painting, FK/IK, Rigify, walk cycles, and creature-specific techniques — with every 5.1 change flagged.</p>
+      <div class="tags"><span class="tag">3D</span><span class="tag">rigging</span><span class="tag">animation</span><span class="tag">blender</span></div>
+      <div class="pbar"><i style="width:8%"></i></div>
+      <div class="card-foot"><span class="open">Open module ↗</span><span class="muted">10 steps</span></div>
+    </article>
+
+    <!-- ===== PLANNED PLACEHOLDERS — duplicate a card to add a real one ===== -->
+    <article class="card planned" data-tags="Music" aria-label="Planned module">
+      <div class="card-top"><span class="callno">MUS · 02</span><span class="status planned">Planned</span></div>
+      <h2>FL Studio<br>Production</h2>
+      <p class="blurb">Mixing, automation, and arrangement workflow — a reference you can build up as you go.</p>
+      <div class="tags"><span class="tag">Music</span><span class="tag">FL Studio</span><span class="tag">mixing</span></div>
+      <div class="pbar"><i style="width:0%"></i></div>
+      <div class="card-foot"><span class="muted">Not started</span><span class="muted">—</span></div>
+    </article>
+
+    <article class="card planned" data-tags="Dev" aria-label="Planned module">
+      <div class="card-top"><span class="callno">DEV · 03</span><span class="status planned">Planned</span></div>
+      <h2>AutoHotkey v2<br>Patterns</h2>
+      <p class="blurb">Hotkeys, GUIs, JSON config, and the v2 idioms worth keeping in one place.</p>
+      <div class="tags"><span class="tag">Dev</span><span class="tag">AHK v2</span><span class="tag">windows</span></div>
+      <div class="pbar"><i style="width:0%"></i></div>
+      <div class="card-foot"><span class="muted">Not started</span><span class="muted">—</span></div>
+    </article>
+
+    <article class="card planned" data-tags="Trading" aria-label="Planned module">
+      <div class="card-top"><span class="callno">TRD · 04</span><span class="status planned">Planned</span></div>
+      <h2>Futures Trading<br>Systems</h2>
+      <p class="blurb">Backtesting, execution, and risk concepts — notes-to-self as the bot architecture comes together.</p>
+      <div class="tags"><span class="tag">Trading</span><span class="tag">python</span><span class="tag">futures</span></div>
+      <div class="pbar"><i style="width:0%"></i></div>
+      <div class="card-foot"><span class="muted">Not started</span><span class="muted">—</span></div>
+    </article>
+
+    <!-- ===== TEMPLATE: copy this folder pattern for a new skill ===== -->
+    <article class="card add" data-tags="all" aria-label="How to add a new module">
+      <div class="plus">+</div>
+      <div>Add a skill: drop an<br><code>index.html</code> in <code>skills/your-skill/</code><br>then copy a card above.</div>
+    </article>
+
+  </div>
+  <p class="empty" id="empty">No modules with that tag yet.</p>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <h3>How this library works</h3>
+    <p>Each skill is its own folder under <code>skills/</code> with an <code>index.html</code> inside it. The card grid above just links to them. To add one: create <code>skills/&lt;name&gt;/index.html</code>, then duplicate a card in this file and point it there. Commit, push, and it's live.</p>
+    <p style="margin-top:16px;color:var(--ink-dim)">Served over HTTPS by GitHub Pages, so embedded videos and external resources load exactly like any website — no local server, no Node, nothing to run.</p>
+    <p style="margin-top:16px"><span class="muted">Replace this with your repo:</span> <a href="#" id="repolink">github.com/your-username/learning-library</a></p>
+  </div>
+</footer>
+
+<script>
+  // tag filtering
+  (function(){
+    var buttons = document.querySelectorAll('.filter');
+    var cards = document.querySelectorAll('.card[data-tags]');
+    var empty = document.getElementById('empty');
+    buttons.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var f = btn.getAttribute('data-filter');
+        buttons.forEach(function(b){b.setAttribute('aria-pressed', b===btn ? 'true':'false');});
+        var shown = 0;
+        cards.forEach(function(c){
+          var tags = c.getAttribute('data-tags');
+          var show = (f==='all') || (tags && tags.split(/\s+/).indexOf(f)>-1) || c.classList.contains('add');
+          c.style.display = show ? '' : 'none';
+          if(show && !c.classList.contains('add')) shown++;
+        });
+        empty.style.display = shown===0 ? 'block' : 'none';
+      });
+    });
+    // make active cards keyboard-activatable
+    document.querySelectorAll('.card.active').forEach(function(c){
+      c.addEventListener('keydown', function(e){
+        if(e.key==='Enter'||e.key===' '){ e.preventDefault(); var l=c.querySelector('.card-link'); if(l) l.click(); }
+      });
+    });
+    document.getElementById('updated').textContent = new Date().getFullYear();
+  })();
+</script>
+</body>
+</html>
