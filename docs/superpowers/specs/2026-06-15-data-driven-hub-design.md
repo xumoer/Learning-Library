@@ -118,14 +118,18 @@ This demonstrates a different category and an `href` that is **not**
 
 ## Migration
 
-The current four cards (Blender = learning/active; FL Studio, AutoHotkey,
-Futures = planned) become the seed entries in `modules.js`, with `code` values
-set to match the existing prefixes (`3D`, `MUS`, `DEV`, `TRD`). After the change
-the existing four render visually identical to today.
+`modules.js` is seeded with **only real, built guides** — the three current
+"Planned" placeholder cards (FL Studio, AutoHotkey, Futures) are **removed**, not
+migrated. Seed entries:
 
-In addition, the already-built **Pelvic Floor Training** guide (see second
-example above) is seeded as a real `solid`/active card in the `Health` category
-— it exists on disk but is not yet listed on the hub, so this surfaces it.
+1. **Blender Rigging** — `3D` / `learning`, `code: "3D"`, the existing active card.
+2. **Pelvic Floor Training** — `Health` / `solid`, `code: "HLT"` (see second
+   example above). It exists on disk but is not yet listed on the hub, so this
+   surfaces it.
+
+After the change the hub shows these two real cards plus the dashed "Add a skill"
+template card. The `planned` status remains supported in the schema for future
+modules; it is simply not seeded with placeholders.
 
 ## Out of scope
 
@@ -135,8 +139,10 @@ example above) is seeded as a real `solid`/active card in the `Health` category
 
 ## Success criteria
 
-- Opening `index.html` locally (`file://`) and on GitHub Pages renders all four
-  seed cards identically to the current page.
+- Opening `index.html` locally (`file://`) and on GitHub Pages renders the two
+  seed cards (Blender, Pelvic Floor) plus the "Add a skill" template card; the
+  three old placeholder cards are gone. The ledger reads `2 active` / `2 modules
+  listed`.
 - Adding a new module = appending one object to `modules.js`; a new card, its
   call number, its filter button (if a new category), and the ledger counts all
   appear with no other edits.
