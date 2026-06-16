@@ -96,16 +96,17 @@ href field before saving, the file is copied to the edited location.
 
 ## Part C — Button relayout
 
-Target arrangement (Save + Reload share the top-right toolbar):
+Target arrangement (Add New top-left, Reload top-right, Save a prominent
+bottom-right button under the form, list-management under the ListView):
 
 ```
-[Add New]                              [Save to File] [Reload]
+[Add New]                                           [Reload]
 ┌─────────────────────────┐   <form fields: Title … Progress>
 │ ListView (Title|Type|   │
 │  Status)                │
 │                         │
 └─────────────────────────┘
-[Delete]    [Move Up] [Move Down]
+[Delete]    [Move Up] [Move Down]        [ Save to File ]
 ```
 
 Concrete coordinates (window stays `w760`, height grows to `h500`;
@@ -113,7 +114,6 @@ Concrete coordinates (window stays `w760`, height grows to `h500`;
 
 - **Top toolbar (y8):**
   - `Add New`  → `x8  y8  w90`
-  - `Save to File` → `x520 y8 w140`
   - `Reload`   → `x666 y8 w86`
 - **ListView:** `x8 y40 w330 h418` (columns unchanged: Title | Type | Status).
 - **List-management row, under the ListView (y462):**
@@ -121,6 +121,8 @@ Concrete coordinates (window stays `w760`, height grows to `h500`;
   - (gap)
   - `Move Up`   → `x150 y462 w88`
   - `Move Down` → `x242 y462 w96`
+- **Save (bottom-right, prominent):** `x500 y462 w252` — aligned on the same row
+  as the list-management buttons, on the right side under the form.
 - **Form (right column, x350/x440), shifted down to clear the toolbar** — same
   field order and widths as today, each row +30px from current:
   - Title `y40`, Blurb `y72` (r3), Type `y140` (ComboBox), Category `y172`,
@@ -128,8 +130,9 @@ Concrete coordinates (window stays `w760`, height grows to `h500`;
     Href `y316`, Steps `y348`, Progress `y380`.
 
 (Exact pixel values are finalised in the implementation plan; the rule is:
-toolbar across the top, list + its management buttons on the left, form on the
-right.)
+Add New top-left and Reload top-right across the top, list + its management
+buttons on the left, the form on the right, and Save as a prominent
+bottom-right button.)
 
 ## Error handling summary
 
