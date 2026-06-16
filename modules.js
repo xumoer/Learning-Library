@@ -47,10 +47,10 @@ window.MODULES = [
     blurb:    "A unique table top rule set",
     type:     "Rules",
     category: "Game Rules",
-    code:     "UDS",
+    code:     "RUL",
     tags:     ["Games", "Rules", "Dice"],
     status:   "solid",
-    href:     "library/UDS-Rules",
+    href:     "library/UDS-Rules/GAME_RULES_v5.html",
     steps:    25,
     progress: 0
   }
