@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learning Library</title>
+<title>Documents Library</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -69,6 +69,21 @@
   /* ---------- card grid ---------- */
   main{padding:8px 0 70px}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;margin-top:18px}
+  /* ---------- per-type shelves ---------- */
+  /* #grid no longer a card grid — it stacks shelves vertically */
+  #grid{display:block;margin-top:6px}
+  .shelf{margin-top:34px}
+  .shelf:first-of-type{margin-top:10px}
+  .shelf-head{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+  .shelf-name{font-family:"Space Grotesk",sans-serif;font-size:1.1rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
+  .shelf-head .rule{flex:1;height:1px;background:var(--line)}
+  .shelf-count{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink-faint)}
+  .track{display:flex;gap:18px;overflow-x:auto;overflow-y:hidden;padding:4px 2px 16px;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:var(--line-2) transparent}
+  .track > .card{flex:0 0 330px;scroll-snap-align:start}
+  .track::-webkit-scrollbar{height:9px}
+  .track::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:100px}
+  .track::-webkit-scrollbar-track{background:transparent}
+  @media (prefers-reduced-motion:reduce){.track{scroll-snap-type:none}}
   .card{position:relative;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px 20px;transition:transform .16s,border-color .16s,box-shadow .16s}
   .card.active{cursor:pointer}
   .card.active:hover{transform:translateY(-3px);border-color:var(--signal);box-shadow:0 10px 30px -12px rgba(240,168,48,.35)}
@@ -108,9 +123,9 @@
 
 <header class="mast">
   <div class="mast-inner">
-    <p class="eyebrow">Creation Library</p>
-    <h1><br>teaching myself<span class="amp">.</span></h1>
-    <p class="sub">A growing shelf of self-contained, Documents one folder per skill, each with text, diagrams, and videos. Tutorials, Guides, Information packs.</p>
+    <p class="eyebrow">Documents Library</p>
+    <h1>the library<span class="amp">.</span></h1>
+    <p class="sub">A growing shelf of self-contained documents — tutorials, info packs, game rules, and plans. One folder per document, each with text, diagrams, and embedded video.</p>
     <div class="ledger">
       <span><span class="dot">●</span> <b id="count-active">1</b> active</span>
       <span><span class="dot">●</span> <b id="count-total">4</b> modules listed</span>
@@ -129,16 +144,16 @@
 <main>
 <div class="wrap">
   <div class="grid" id="grid">
-    <!-- cards (and the "Add a skill" template card) are generated from modules.js -->
+    <!-- shelves (and each shelf's "Add a document" card) are generated from modules.js -->
   </div>
-  <p class="empty" id="empty">No modules with that tag yet.</p>
+  <p class="empty" id="empty">No documents of that type yet.</p>
 </div>
 </main>
 
 <footer>
   <div class="wrap">
     <h3>How this library works</h3>
-    <p>Each document is its own folder under <code>library/</code> with its guide inside it. The card grid above is generated from <code>modules.js</code>. To add one: create your page under <code>library/&lt;name&gt;/</code>, then add one entry to the <code>MODULES</code> array in <code>modules.js</code> (copy the template at the top of that file). Commit, push, and it's live.</p>
+    <p>Each document is its own folder under <code>library/</code> with its page inside it. The shelves above are generated from <code>modules.js</code>, grouped by document type. To add one: create your page under <code>library/&lt;name&gt;/</code>, then add an entry to the <code>MODULES</code> array in <code>modules.js</code> (copy the template at the top of that file). Commit, push, and it's live.</p>
     <p style="margin-top:16px;color:var(--ink-dim)">Served over HTTPS by GitHub Pages, so embedded videos and external resources load exactly like any website — no local server, no Node, nothing to run.</p>
     <p style="margin-top:16px"><span class="muted">Replace this with your repo:</span> <a href="#" id="repolink">github.com/your-username/learning-library</a></p>
   </div>
