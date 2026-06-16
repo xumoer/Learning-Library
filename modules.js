@@ -50,7 +50,7 @@ window.MODULES = [
     code:     "RUL",
     tags:     ["Games", "Rules", "Dice"],
     status:   "solid",
-    href:     "library/UDS-Rules/Game_Rules.html",
+    href:     "library/UDS-Rules/Game_Rules_v5.html",
     steps:    25,
     progress: 0
   }
