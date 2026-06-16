@@ -153,86 +153,119 @@
     function pad(n){ return n < 10 ? '0' + n : '' + n; }
     function esc(s){ return String(s).replace(/[&<>"]/g, function(c){
       return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-    function codeFor(m){ return m.code || String(m.category).slice(0,3).toUpperCase(); }
+
+    var CODE_MAP = { Tutorial:'TUT', Info:'INF', Rules:'RUL', Plan:'PLN' };
+    function codeFor(m){
+      return m.code || CODE_MAP[m.type] || String(m.type || '').slice(0,3).toUpperCase();
+    }
 
     var statusLabels = { solid:'Solid', learning:'Learning', planned:'Planned' };
-    var counters = {};
-    var html = '';
 
+    // group modules by type, preserving first-appearance order
+    var types = [];
+    var byType = {};
     modules.forEach(function(m){
-      var cat = m.category;
-      counters[cat] = (counters[cat] || 0) + 1;
-      var callno = codeFor(m) + ' · ' + pad(counters[cat]);
-      var status = m.status || 'planned';
-      var active = !!m.href && status !== 'planned';
-      var tags = (m.tags || []).map(function(t){ return '<span class="tag">' + esc(t) + '</span>'; }).join('');
+      var t = m.type || 'Other';
+      if (!byType[t]) { byType[t] = []; types.push(t); }
+      byType[t].push(m);
+    });
+
+    function cardHtml(m, n){
+      var callno = codeFor(m) + ' · ' + pad(n);
+      var status = m.status || '';
+      var active = !!m.href;
       var cls = 'card' + (active ? ' active' : '') + (status === 'planned' ? ' planned' : '');
 
-      var attrs = 'class="' + cls + '" data-cat="' + esc(cat) + '"';
+      var attrs = 'class="' + cls + '"';
       attrs += active
         ? ' tabindex="0" role="link" aria-label="Open: ' + esc(m.title) + '"'
-        : ' aria-label="Planned module"';
+        : ' aria-label="' + esc(m.title) + '"';
 
       var link = active
         ? '<a class="card-link" href="' + esc(m.href) + '" aria-hidden="true" tabindex="-1"></a>'
         : '';
 
-      var pbar = '<div class="pbar"><i style="width:' + (active ? (m.progress || 0) : 0) + '%"></i></div>';
-      var foot = active
-        ? '<div class="card-foot"><span class="open">Open module ↗</span><span class="muted">' + (m.steps ? esc(m.steps) + ' steps' : '—') + '</span></div>'
-        : '<div class="card-foot"><span class="muted">Not started</span><span class="muted">—</span></div>';
+      // tags: topic category first (if any), then any explicit tags (deduped)
+      var tagList = [];
+      if (m.category) tagList.push(m.category);
+      (m.tags || []).forEach(function(t){ if (tagList.indexOf(t) < 0) tagList.push(t); });
+      var tags = tagList.map(function(t){ return '<span class="tag">' + esc(t) + '</span>'; }).join('');
 
-      html += '<article ' + attrs + '>'
+      var statusBadge = status
+        ? '<span class="status ' + esc(status) + '">' + esc(statusLabels[status] || status) + '</span>'
+        : '';
+
+      var pbar = (m.progress != null)
+        ? '<div class="pbar"><i style="width:' + (m.progress || 0) + '%"></i></div>'
+        : '';
+
+      var footRight = (m.steps != null) ? esc(m.steps) + ' steps' : '—';
+      var footLeft = active
+        ? '<span class="open">Open ↗</span>'
+        : '<span class="muted">Not started</span>';
+      var foot = '<div class="card-foot">' + footLeft
+        + '<span class="muted">' + footRight + '</span></div>';
+
+      return '<article ' + attrs + '>'
         + link
         + '<div class="card-top"><span class="callno">' + esc(callno) + '</span>'
-        + '<span class="status ' + esc(status) + '">' + esc(statusLabels[status] || status) + '</span></div>'
+        + statusBadge + '</div>'
         + '<h2>' + esc(m.title) + '</h2>'
         + '<p class="blurb">' + esc(m.blurb || '') + '</p>'
         + '<div class="tags">' + tags + '</div>'
         + pbar
         + foot
         + '</article>';
-    });
+    }
 
-    // "Add a skill" template card — always last, always visible.
-    html += '<article class="card add" data-cat="__add__" aria-label="How to add a new module">'
+    var addCard = '<article class="card add" aria-label="How to add a new document">'
       + '<div class="plus">+</div>'
-      + '<div>Add a document: drop your page in<br><code>library/your-skill/</code><br>then add an entry to <code>modules.js</code>.</div>'
+      + '<div>Add a document: drop your page in<br><code>library/your-doc/</code><br>then add an entry to <code>modules.js</code>.</div>'
       + '</article>';
 
+    // build one shelf per type
+    var html = '';
+    types.forEach(function(t){
+      var items = byType[t];
+      var cards = '';
+      items.forEach(function(m, i){ cards += cardHtml(m, i + 1); });
+      cards += addCard;
+      html += '<section class="shelf" data-type="' + esc(t) + '">'
+        + '<div class="shelf-head"><span class="shelf-name">' + esc(t) + '</span>'
+        + '<span class="rule"></span>'
+        + '<span class="shelf-count">' + items.length + '</span></div>'
+        + '<div class="track">' + cards + '</div>'
+        + '</section>';
+    });
     grid.innerHTML = html;
 
     // ledger counts
-    var total = modules.length;
-    var activeCount = modules.filter(function(m){ return m.status !== 'planned'; }).length;
-    document.getElementById('count-active').textContent = activeCount;
-    document.getElementById('count-total').textContent = total;
+    document.getElementById('count-active').textContent =
+      modules.filter(function(m){ return !!m.href; }).length;
+    document.getElementById('count-total').textContent = modules.length;
     document.getElementById('updated').textContent = new Date().getFullYear();
 
-    // filter buttons: "All" + distinct categories in order of appearance
-    var cats = [];
-    modules.forEach(function(m){ if (cats.indexOf(m.category) < 0) cats.push(m.category); });
+    // filter buttons: All + one per type (first-appearance order)
     var filterHtml = '<span class="label">Filter</span>'
       + '<button class="filter" data-filter="all" aria-pressed="true">All</button>';
-    cats.forEach(function(c){
-      filterHtml += '<button class="filter" data-filter="' + esc(c) + '" aria-pressed="false">' + esc(c) + '</button>';
+    types.forEach(function(t){
+      filterHtml += '<button class="filter" data-filter="' + esc(t) + '" aria-pressed="false">' + esc(t) + '</button>';
     });
     document.querySelector('.controls').innerHTML = filterHtml;
 
-    // wire filtering
+    // filtering: show/hide whole shelves
     var buttons = document.querySelectorAll('.filter');
-    var cards = document.querySelectorAll('.card[data-cat]');
+    var shelves = document.querySelectorAll('.shelf');
     var empty = document.getElementById('empty');
     buttons.forEach(function(btn){
       btn.addEventListener('click', function(){
         var f = btn.getAttribute('data-filter');
         buttons.forEach(function(b){ b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
         var shown = 0;
-        cards.forEach(function(c){
-          var isAdd = c.classList.contains('add');
-          var show = (f === 'all') || (c.getAttribute('data-cat') === f) || isAdd;
-          c.style.display = show ? '' : 'none';
-          if (show && !isAdd) shown++;
+        shelves.forEach(function(s){
+          var show = (f === 'all') || (s.getAttribute('data-type') === f);
+          s.style.display = show ? '' : 'none';
+          if (show) shown++;
         });
         empty.style.display = shown === 0 ? 'block' : 'none';
       });
