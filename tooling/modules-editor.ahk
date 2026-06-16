@@ -9,8 +9,9 @@ ModulesEditor().Run()
 
 class ModulesEditor {
     ; canonical field order (also the emit order)
-    Fields := ["title", "blurb", "category", "code", "tags", "status", "href", "steps", "progress"]
+    Fields := ["title", "blurb", "type", "category", "code", "tags", "status", "href", "steps", "progress"]
     Statuses := ["solid", "learning", "planned"]
+    Types := ["Tutorial", "Info", "Rules", "Plan"]
     PadWidth := 10
 
     FilePath := ""
@@ -29,7 +30,7 @@ class ModulesEditor {
         this.LoadFile()
         this.BuildGui()
         this.RefreshList()
-        this.gui.Show("w760 h440")
+        this.gui.Show("w760 h470")
         this.SelectIndex(this.Modules.Length ? 1 : 0)
     }
 
@@ -70,7 +71,7 @@ class ModulesEditor {
 
         ; 3. quote the known keys so the body becomes strict JSON
         body := RegExReplace(body
-            , "m)^(\h*)(title|blurb|category|code|tags|status|href|steps|progress)\h*:"
+            , "m)^(\h*)(title|blurb|type|category|code|tags|status|href|steps|progress)\h*:"
             , "$1`"$2`":")
 
         ; 4. parse; on failure, warn and fall back to an empty list (don't crash)
@@ -117,17 +118,18 @@ class ModulesEditor {
         for k in this.Fields
             m[k] := ""
         m["tags"] := []
+        m["type"] := "Tutorial"
         m["status"] := "learning"
         return m
     }
 
     ; ------------------------------------------------------------------ GUI
     BuildGui() {
-        this.gui := Gui("+MinSize720x440", "Modules Editor — " this.FilePath)
+        this.gui := Gui("+MinSize720x470", "Modules Editor — " this.FilePath)
         this.gui.OnEvent("Close", (*) => ExitApp())
         this.gui.SetFont("s9", "Segoe UI")
 
-        this.lv := this.gui.AddListView("x8 y8 w330 h420", ["Title", "Category", "Status"])
+        this.lv := this.gui.AddListView("x8 y8 w330 h450", ["Title", "Type", "Status"])
         this.lv.OnEvent("ItemSelect", this.OnItemSelect.Bind(this))
         this.lv.ModifyCol(1, 180)
         this.lv.ModifyCol(2, 80)
@@ -137,28 +139,30 @@ class ModulesEditor {
         this.ctrl["title"]    := this.gui.AddEdit("x440 y10 w310")
         this.AddLabel("Blurb",    350, 44)
         this.ctrl["blurb"]    := this.gui.AddEdit("x440 y42 w310 r3 +Wrap")
-        this.AddLabel("Category", 350, 110)
-        this.ctrl["category"] := this.gui.AddEdit("x440 y108 w310")
-        this.AddLabel("Code",     350, 142)
-        this.ctrl["code"]     := this.gui.AddEdit("x440 y140 w310")
-        this.AddLabel("Tags",     350, 174)
-        this.ctrl["tags"]     := this.gui.AddEdit("x440 y172 w310")
-        this.gui.AddText("x440 y196 w310 cGray", "comma-separated")
-        this.AddLabel("Status",   350, 222)
-        this.ctrl["status"]   := this.gui.AddDropDownList("x440 y220 w150", this.Statuses)
-        this.AddLabel("Href",     350, 252)
-        this.ctrl["href"]     := this.gui.AddEdit("x440 y250 w310")
-        this.AddLabel("Steps",    350, 284)
-        this.ctrl["steps"]    := this.gui.AddEdit("x440 y282 w80 +Number")
-        this.AddLabel("Progress", 350, 316)
-        this.ctrl["progress"] := this.gui.AddEdit("x440 y314 w80 +Number")
+        this.AddLabel("Type",     350, 110)
+        this.ctrl["type"]     := this.gui.AddComboBox("x440 y108 w150", this.Types)
+        this.AddLabel("Category", 350, 142)
+        this.ctrl["category"] := this.gui.AddEdit("x440 y140 w310")
+        this.AddLabel("Code",     350, 174)
+        this.ctrl["code"]     := this.gui.AddEdit("x440 y172 w310")
+        this.AddLabel("Tags",     350, 206)
+        this.ctrl["tags"]     := this.gui.AddEdit("x440 y204 w310")
+        this.gui.AddText("x440 y228 w310 cGray", "comma-separated")
+        this.AddLabel("Status",   350, 254)
+        this.ctrl["status"]   := this.gui.AddDropDownList("x440 y252 w150", this.Statuses)
+        this.AddLabel("Href",     350, 286)
+        this.ctrl["href"]     := this.gui.AddEdit("x440 y284 w310")
+        this.AddLabel("Steps",    350, 318)
+        this.ctrl["steps"]    := this.gui.AddEdit("x440 y316 w80 +Number")
+        this.AddLabel("Progress", 350, 350)
+        this.ctrl["progress"] := this.gui.AddEdit("x440 y348 w80 +Number")
 
-        this.gui.AddButton("x440 y352 w74",  "Add New").OnEvent("Click", (*) => this.AddNew())
-        this.gui.AddButton("x519 y352 w74",  "Delete").OnEvent("Click", (*) => this.DeleteSel())
-        this.gui.AddButton("x598 y352 w74",  "Move Up").OnEvent("Click", (*) => this.Move(-1))
-        this.gui.AddButton("x677 y352 w74",  "Move Down").OnEvent("Click", (*) => this.Move(1))
-        this.gui.AddButton("x440 y388 w150", "Save to File").OnEvent("Click", (*) => this.SaveFile())
-        this.gui.AddButton("x598 y388 w153", "Reload").OnEvent("Click", (*) => this.Reload())
+        this.gui.AddButton("x440 y386 w74",  "Add New").OnEvent("Click", (*) => this.AddNew())
+        this.gui.AddButton("x519 y386 w74",  "Delete").OnEvent("Click", (*) => this.DeleteSel())
+        this.gui.AddButton("x598 y386 w74",  "Move Up").OnEvent("Click", (*) => this.Move(-1))
+        this.gui.AddButton("x677 y386 w74",  "Move Down").OnEvent("Click", (*) => this.Move(1))
+        this.gui.AddButton("x440 y422 w150", "Save to File").OnEvent("Click", (*) => this.SaveFile())
+        this.gui.AddButton("x598 y422 w153", "Reload").OnEvent("Click", (*) => this.Reload())
     }
 
     AddLabel(text, x, y) {
@@ -170,7 +174,7 @@ class ModulesEditor {
         this.Loading := true
         this.lv.Delete()
         for mod in this.Modules
-            this.lv.Add(, mod["title"], mod["category"], mod["status"])
+            this.lv.Add(, mod["title"], mod["type"], mod["status"])
         this.Loading := false
     }
 
@@ -200,6 +204,7 @@ class ModulesEditor {
         mod := this.Modules[i]
         this.ctrl["title"].Value    := mod["title"]
         this.ctrl["blurb"].Value    := mod["blurb"]
+        this.ctrl["type"].Text     := mod["type"]
         this.ctrl["category"].Value := mod["category"]
         this.ctrl["code"].Value     := mod["code"]
         this.ctrl["tags"].Value     := this.Join(mod["tags"], ", ")
@@ -211,8 +216,9 @@ class ModulesEditor {
 
     ClearForm() {
         for k in this.Fields
-            if (k != "status")
+            if (k != "status" && k != "type")
                 this.ctrl[k].Value := ""
+        this.ctrl["type"].Text := ""
         this.ctrl["status"].Choose(0)
     }
 
@@ -224,6 +230,7 @@ class ModulesEditor {
         m := this.Modules[i]
         m["title"]    := this.ctrl["title"].Value
         m["blurb"]    := this.ctrl["blurb"].Value
+        m["type"]     := this.ctrl["type"].Text
         m["category"] := this.ctrl["category"].Value
         m["code"]     := this.ctrl["code"].Value
         m["tags"]     := this.SplitTags(this.ctrl["tags"].Value)
@@ -232,7 +239,7 @@ class ModulesEditor {
         m["steps"]    := Trim(this.ctrl["steps"].Value)
         m["progress"] := Trim(this.ctrl["progress"].Value)
         if (i <= this.lv.GetCount())
-            this.lv.Modify(i, , m["title"], m["category"], m["status"])
+            this.lv.Modify(i, , m["title"], m["type"], m["status"])
     }
 
     SplitTags(text) {
@@ -248,7 +255,7 @@ class ModulesEditor {
         this.CommitForm()
         m := this.NewModule()
         this.Modules.Push(m)
-        this.lv.Add(, m["title"], m["category"], m["status"])
+        this.lv.Add(, m["title"], m["type"], m["status"])
         this.SelectIndex(this.Modules.Length)
         this.ctrl["title"].Focus()
     }
@@ -323,7 +330,7 @@ class ModulesEditor {
         errs := []
         for i, mod in this.Modules {
             label := (Trim(mod["title"]) != "") ? mod["title"] : "row " i
-            for req in ["title", "blurb", "category", "status"]
+            for req in ["title", "blurb", "type"]
                 if (Trim(mod[req]) = "")
                     errs.Push(label ": '" req "' is required")
             st := Trim(mod["status"])
