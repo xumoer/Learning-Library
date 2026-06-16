@@ -185,6 +185,14 @@
       byType[t].push(m);
     });
 
+    // live reading-progress saved by progress.js on each document page
+    function storedProgress(href){
+      try {
+        var v = parseInt(localStorage.getItem('lib:progress:' + href), 10);
+        return isNaN(v) ? null : v;
+      } catch (e) { return null; }
+    }
+
     function cardHtml(m, n){
       var callno = codeFor(m) + ' · ' + pad(n);
       var status = m.status || '';
@@ -210,8 +218,11 @@
         ? '<span class="status ' + esc(status) + '">' + esc(statusLabels[status] || status) + '</span>'
         : '';
 
-      var pbar = (m.progress != null)
-        ? '<div class="pbar"><i style="width:' + (m.progress || 0) + '%"></i></div>'
+      // live progress (localStorage) wins; modules.js progress is the fallback default
+      var liveProgress = m.href ? storedProgress(m.href) : null;
+      var prog = (liveProgress != null) ? liveProgress : m.progress;
+      var pbar = (prog != null)
+        ? '<div class="pbar"><i style="width:' + (prog || 0) + '%"></i></div>'
         : '';
 
       var footRight = (m.steps != null) ? esc(m.steps) + ' steps' : '—';
