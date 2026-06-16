@@ -120,6 +120,73 @@ class ModulesEditor {
         m["tags"] := []
         m["type"] := "Tutorial"
         m["status"] := "learning"
+        m["_src"] := ""          ; editor-only: pending source HTML to copy on save (never serialized)
+        return m
+    }
+
+    ; ---------------------------------------------------------- file helpers
+    ; Repo root = the directory that holds modules.js (this.FilePath).
+    RepoRoot() {
+        SplitPath(this.FilePath, , &dir)
+        return dir
+    }
+
+    LibraryDir() {
+        return this.RepoRoot() "\library"
+    }
+
+    ; Filename (no extension) -> URL-safe slug. Empty -> "doc".
+    Slugify(name) {
+        s := StrLower(Trim(name))
+        s := RegExReplace(s, "[\s_]+", "-")     ; spaces/underscores -> hyphen
+        s := RegExReplace(s, "[^a-z0-9-]", "")  ; drop everything else
+        s := RegExReplace(s, "-+", "-")         ; collapse repeats
+        s := Trim(s, "-")                        ; trim edge hyphens
+        return (s = "") ? "doc" : s
+    }
+
+    DecodeEntities(s) {
+        s := StrReplace(s, "&lt;", "<")
+        s := StrReplace(s, "&gt;", ">")
+        s := StrReplace(s, "&quot;", '"')
+        s := StrReplace(s, "&#39;", "'")
+        s := StrReplace(s, "&amp;", "&")        ; do & last to avoid double-decoding
+        return s
+    }
+
+    ; Best-effort parse of <title> and <meta name="description">. Never throws.
+    ParseHtmlMeta(path) {
+        out := Map("title", "", "blurb", "")
+        try {
+            raw := FileRead(path, "UTF-8")
+        } catch {
+            return out
+        }
+        if RegExMatch(raw, "is)<title[^>]*>(.*?)</title>", &mt)
+            out["title"] := this.DecodeEntities(Trim(mt[1]))
+        ; find the <meta ...> tag whose name attr is description (any attr order)
+        if RegExMatch(raw, "is)<meta\s+[^>]*name\s*=\s*([""'])description\1[^>]*>", &mm)
+            if RegExMatch(mm[0], "is)content\s*=\s*([""'])(.*?)\1", &mc)
+                out["blurb"] := this.DecodeEntities(Trim(mc[2]))
+        return out
+    }
+
+    ; Build a prefilled module from a picked HTML file.
+    ModuleFromHtml(path) {
+        m := this.NewModule()
+        SplitPath(path, &fileName, , , &nameNoExt)
+        meta := this.ParseHtmlMeta(path)
+        m["title"] := (meta["title"] != "") ? meta["title"] : nameNoExt
+        m["blurb"] := meta["blurb"]
+        libDir := this.LibraryDir()
+        if (SubStr(path, 1, StrLen(libDir) + 1) = libDir "\") {
+            ; already inside library/ -> link to its existing path, no copy
+            m["href"] := StrReplace(SubStr(path, StrLen(this.RepoRoot()) + 2), "\", "/")
+        } else {
+            ; outside library/ -> derive dest from filename slug; copy on save
+            m["href"] := "library/" this.Slugify(nameNoExt) "/" fileName
+            m["_src"] := path
+        }
         return m
     }
 
