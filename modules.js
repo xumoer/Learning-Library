@@ -65,5 +65,17 @@ window.MODULES = [
     href:     "library/business-plan/business-plan.html",
     steps:    11,
     progress: 0
+  },
+  {
+    title:    "Godot 4: Build Your First 2D Platformer",
+    blurb:    "A beginner's path from installing Godot 4 to exporting a small, playable 2D platformer, built around current (4.6) best practices and verified video lessons.",
+    type:     "Tutorial",
+    category: "Gamedev",
+    code:     "TUT",
+    tags:     ["godot", "gamedev", "2d", "platformer", "gdscript", "beginner"],
+    status:   "learning",
+    href:     "library/Godot4-2d-platformer/index.html",
+    steps:    8,
+    progress: 0
   }
 ];

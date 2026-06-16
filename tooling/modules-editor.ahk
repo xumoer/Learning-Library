@@ -10,6 +10,8 @@ ModulesEditor().Run()
 class ModulesEditor {
     ; canonical field order (also the emit order)
     Fields := ["title", "blurb", "type", "category", "code", "tags", "status", "href", "steps", "progress"]
+    ; <meta name> values read from a document's <head> (href is derived, not read)
+    MetaFields := ["type", "category", "code", "tags", "status", "steps", "progress"]
     Statuses := ["solid", "learning", "planned"]
     Types := ["Tutorial", "Info", "Rules", "Plan"]
     PadWidth := 10
@@ -154,20 +156,34 @@ class ModulesEditor {
         return s
     }
 
-    ; Best-effort parse of <title> and <meta name="description">. Never throws.
+    ; Read one <meta name="NAME" content="..."> value (any attr order). "" if absent.
+    GetMeta(raw, name) {
+        if RegExMatch(raw, "is)<meta\s+[^>]*name\s*=\s*([\x22\x27])" name "\1[^>]*>", &mm)
+            if RegExMatch(mm[0], "is)content\s*=\s*([\x22\x27])(.*?)\1", &mc)
+                return this.DecodeEntities(Trim(mc[2]))
+        return ""
+    }
+
+    ; Best-effort parse of the document's metadata <meta> tags. Never throws.
     ParseHtmlMeta(path) {
         out := Map("title", "", "blurb", "")
+        for f in this.MetaFields
+            out[f] := ""
         try {
             raw := FileRead(path, "UTF-8")
         } catch {
             return out
         }
-        if RegExMatch(raw, "is)<title[^>]*>(.*?)</title>", &mt)
+        ; title: <meta name="title"> wins, else the page's <title> element
+        out["title"] := this.GetMeta(raw, "title")
+        if (out["title"] = "" && RegExMatch(raw, "is)<title[^>]*>(.*?)</title>", &mt))
             out["title"] := this.DecodeEntities(Trim(mt[1]))
-        ; find the <meta ...> tag whose name attr is description (any attr order)
-        if RegExMatch(raw, "is)<meta\s+[^>]*name\s*=\s*([\x22\x27])description\1[^>]*>", &mm)
-            if RegExMatch(mm[0], "is)content\s*=\s*([\x22\x27])(.*?)\1", &mc)
-                out["blurb"] := this.DecodeEntities(Trim(mc[2]))
+        ; blurb: <meta name="blurb"> wins, else legacy <meta name="description">
+        out["blurb"] := this.GetMeta(raw, "blurb")
+        if (out["blurb"] = "")
+            out["blurb"] := this.GetMeta(raw, "description")
+        for f in this.MetaFields
+            out[f] := this.GetMeta(raw, f)
         return out
     }
 
@@ -178,6 +194,17 @@ class ModulesEditor {
         meta := this.ParseHtmlMeta(path)
         m["title"] := (meta["title"] != "") ? meta["title"] : nameNoExt
         m["blurb"] := meta["blurb"]
+        ; carry across the rest of the <meta> scheme; keep NewModule defaults when absent
+        if (meta["type"] != "")
+            m["type"] := meta["type"]
+        if (meta["status"] != "")
+            m["status"] := meta["status"]
+        m["category"] := meta["category"]
+        m["code"]     := meta["code"]
+        if (meta["tags"] != "")
+            m["tags"] := this.SplitTags(meta["tags"])
+        m["steps"]    := meta["steps"]
+        m["progress"] := meta["progress"]
         libDir := this.LibraryDir()
         if (SubStr(path, 1, StrLen(libDir) + 1) = libDir "\") {
             ; already inside library/ -> link to its existing path, no copy

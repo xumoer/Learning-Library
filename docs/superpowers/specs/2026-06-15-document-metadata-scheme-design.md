@@ -36,7 +36,7 @@ All fields except `title`, `blurb`, and `type` are optional but helpful.
 Put the metadata in `<head>`, after the standard `charset` and `viewport` tags and
 alongside the `<title>`.
 
-## Copy-paste block
+## example block
 
 ```html
 <head>

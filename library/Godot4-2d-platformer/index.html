@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Godot 4: Build Your First 2D Platformer</title>
+  <meta name="title"    content="Godot 4: Build Your First 2D Platformer">
+  <meta name="blurb"    content="A beginner's path from installing Godot 4 to exporting a small, playable 2D platformer, built around current (4.6) best practices and verified video lessons.">
+  <meta name="type"     content="Tutorial">
+  <meta name="category" content="Gamedev">
+  <meta name="code"     content="TUT">
+  <meta name="tags"     content="godot, gamedev, 2d, platformer, gdscript, beginner">
+  <meta name="status"   content="learning">
+  <meta name="steps"    content="8">
+  <meta name="progress" content="0">
+
+  <style>
+    :root{
+      --bg:#0f1115; --panel:#171a21; --panel-2:#1d212b; --border:#2a2f3a;
+      --text:#e7e9ee; --muted:#9aa3b2; --accent:#6ea8fe; --accent-2:#8ad6a1;
+      --warn:#f0c674; --warn-bg:#2a2412; --code:#0b0d11;
+      --radius:12px; --maxw:820px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; background:var(--bg); color:var(--text);
+      font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      padding:0 18px 80px;
+    }
+    .wrap{max-width:var(--maxw); margin:0 auto}
+    a{color:var(--accent)}
+    .top{display:flex; align-items:center; gap:14px; padding:18px 0; font-size:.92rem}
+    .top a.lib{color:var(--muted); text-decoration:none}
+    .top a.lib:hover{color:var(--text)}
+    header.head{padding:8px 0 4px}
+    header.head h1{font-size:2rem; line-height:1.2; margin:.2em 0}
+    header.head .blurb{color:var(--muted); font-size:1.05rem; margin:0 0 .4em}
+    .meta-row{color:var(--muted); font-size:.85rem; display:flex; flex-wrap:wrap; gap:6px 14px; margin:.5em 0 1.2em}
+    h2{font-size:1.45rem; margin:2.2em 0 .5em; padding-top:.4em}
+    h3{font-size:1.15rem; margin:1.6em 0 .4em}
+    p{margin:.7em 0}
+    code{background:var(--code); padding:.12em .4em; border-radius:6px; font-size:.92em;
+      font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    pre{background:var(--code); border:1px solid var(--border); border-radius:10px;
+      padding:14px 16px; overflow:auto}
+    pre code{background:none; padding:0}
+    ul,ol{padding-left:1.3em}
+    li{margin:.3em 0}
+
+    .step{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+      padding:4px 20px 16px; margin:1.4em 0}
+    .step > h2{margin-top:.6em}
+    .step .teaches{color:var(--accent-2); font-size:.9rem; font-weight:600; letter-spacing:.02em; text-transform:uppercase; margin:.8em 0 .2em}
+    .ready{background:var(--panel-2); border-left:3px solid var(--accent-2); border-radius:8px;
+      padding:10px 14px; margin:1em 0 .2em; color:var(--text); font-size:.95rem}
+    .ready b{color:var(--accent-2)}
+
+    .video{margin:1.1em 0}
+    .video iframe{width:100%; aspect-ratio:16/9; border:0; border-radius:10px; background:#000}
+    .video .watch{display:inline-block; margin-top:.5em; font-size:.9rem; color:var(--muted); text-decoration:none}
+    .video .watch:hover{color:var(--accent)}
+    .ts{display:inline-block; margin:.2em 0; font-size:.92rem; color:var(--accent); text-decoration:none}
+    .ts:hover{text-decoration:underline}
+
+    .pitfall{background:var(--warn-bg); border:1px solid #4a3d18; border-left:4px solid var(--warn);
+      border-radius:10px; padding:2px 16px; margin:1em 0}
+    .pitfall::before{content:"⚠ Gotcha"; display:block; color:var(--warn); font-weight:600; font-size:.85rem; margin:.7em 0 -.3em}
+
+    .versionflag{background:var(--panel-2); border:1px dashed var(--border); border-radius:8px;
+      padding:2px 14px; margin:.9em 0; font-size:.95rem}
+    .versionflag::before{content:"↻ Changed in recent versions"; display:block; color:var(--accent); font-weight:600; font-size:.82rem; margin:.6em 0 -.3em}
+
+    .glossary{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:6px 20px; margin:1.2em 0}
+    .glossary dt{font-weight:600; color:var(--text); margin-top:.7em}
+    .glossary dd{margin:.1em 0 .2em; color:var(--muted)}
+
+    figure.diagram{margin:1.2em 0; text-align:center}
+    figure.diagram svg{max-width:100%; height:auto; background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:10px}
+    figure.diagram figcaption{color:var(--muted); font-size:.85rem; margin-top:.4em}
+
+    hr{border:0; border-top:1px solid var(--border); margin:2.4em 0}
+
+    .callout{background:var(--panel-2); border:1px solid var(--border); border-radius:10px; padding:2px 16px; margin:1em 0}
+    .verify-note{color:var(--muted); font-size:.9rem}
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <a class="lib" href="../../index.html">← Library</a>
+  </div>
+
+  <header class="head">
+    <h1>Godot 4: Build Your First 2D Platformer</h1>
+    <p class="blurb">From installing the engine to exporting a small, playable platformer — using current Godot 4.6 best practices and verified video lessons.</p>
+    <div class="meta-row">
+      <span>For: total beginner</span>
+      <span>Goal: ship a small 2D platformer</span>
+      <span>Version: Godot 4.6.x (stable, as of June 2026)</span>
+    </div>
+  </header>
+
+  <p>This tutorial takes you from zero to a tiny but <em>complete</em> 2D platformer: a character that runs and jumps, a tiled level, coins to collect, an enemy to avoid, a score counter, and an exported build you can hand to a friend. Work through it in order — each step builds on the last, and there's a "ready to move on when…" check so you know you've actually got it.</p>
+
+  <p>The spine of this course is one outstanding, free, hour-and-a-quarter video by <strong>Brackeys</strong> that builds exactly this kind of game. We embed it below and deep-link to the relevant chapter in each step. The written steps add the <em>2026 context</em> the video can't — what's changed in Godot since it was recorded, and the pitfalls beginners actually hit.</p>
+
+  <div class="callout">
+    <p><strong>What you need:</strong> a Windows, macOS, or Linux machine. Godot is a free, ~120&nbsp;MB download with no installer and no account. That's it — no paid licenses, ever.</p>
+  </div>
+
+  <!-- ============ STEP 1 ============ -->
+  <section class="step">
+    <h2>1. Install Godot 4 and create a project</h2>
+    <p class="teaches">Getting the engine running and understanding the project structure.</p>
+    <p>Download the <strong>Godot 4</strong> Standard build (not the .NET/C# build — you want plain GDScript as a beginner) from the official site, unzip it, and run the executable directly. There's no install step; the engine <em>is</em> the unzipped file.</p>
+    <ol>
+      <li>Go to <a href="https://godotengine.org/download/" target="_blank" rel="noopener">godotengine.org/download</a> and grab <strong>Godot Engine 4.6.x — Standard</strong>.</li>
+      <li>Unzip anywhere and double-click the executable.</li>
+      <li>In the Project Manager, click <code>+ Create</code>, name it, pick an empty folder, and choose the <strong>Forward+</strong> renderer (fine for 2D; <strong>Compatibility</strong> if you're on old hardware or targeting web/mobile).</li>
+      <li>Click <code>Create &amp; Edit</code>.</li>
+    </ol>
+
+    <div class="video">
+      <iframe src="https://www.youtube.com/embed/SG8nYHsYThI" title="How to Setup Godot 4 in 2026: The Complete Beginner's Guide" loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <a class="watch" href="https://www.youtube.com/watch?v=SG8nYHsYThI" target="_blank" rel="noopener">▶ Watch on YouTube — "How to Setup Godot 4 in 2026"</a>
+    </div>
+    <p class="verify-note">(Setup walkthrough, updated for 2026. I confirmed this video exists but could not fully confirm the channel name — see the verification note at the bottom.)</p>
+
+    <div class="versionflag">
+      <p>Godot <strong>4.6</strong> (Jan 2026) shipped a "Modern UI" refresh and finally made the editor's bottom panel movable. If a slightly older video shows panels in different spots, that's why — the names and functions are the same.</p>
+    </div>
+
+    <div class="ready"><b>Ready to move on when…</b> the empty editor opens and you can see the Scene dock (top-left), the FileSystem dock (bottom-left), and the central viewport.</div>
+  </section>
+
+  <!-- ============ STEP 2 ============ -->
+  <section class="step">
+    <h2>2. The core idea: scenes, nodes, and the tree</h2>
+    <p class="teaches">The single mental model that makes all of Godot click.</p>
+    <p>Everything in Godot is a <strong>node</strong> — a small object that does one thing (draws a sprite, plays a sound, detects collisions). You arrange nodes into a <strong>tree</strong>, and a saved tree is a <strong>scene</strong>. A scene can be dropped inside another scene as a reusable building block. Your <em>Player</em> is a scene; your <em>Coin</em> is a scene; your <em>Level</em> is a scene that contains many of them.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 640 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A scene tree: a Level node with Player, TileMapLayer, and Coins children; Player has Sprite2D and CollisionShape2D children.">
+        <style>
+          .n{fill:#1d212b;stroke:#2a2f3a;stroke-width:1.5;rx:8}
+          .t{fill:#e7e9ee;font:13px system-ui;}
+          .tm{fill:#9aa3b2;font:11px system-ui;}
+          .ln{stroke:#3a4150;stroke-width:1.5;fill:none}
+          .root{stroke:#6ea8fe}
+        </style>
+        <!-- root -->
+        <rect class="n root" x="250" y="14" width="140" height="34"/>
+        <text class="t" x="320" y="35" text-anchor="middle">Level (Node2D)</text>
+        <!-- level connectors -->
+        <path class="ln" d="M320 48 L320 70 L110 70 L110 92"/>
+        <path class="ln" d="M320 48 L320 70 L320 92"/>
+        <path class="ln" d="M320 48 L320 70 L520 70 L520 92"/>
+        <!-- children of level -->
+        <rect class="n" x="40" y="92" width="140" height="34"/>
+        <text class="t" x="110" y="113" text-anchor="middle">Player (scene)</text>
+        <rect class="n" x="250" y="92" width="140" height="34"/>
+        <text class="t" x="320" y="110" text-anchor="middle">TileMapLayer</text>
+        <text class="tm" x="320" y="121" text-anchor="middle">(the world)</text>
+        <rect class="n" x="450" y="92" width="140" height="34"/>
+        <text class="t" x="520" y="113" text-anchor="middle">Coins (Node2D)</text>
+        <!-- player children -->
+        <path class="ln" d="M110 126 L110 150 L60 150 L60 172"/>
+        <path class="ln" d="M110 126 L110 150 L160 150 L160 172"/>
+        <rect class="n" x="0" y="172" width="120" height="34"/>
+        <text class="t" x="60" y="193" text-anchor="middle">Sprite2D</text>
+        <rect class="n" x="130" y="172" width="150" height="34"/>
+        <text class="t" x="205" y="190" text-anchor="middle">CollisionShape2D</text>
+        <text class="tm" x="205" y="201" text-anchor="middle">(the hitbox)</text>
+      </svg>
+      <figcaption>A scene is just a tree of nodes. Scenes nest inside other scenes.</figcaption>
+    </figure>
+
+    <p>Watch the whole Brackeys build once for the big picture, then come back and do it step by step. The chapter below explains how Godot is structured:</p>
+
+    <div class="video">
+      <iframe src="https://www.youtube.com/embed/LOhfqjmasi0?start=332" title="How to make a Video Game - Godot Beginner Tutorial (Brackeys)" loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <a class="watch" href="https://www.youtube.com/watch?v=LOhfqjmasi0" target="_blank" rel="noopener">▶ Watch on YouTube — Brackeys, "How to make a Video Game" (full 1h17m course)</a>
+    </div>
+
+    <div class="ready"><b>Ready to move on when…</b> you can explain, out loud, the difference between a node, a scene, and the scene tree.</div>
+  </section>
+
+  <!-- ============ STEP 3 ============ -->
+  <section class="step">
+    <h2>3. Build the player scene</h2>
+    <p class="teaches">Creating a controllable character body with a sprite and a collision shape.</p>
+    <p>Make a new scene with a <strong>CharacterBody2D</strong> root. Add two children: a <strong>Sprite2D</strong> (assign it a texture) and a <strong>CollisionShape2D</strong> (give it a capsule or rectangle shape sized to the sprite). Save it as <code>player.tscn</code>.</p>
+
+    <div class="versionflag">
+      <p>In <strong>Godot 3</strong> this node was called <code>KinematicBody2D</code>. In Godot 4 it's <strong>CharacterBody2D</strong>, and the movement code changed too (see the next step). Any pre-2023 tutorial using <code>KinematicBody2D</code> is on the old engine — the concepts carry over, but the node names don't.</p>
+      <p class="verify-note">I'm confident on the rename; treat the exact movement-API specifics in Step&nbsp;4 as worth a quick spot-check against the docs (flagged at the bottom).</p>
+    </div>
+
+    <p>Follow along here (Brackeys "Player 1.0"):</p>
+    <a class="ts" href="https://www.youtube.com/watch?v=LOhfqjmasi0&t=451s" target="_blank" rel="noopener">▶ Watch the "Player" chapter on YouTube (7:31)</a>
+
+    <div class="ready"><b>Ready to move on when…</b> your player scene has a CharacterBody2D root with a visible sprite and a collision shape, and it opens without errors.</div>
+  </section>
+
+  <!-- ============ STEP 4 ============ -->
+  <section class="step">
+    <h2>4. Movement and jumping</h2>
+    <p class="teaches">Input actions, a movement script, gravity, and jumping.</p>
+    <p>First define inputs so you're not hard-coding keys. Open <strong>Project → Project Settings → Input Map</strong> and add actions named <code>move_left</code>, <code>move_right</code>, and <code>jump</code>; bind keys (and a gamepad button if you like) to each. Code then refers to the <em>action</em>, so remapping later is free.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 640 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flow: keyboard input goes to an input action, which sets velocity, which is applied by move and slide, which moves the body.">
+        <style>
+          .b{fill:#1d212b;stroke:#2a2f3a;stroke-width:1.5}
+          .bt{fill:#e7e9ee;font:13px system-ui}
+          .ar{stroke:#6ea8fe;stroke-width:2;fill:none;marker-end:url(#ah)}
+        </style>
+        <defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#6ea8fe"/></marker></defs>
+        <rect class="b" x="6" y="55" width="120" height="40" rx="8"/><text class="bt" x="66" y="80" text-anchor="middle">Key press</text>
+        <line class="ar" x1="128" y1="75" x2="168" y2="75"/>
+        <rect class="b" x="170" y="55" width="120" height="40" rx="8"/><text class="bt" x="230" y="80" text-anchor="middle">Input action</text>
+        <line class="ar" x1="292" y1="75" x2="332" y2="75"/>
+        <rect class="b" x="334" y="55" width="120" height="40" rx="8"/><text class="bt" x="394" y="80" text-anchor="middle">set velocity</text>
+        <line class="ar" x1="456" y1="75" x2="496" y2="75"/>
+        <rect class="b" x="498" y="55" width="136" height="40" rx="8"/><text class="bt" x="566" y="74" text-anchor="middle">move_and_slide()</text><text class="bt" x="566" y="89" text-anchor="middle" style="font-size:10px;fill:#9aa3b2">moves the body</text>
+      </svg>
+      <figcaption>The Godot 4 movement loop: input → velocity → <code>move_and_slide()</code>.</figcaption>
+    </figure>
+
+    <p>Attach a script to the player. The Godot 4 shape looks like this (gravity pulls you down each frame; pressing jump sets an upward velocity only when you're on the floor):</p>
+    <pre><code>extends CharacterBody2D
+
+const SPEED = 200.0
+const JUMP_VELOCITY = -400.0
+
+func _physics_process(delta):
+    # gravity
+    if not is_on_floor():
+        velocity += get_gravity() * delta
+    # jump
+    if Input.is_action_just_pressed("jump") and is_on_floor():
+        velocity.y = JUMP_VELOCITY
+    # left / right
+    var dir = Input.get_axis("move_left", "move_right")
+    velocity.x = dir * SPEED
+    move_and_slide()</code></pre>
+
+    <div class="versionflag">
+      <p>Two Godot-4 specifics that trip people coming from older tutorials: <code>move_and_slide()</code> takes <strong>no arguments</strong> now (it reads the node's <code>velocity</code> property), and gravity is read with <code>get_gravity()</code>. In Godot 3 you passed velocity <em>into</em> <code>move_and_slide(velocity)</code>.</p>
+    </div>
+
+    <div class="pitfall">
+      <p>If your character falls through the floor or won't move, the usual causes are: no <code>CollisionShape2D</code> on the player or the floor, the script attached to the wrong node, or an input action name that doesn't exactly match the string in your code (<code>"jump"</code> ≠ <code>"Jump"</code>).</p>
+    </div>
+
+    <a class="ts" href="https://www.youtube.com/watch?v=LOhfqjmasi0&t=3176s" target="_blank" rel="noopener">▶ Watch the "Player 2.0" movement chapter on YouTube (52:56)</a>
+
+    <div class="ready"><b>Ready to move on when…</b> you can run the scene and your character walks left/right and jumps, landing back on a floor.</div>
+  </section>
+
+  <!-- ============ STEP 5 ============ -->
+  <section class="step">
+    <h2>5. Build the world with tiles</h2>
+    <p class="teaches">Painting a level with a tileset and giving it collision.</p>
+    <p>A platformer level is built from <strong>tiles</strong>: small reusable images you paint onto a grid. You create a <strong>TileSet</strong> resource from a sprite sheet, mark which tiles are solid (collision), then paint your level with the tile editor in the bottom panel.</p>
+
+    <div class="versionflag">
+      <p><strong>Important and easy to miss:</strong> as of Godot <strong>4.3</strong> (Aug 2024) the old <code>TileMap</code> node is <em>deprecated</em>. New projects should use one <strong>TileMapLayer</strong> node per visual layer, all sharing one TileSet. The Brackeys video predates this and uses the old <code>TileMap</code> node — it still works, but the editor will show a "deprecated" warning. Either right-click the TileMap and choose the converter, or just start with a <code>TileMapLayer</code> node from the beginning. Official class reference: <a href="https://docs.godotengine.org/en/stable/classes/class_tilemap.html" target="_blank" rel="noopener">TileMap (deprecated)</a>; migration notes: <a href="https://docs.godotengine.org/en/stable/tutorials/migrating/upgrading_to_godot_4.3.html" target="_blank" rel="noopener">Upgrading to 4.3</a>.</p>
+    </div>
+
+    <div class="pitfall">
+      <p>The single most common beginner tilemap mistake: forgetting to add <strong>physics/collision</strong> to your solid tiles in the TileSet editor. Without it, your beautifully painted ground is just a picture and the player drops straight through.</p>
+    </div>
+
+    <p>Brackeys "Worldbuilding" and "Platforms" chapters:</p>
+    <a class="ts" href="https://www.youtube.com/watch?v=LOhfqjmasi0&t=1017s" target="_blank" rel="noopener">▶ Watch "Worldbuilding" on YouTube (16:57)</a><br>
+    <a class="ts" href="https://www.youtube.com/watch?v=LOhfqjmasi0&t=1408s" target="_blank" rel="noopener">▶ Watch "Platforms" on YouTube (23:28)</a>
+
+    <div class="ready"><b>Ready to move on when…</b> you've painted a small level your character can stand and walk on without falling through.</div>
+  </section>
+
+  <!-- ============ STEP 6 ============ -->
+  <section class="step">
+    <h2>6. Coins and enemies with Area2D signals</h2>
+    <p class="teaches">Detecting overlaps and reacting to them with signals.</p>
+    <p>Coins and enemies use <strong>Area2D</strong> — a node that detects when something enters it, without pushing it around like a solid body would. When the player's body enters a coin's area, the coin emits a <strong>signal</strong>; you connect that signal to a function that adds to the score and deletes the coin. Same idea for an enemy, except the function ends the run instead.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 640 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Player body enters a coin's Area2D, which emits body_entered signal, which calls a collect function.">
+        <style>
+          .b2{fill:#1d212b;stroke:#2a2f3a;stroke-width:1.5}
+          .bt2{fill:#e7e9ee;font:13px system-ui}
+          .sig{fill:#8ad6a1;font:12px system-ui}
+          .ar2{stroke:#8ad6a1;stroke-width:2;fill:none;marker-end:url(#ah2)}
+        </style>
+        <defs><marker id="ah2" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#8ad6a1"/></marker></defs>
+        <rect class="b2" x="6" y="55" width="150" height="40" rx="8"/><text class="bt2" x="81" y="80" text-anchor="middle">Player enters area</text>
+        <line class="ar2" x1="158" y1="75" x2="206" y2="75"/>
+        <text class="sig" x="182" y="48" text-anchor="middle">signal</text>
+        <rect class="b2" x="208" y="55" width="180" height="40" rx="8"/><text class="bt2" x="298" y="74" text-anchor="middle">Area2D emits</text><text class="bt2" x="298" y="89" text-anchor="middle" style="font-size:11px;fill:#9aa3b2">body_entered</text>
+        <line class="ar2" x1="390" y1="75" x2="438" y2="75"/>
+        <rect class="b2" x="440" y="55" width="194" height="40" rx="8"/><text class="bt2" x="537" y="74" text-anchor="middle">_on_body_entered()</text><text class="bt2" x="537" y="89" text-anchor="middle" style="font-size:11px;fill:#9aa3b2">add score, queue_free()</text>
+      </svg>
+      <figcaption>Signals are how nodes talk to each other without being tightly wired together.</figcaption>
+    </figure>
+
+    <p>To delete the collected coin, call <code>queue_free()</code> on it — that safely removes the node at the end of the frame.</p>
+
+    <a class="ts" href="https://www.youtube.com/watch?v=LOhfqjmasi0&t=1700s" target="_blank" rel="noopener">▶ Watch "Pickups" on YouTube (28:20)</a><br>
+    <a class="ts" href="https://www.youtube.com/watch?v=LOhfqjmasi0&t=2518s" target="_blank" rel="noopener">▶ Watch "Enemy" on YouTube (41:58)</a>
+
+    <div class="ready"><b>Ready to move on when…</b> walking into a coin makes it disappear, and touching the enemy triggers <em>something</em> (even just a print to the console).</div>
+  </section>
+
+  <!-- ============ STEP 7 ============ -->
+  <section class="step">
+    <h2>7. Dying, score, UI text, and sound</h2>
+    <p class="teaches">Game state, on-screen UI, and audio feedback.</p>
+    <p>Put UI on a <strong>CanvasLayer</strong> so it stays fixed on screen while the camera moves. A <strong>Label</strong> shows the score; update its <code>text</code> whenever the score changes. For "dying," reload the current scene to restart (<code>get_tree().reload_current_scene()</code>) once the player touches an enemy or falls off the map. Add an <strong>AudioStreamPlayer</strong> and call <code>play()</code> for jump and coin sounds — small touches that make it feel like a game.</p>
+
+    <a class="ts" href="https://www.youtube.com/watch?v=LOhfqjmasi0&t=2060s" target="_blank" rel="noopener">▶ Watch "Dying" on YouTube (34:20)</a><br>
+    <a class="ts" href="https://www.youtube.com/watch?v=LOhfqjmasi0&t=3643s" target="_blank" rel="noopener">▶ Watch "Text &amp; Score" on YouTube (1:00:43)</a><br>
+    <a class="ts" href="https://www.youtube.com/watch?v=LOhfqjmasi0&t=4066s" target="_blank" rel="noopener">▶ Watch "Audio" on YouTube (1:07:46)</a>
+
+    <div class="ready"><b>Ready to move on when…</b> collecting coins increments a visible score, and dying restarts the level.</div>
+  </section>
+
+  <!-- ============ STEP 8 ============ -->
+  <section class="step">
+    <h2>8. Export a playable build</h2>
+    <p class="teaches">Turning your project into something you can share.</p>
+    <p>Go to <strong>Project → Export</strong>. The first time, Godot will prompt you to download the matching <strong>export templates</strong> (one click). Add a preset for your platform — <strong>Windows Desktop</strong>, <strong>macOS</strong>, <strong>Linux</strong>, or <strong>Web</strong> — then <code>Export Project</code> to produce a runnable file (or, for Web, an HTML/JS bundle you can host).</p>
+
+    <div class="pitfall">
+      <p><strong>Web export gotcha:</strong> a Web build won't run by double-clicking the HTML from your file system — browsers block it. It needs to be served over HTTP(S). For a quick local test, run a tiny static server in the export folder; to share it, upload to a host like itch.io.</p>
+    </div>
+
+    <a class="ts" href="https://www.youtube.com/watch?v=LOhfqjmasi0&t=4456s" target="_blank" rel="noopener">▶ Watch "Export" on YouTube (1:14:16)</a>
+
+    <div class="ready"><b>You're done when…</b> you have an exported build that launches and plays on its own. That's a real, shippable game. 🎉</div>
+  </section>
+
+  <hr>
+
+  <!-- ============ PITFALLS ============ -->
+  <h2>Common pitfalls &amp; gotchas</h2>
+  <ul>
+    <li><strong>Wrong download.</strong> Grab the <em>Standard</em> build, not <em>.NET</em>, unless you specifically want C#. The .NET build needs the .NET SDK installed and confuses beginners.</li>
+    <li><strong>Following an old-version video blindly.</strong> If a tutorial uses <code>KinematicBody2D</code> or passes an argument to <code>move_and_slide()</code>, it's Godot 3. If it uses a single <code>TileMap</code> node without warnings, it predates 4.3. The ideas transfer; the exact node names and a few function signatures don't.</li>
+    <li><strong>Forgetting collision shapes.</strong> No <code>CollisionShape2D</code> = the object is a ghost. This is the #1 "why won't it work" for new users.</li>
+    <li><strong>Action-name typos.</strong> Input action strings are case-sensitive and must match exactly between the Input Map and your code.</li>
+    <li><strong>Not saving scenes.</strong> Unsaved scenes can't be instanced into other scenes. Save early, save often (<code>Ctrl/Cmd+S</code>).</li>
+  </ul>
+
+  <!-- ============ GLOSSARY ============ -->
+  <h2>Glossary</h2>
+  <dl class="glossary">
+    <dt>Node</dt><dd>The basic building block — one object that does one job (sprite, sound, collider, etc.).</dd>
+    <dt>Scene</dt><dd>A saved tree of nodes. Can be reused and nested inside other scenes (<code>.tscn</code> file).</dd>
+    <dt>Scene tree</dt><dd>The live hierarchy of all nodes currently running in your game.</dd>
+    <dt>GDScript</dt><dd>Godot's built-in, Python-like scripting language. The default and easiest way to start.</dd>
+    <dt>CharacterBody2D</dt><dd>The Godot 4 node for player/enemy bodies you move with code (was <code>KinematicBody2D</code> in Godot 3).</dd>
+    <dt>Area2D</dt><dd>A node that detects overlaps and emits signals, without physical pushing. Used for pickups, triggers, hurtboxes.</dd>
+    <dt>Signal</dt><dd>An event a node emits (e.g. <code>body_entered</code>) that other nodes can connect functions to.</dd>
+    <dt>TileMapLayer</dt><dd>The Godot 4.3+ node for painting a grid of tiles. One per visual layer, sharing a TileSet.</dd>
+    <dt>TileSet</dt><dd>A resource defining your reusable tiles and which ones have collision.</dd>
+    <dt><code>queue_free()</code></dt><dd>Safely deletes a node at the end of the current frame.</dd>
+  </dl>
+
+  <!-- ============ RESOURCES ============ -->
+  <h2>Resources</h2>
+  <ul>
+    <li><strong>Official docs — Your first 2D game:</strong> <a href="https://docs.godotengine.org/en/stable/getting_started/first_2d_game/index.html" target="_blank" rel="noopener">step-by-step "Dodge the Creeps"</a>. Note: this official tutorial is a <em>top-down</em> game, not a platformer, and assumes a little programming experience — but it's the canonical intro to the editor and GDScript.</li>
+    <li><strong>Official docs — 2D section:</strong> <a href="https://docs.godotengine.org/en/stable/tutorials/2d/index.html" target="_blank" rel="noopener">tilemaps, physics, particles, and more</a>.</li>
+    <li><strong>Brackeys</strong> — <a href="https://www.youtube.com/watch?v=LOhfqjmasi0" target="_blank" rel="noopener">"How to make a Video Game"</a> (the course this tutorial is built around) and the broader <a href="https://www.youtube.com/channel/UCYbK_tjZ2OrIZFBvU6CCMiA" target="_blank" rel="noopener">Brackeys channel</a>.</li>
+    <li><strong>Project files</strong> for the Brackeys game: <a href="https://github.com/Brackeys/first-game-in-godot" target="_blank" rel="noopener">github.com/Brackeys/first-game-in-godot</a>.</li>
+    <li><strong>Community:</strong> the official <a href="https://forum.godotengine.org/" target="_blank" rel="noopener">Godot Forum</a> and the <a href="https://discord.gg/godotengine" target="_blank" rel="noopener">Godot Discord</a> are both active and beginner-friendly.</li>
+  </ul>
+
+  <hr>
+  <p class="verify-note">Built for Godot 4.6.x (current stable as of June 2026). Version facts (TileMap deprecation in 4.3, the 4.6 UI changes, current stable release) were checked against official sources. The one item I couldn't fully confirm is the channel/author of the 2026 setup video in Step&nbsp;1 — the video exists, but verify its source before relying on it. The exact <code>move_and_slide()</code> / <code>get_gravity()</code> signatures are standard Godot&nbsp;4 but worth a 10-second check against the current docs if anything errors.</p>
+
+</div>
+
+<script src="../../progress.js"></script>
+</body>
+</html>
