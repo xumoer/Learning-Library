@@ -59,8 +59,9 @@ Read the picked file as UTF-8 and parse:
   leave blurb blank.
 - `type` defaults to `Tutorial` (as today via `NewModule`); `status` defaults to
   `learning`. Category/code/tags/steps/progress left blank for the user.
-- If the file can't be read, show a non-fatal warning and still create the entry
-  with the derived href + filename-based title.
+- If the file can't be read (or has neither tag), parsing returns empty and the
+  entry is still created with the filename (no extension) as the title and a
+  blank blurb — no separate warning dialog (the parser fails soft).
 
 ### Transient source-path state
 Store the picked absolute source path on the module Map under the key `_src`.
