@@ -165,8 +165,8 @@ class ModulesEditor {
         if RegExMatch(raw, "is)<title[^>]*>(.*?)</title>", &mt)
             out["title"] := this.DecodeEntities(Trim(mt[1]))
         ; find the <meta ...> tag whose name attr is description (any attr order)
-        if RegExMatch(raw, "is)<meta\s+[^>]*name\s*=\s*([""'])description\1[^>]*>", &mm)
-            if RegExMatch(mm[0], "is)content\s*=\s*([""'])(.*?)\1", &mc)
+        if RegExMatch(raw, "is)<meta\s+[^>]*name\s*=\s*([\x22\x27])description\1[^>]*>", &mm)
+            if RegExMatch(mm[0], "is)content\s*=\s*([\x22\x27])(.*?)\1", &mc)
                 out["blurb"] := this.DecodeEntities(Trim(mc[2]))
         return out
     }
