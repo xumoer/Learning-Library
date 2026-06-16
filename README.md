@@ -1,12 +1,13 @@
-# Learning Library
+# Documents Library
 
-A collection of self-contained, work-through-it HTML guides — one folder per skill. Hosted on GitHub Pages so embedded videos and external resources load over HTTPS and just work.
+A collection of self-contained, work-through-it (and read-only) HTML documents — one folder per document. Hosted on GitHub Pages so embedded videos and external resources load over HTTPS and just work. Holds tutorials, info packs, game rules, and plans.
 
 ## Structure
 
 ```
-learning-library/
-├── index.html                      ← the hub / landing page (the card grid)
+documents-library/
+├── index.html                      ← the hub / landing page (per-type shelves)
+├── modules.js                      ← the data file the hub renders from
 ├── README.md
 ├── .nojekyll                       ← tells GitHub Pages to serve files as-is
 └── library/
@@ -14,16 +15,13 @@ learning-library/
         └── index.html              ← Rigging & Animation in Blender 5.1
 ```
 
-Each document lives in its own folder under `library/` and is named `index.html`, so it gets a clean URL like `…/library/blender-rigging/`.
-
+Each document lives in its own folder under `library/` (flat — no per-type subfolders). The hub groups them into shelves by their `type`.
 
 ## Add a new document
 
-1. Make a folder: `library/your-skill-name/` and put your guide in it as `index.html`.
-2. Open `index.html` (the hub) and **duplicate one of the `<article class="card …">` blocks**. Change the title, blurb, call number, tags, status, and the `href` so it points to `library/your-skill-name/index.html`.
-3. Status options are just CSS classes: `solid` (green), `learning` (amber), `planned` (gray). Update the progress bar width (`<i style="width:NN%">`) as you go.
+1. Make a folder: `library/your-doc-name/` and put your page in it (e.g. `index.html`).
+2. Add one entry to the `MODULES` array in `modules.js` — copy the `TEMPLATE` comment at the top of that file. Set at least `title`, `blurb`, and `type` (`Tutorial` / `Info` / `Rules` / `Plan` — or a new one), and point `href` at your page.
+3. `type` drives the shelf, the filter button, and the call-number prefix automatically. `category` is an optional topic tag. `status`, `steps`, and `progress` are optional and mainly useful for tutorials.
 4. Commit and push — it's live.
 
-The three gray "Planned" cards in the hub are placeholders. Edit or delete them freely.
-
-
+You can also edit `modules.js` with the GUI tool at `tooling/modules-editor.ahk` (AutoHotkey v2).
