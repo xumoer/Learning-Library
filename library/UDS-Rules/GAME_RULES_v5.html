@@ -1,0 +1,2570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unified Dice System — Game Rules</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%231a1410'/%3E%3Cg fill='%23c8a86b'%3E%3Ccircle cx='30' cy='30' r='8'/%3E%3Ccircle cx='70' cy='30' r='8'/%3E%3Ccircle cx='50' cy='50' r='8'/%3E%3Ccircle cx='30' cy='70' r='8'/%3E%3Ccircle cx='70' cy='70' r='8'/%3E%3C/g%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#15110d; --bg2:#1d1812; --panel:#211a13; --panel2:#2a2117;
+  --ink:#e9ddc7; --ink-dim:#b6a88d; --ink-faint:#8a7d66;
+  --gold:#c8a86b; --gold-bright:#e3c489; --crimson:#b5453c; --crimson-deep:#7d2b25;
+  --arcane:#9a7fd8; --line:#3a2f22; --line-soft:#2c2419;
+  --shadow:0 10px 30px rgba(0,0,0,.45);
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Times New Roman",serif;
+  --display:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:
+    radial-gradient(1200px 600px at 80% -10%, #241c14 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, #20271f 0%, transparent 55%),
+    var(--bg);
+  color:var(--ink); font-family:var(--serif); font-size:17px; line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--gold-bright); text-decoration:none}
+a:hover{color:#fff; text-decoration:underline}
+
+/* ---------- Layout ---------- */
+.layout{display:grid; grid-template-columns:288px minmax(0,1fr); gap:0; max-width:1320px; margin:0 auto}
+.sidebar{
+  position:sticky; top:0; align-self:start; height:100vh; overflow-y:auto;
+  padding:28px 18px 60px 26px; border-right:1px solid var(--line);
+  background:linear-gradient(180deg,var(--bg2),transparent 40%);
+}
+.content{padding:0 clamp(20px,5vw,64px) 120px; min-width:0}
+
+/* ---------- Sidebar / TOC ---------- */
+.brand{display:flex; align-items:center; gap:12px; margin-bottom:6px}
+.brand .dice{width:34px;height:34px;flex:none}
+.brand .t{font-family:var(--display); font-weight:600; letter-spacing:.5px; line-height:1.15}
+.brand .t small{display:block; color:var(--gold); font-size:11px; letter-spacing:3px; text-transform:uppercase}
+.sb-ver{display:inline-block; margin:10px 0 18px; padding:3px 10px; font-size:11px; letter-spacing:2px;
+  text-transform:uppercase; color:#1a140d; background:linear-gradient(180deg,var(--gold-bright),var(--gold));
+  border-radius:999px; font-family:var(--serif); font-weight:700}
+.toc-title{font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--ink-faint); margin:18px 0 8px}
+.toc{font-size:14px}
+.toc ul{list-style:none; margin:0; padding:0}
+.toc > ul > li > a{font-weight:600; color:var(--ink)}
+.toc li{margin:1px 0}
+.toc a{display:block; padding:4px 10px; border-left:2px solid transparent; border-radius:0 6px 6px 0; color:var(--ink-dim)}
+.toc a:hover{background:var(--panel); color:var(--ink); text-decoration:none}
+.toc ul ul a{padding-left:22px; font-size:13px; color:var(--ink-faint)}
+.toc a.active{color:var(--gold-bright); border-left-color:var(--gold); background:rgba(200,168,107,.08)}
+
+/* ---------- Hero ---------- */
+.hero{padding:64px 0 28px; border-bottom:1px solid var(--line); margin-bottom:8px; position:relative}
+.hero h1.title{
+  font-family:var(--display); font-size:clamp(38px,6vw,64px); line-height:1.02; margin:0;
+  letter-spacing:.5px; color:var(--ink);
+  text-shadow:0 2px 0 rgba(0,0,0,.4);
+}
+.hero h1.title .accent{color:var(--gold)}
+.hero .sub{margin-top:14px; color:var(--ink-dim); font-size:18px; max-width:60ch}
+.hero .rule{display:flex; align-items:center; gap:14px; margin-top:26px; color:var(--gold)}
+.hero .rule::before,.hero .rule::after{content:""; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); flex:1}
+.hero .rule .pip{font-size:13px; letter-spacing:4px; text-transform:uppercase}
+
+/* ---------- Headings ----------
+   Source hierarchy: one `#` doc-title (hidden, hero covers it),
+   `##` numbered chapters (primary), `###` subsections (secondary). */
+.content h1{display:none}
+.content h2{
+  font-family:var(--display); font-size:clamp(28px,3.6vw,42px); margin:72px 0 6px;
+  padding-bottom:12px; letter-spacing:.4px; color:var(--gold-bright); font-weight:700;
+  border-bottom:2px solid var(--line); scroll-margin-top:20px; position:relative;
+}
+.content h2::before{
+  content:"◆"; color:var(--crimson); font-size:.55em; vertical-align:middle; margin-right:.55em;
+}
+.content h3{
+  font-family:var(--display); font-size:clamp(19px,2.2vw,25px); margin:40px 0 6px;
+  color:var(--ink); padding-left:14px; border-left:3px solid var(--gold);
+  font-weight:700; letter-spacing:.3px; scroll-margin-top:20px;
+}
+.content h4{
+  font-size:16px; margin:26px 0 4px; color:var(--gold); letter-spacing:.4px;
+  text-transform:uppercase; font-weight:700; scroll-margin-top:20px;
+}
+.content p{margin:.7em 0}
+.content strong{color:var(--gold-bright); font-weight:700}
+.content em{color:var(--ink); font-style:italic}
+hr{border:none; height:1px; margin:48px 0; background:linear-gradient(90deg,transparent,var(--line) 20%,var(--line) 80%,transparent)}
+
+/* ---------- Lists ---------- */
+.content ul,.content ol{margin:.6em 0; padding-left:1.4em}
+.content li{margin:.32em 0}
+.content ul li::marker{color:var(--crimson)}
+.content ol li::marker{color:var(--gold); font-weight:700}
+
+/* ---------- Callouts (blockquotes) ---------- */
+blockquote{
+  margin:20px 0; padding:16px 20px; background:var(--panel);
+  border:1px solid var(--line); border-left:4px solid var(--arcane);
+  border-radius:8px; color:var(--ink-dim); box-shadow:var(--shadow);
+}
+blockquote p{margin:.4em 0}
+blockquote strong{color:var(--arcane)}
+blockquote.banner{
+  border-left-color:var(--crimson); background:
+    linear-gradient(180deg,rgba(181,69,60,.10),transparent 60%), var(--panel2);
+}
+blockquote.banner strong{color:var(--gold-bright)}
+
+/* ---------- Tables ---------- */
+.table-wrap{overflow-x:auto; margin:22px 0; border:1px solid var(--line); border-radius:10px; box-shadow:var(--shadow)}
+table{border-collapse:collapse; width:100%; font-size:15px; background:var(--panel)}
+thead th{
+  background:linear-gradient(180deg,#2f2517,#251d12); color:var(--gold-bright);
+  font-family:var(--display); font-weight:700; letter-spacing:.6px; text-align:left;
+  padding:11px 14px; border-bottom:2px solid var(--gold); white-space:nowrap;
+}
+tbody td{padding:9px 14px; border-bottom:1px solid var(--line-soft); vertical-align:top}
+tbody tr:nth-child(even){background:rgba(255,255,255,.018)}
+tbody tr:hover{background:rgba(200,168,107,.06)}
+table strong{color:var(--gold-bright)}
+tbody tr:last-child td{border-bottom:none}
+
+/* ---------- Inline code ---------- */
+code{
+  font-family:"Cascadia Code",Consolas,"SF Mono",Menlo,monospace; font-size:.88em;
+  background:#0f0c08; color:var(--gold-bright); padding:1px 6px; border-radius:5px;
+  border:1px solid var(--line);
+}
+pre{background:#0f0c08; border:1px solid var(--line); border-radius:8px; padding:14px 16px; overflow-x:auto}
+pre code{background:none; border:none; padding:0; color:var(--ink)}
+
+/* ---------- Misc ---------- */
+.top-link{position:fixed; right:18px; bottom:18px; z-index:5; width:46px; height:46px; display:grid; place-items:center;
+  background:var(--panel2); color:var(--gold); border:1px solid var(--gold); border-radius:50%;
+  box-shadow:var(--shadow); opacity:0; pointer-events:none; transition:opacity .25s}
+.top-link.show{opacity:1; pointer-events:auto}
+.top-link:hover{background:var(--gold); color:#1a140d; text-decoration:none}
+.menu-btn{display:none}
+
+/* ---------- Responsive ---------- */
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{position:fixed; z-index:20; left:0; top:0; width:300px; transform:translateX(-105%);
+    transition:transform .25s; background:var(--bg2); box-shadow:var(--shadow)}
+  .sidebar.open{transform:none}
+  .menu-btn{display:grid; place-items:center; position:fixed; z-index:21; left:14px; top:14px; width:44px; height:44px;
+    background:var(--panel2); color:var(--gold); border:1px solid var(--gold); border-radius:10px; cursor:pointer; font-size:20px}
+  .content{padding-top:64px}
+}
+
+/* ---------- Print ---------- */
+@media print{
+  body{background:#fff; color:#1a1a1a; font-size:11pt}
+  .sidebar,.top-link,.menu-btn{display:none}
+  .layout{display:block; max-width:none}
+  .content{padding:0}
+  .content h2{color:#000; border-color:#000} .content h3{color:#222; border-left-color:#000}
+  .content h4{color:#444} a{color:#000}
+  blockquote{background:#f4f0e6; color:#222; box-shadow:none}
+  thead th{background:#222; color:#fff} table,.table-wrap{box-shadow:none}
+  strong,table strong,.content strong{color:#000}
+}
+</style>
+</head>
+<body>
+<button class="menu-btn" id="menuBtn" aria-label="Toggle navigation">☰</button>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <svg class="dice" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="18" fill="#221a12" stroke="#c8a86b" stroke-width="3"/><g fill="#c8a86b"><circle cx="30" cy="30" r="7"/><circle cx="70" cy="30" r="7"/><circle cx="50" cy="50" r="7"/><circle cx="30" cy="70" r="7"/><circle cx="70" cy="70" r="7"/></g></svg>
+      <div class="t">Unified Dice System<small>Game Rules</small></div>
+    </div>
+    <span class="sb-ver">Version 5.1</span>
+    <div class="toc-title">Contents</div>
+    <div class="toc">
+<ul>
+<li><a href="#1-rules-vocabulary">1. Rules Vocabulary</a></li>
+<li><a href="#2-core-resolution">2. Core Resolution</a><ul>
+<li><a href="#21-build-the-roll">2.1 Build the Roll</a></li>
+<li><a href="#22-power-ratio-table-dial">2.2 Power Ratio (Table Dial)</a></li>
+<li><a href="#23-success-threshold-scale">2.3 Success Threshold Scale</a></li>
+<li><a href="#24-difficulty-non-combat">2.4 Difficulty (Non-Combat)</a></li>
+<li><a href="#25-margin">2.5 Margin</a></li>
+<li><a href="#global-rules">Global Rules</a></li>
+</ul>
+</li>
+<li><a href="#3-character-statistics">3. Character Statistics</a><ul>
+<li><a href="#31-attributes">3.1 Attributes</a></li>
+<li><a href="#32-ability-rank-ar">3.2 Ability Rank (AR)</a></li>
+<li><a href="#33-derived-defenses">3.3 Derived Defenses</a></li>
+</ul>
+</li>
+<li><a href="#4-skills">4. Skills</a><ul>
+<li><a href="#41-training-levels">4.1 Training Levels</a></li>
+<li><a href="#42-skill-domains">4.2 Skill Domains</a></li>
+<li><a href="#43-armor-mastery-special-training-martial-domain">4.3 Armor Mastery (Special Training, Martial Domain)</a></li>
+</ul>
+</li>
+<li><a href="#5-survival-resources">5. Survival Resources</a><ul>
+<li><a href="#51-grit">5.1 Grit</a></li>
+<li><a href="#52-health">5.2 Health</a></li>
+<li><a href="#53-dying">5.3 Dying</a></li>
+<li><a href="#54-exhaustion-recovery">5.4 Exhaustion &amp; Recovery</a></li>
+</ul>
+</li>
+<li><a href="#6-combat">6. Combat</a><ul>
+<li><a href="#61-action-economy">6.1 Action Economy</a></li>
+<li><a href="#62-zones">6.2 Zones</a></li>
+<li><a href="#63-initiative">6.3 Initiative</a></li>
+<li><a href="#64-attack-sequence">6.4 Attack Sequence</a></li>
+<li><a href="#65-impact-riders">6.5 Impact Riders</a></li>
+</ul>
+</li>
+<li><a href="#7-equipment-economy">7. Equipment &amp; Economy</a><ul>
+<li><a href="#71-armor-shields">7.1 Armor &amp; Shields</a></li>
+<li><a href="#72-weapon-tiers">7.2 Weapon Tiers</a></li>
+<li><a href="#73-weapon-traits-wp">7.3 Weapon Traits (WP)</a></li>
+<li><a href="#74-loot-budgets-gm-tools">7.4 Loot Budgets (GM Tools)</a></li>
+</ul>
+</li>
+<li><a href="#8-abilities">8. Abilities</a><ul>
+<li><a href="#81-nature">8.1 Nature</a></li>
+<li><a href="#82-expression">8.2 Expression</a></li>
+<li><a href="#83-action-type-range-targeting">8.3 Action Type, Range, Targeting</a></li>
+<li><a href="#84-effects-table">8.4 Effects Table</a></li>
+<li><a href="#85-difficulty-value-the-entropy-die">8.5 Difficulty Value &amp; the Entropy Die</a></li>
+<li><a href="#86-ability-creation-procedure">8.6 Ability Creation Procedure</a></li>
+<li><a href="#87-worked-examples">8.7 Worked Examples</a></li>
+</ul>
+</li>
+<li><a href="#9-character-creation">9. Character Creation</a><ul>
+<li><a href="#91-the-three-budgets">9.1 The Three Budgets</a></li>
+<li><a href="#92-ccp-table">9.2 CCP Table</a></li>
+<li><a href="#93-starting-package">9.3 Starting Package</a></li>
+<li><a href="#94-procedure">9.4 Procedure</a></li>
+</ul>
+</li>
+<li><a href="#10-traits-who-you-are">10. Traits — Who You Are</a><ul>
+<li><a href="#physical">Physical</a></li>
+<li><a href="#mental">Mental</a></li>
+<li><a href="#background">Background</a></li>
+<li><a href="#presence">Presence</a></li>
+</ul>
+</li>
+<li><a href="#11-feats-what-youve-learned">11. Feats — What You've Learned</a><ul>
+<li><a href="#martial-domain-combat-technique">Martial Domain — Combat Technique</a></li>
+<li><a href="#athletics-domain-resilience-recovery">Athletics Domain — Resilience &amp; Recovery</a></li>
+<li><a href="#arcana-domain-ability-magic-enhancement">Arcana Domain — Ability &amp; Magic Enhancement</a></li>
+<li><a href="#tactics-domain-precision-setup">Tactics Domain — Precision &amp; Setup</a></li>
+<li><a href="#survival-subtlety-domains-utility-exploration">Survival &amp; Subtlety Domains — Utility &amp; Exploration</a></li>
+<li><a href="#advanced-feats-capstones">Advanced Feats — Capstones</a></li>
+</ul>
+</li>
+<li><a href="#12-conditions">12. Conditions</a><ul>
+<li><a href="#tags">Tags</a></li>
+<li><a href="#minor-conditions">Minor Conditions</a></li>
+<li><a href="#major-conditions">Major Conditions</a></li>
+<li><a href="#special-conditions">Special Conditions</a></li>
+</ul>
+</li>
+<li><a href="#13-specializations">13. Specializations</a><ul>
+<li><a href="#the-resolute">The Resolute</a></li>
+<li><a href="#the-precise">The Precise</a></li>
+<li><a href="#the-devastating">The Devastating</a></li>
+<li><a href="#the-channeler">The Channeler</a></li>
+<li><a href="#the-architect">The Architect</a></li>
+</ul>
+</li>
+<li><a href="#14-enemies-gm-tools">14. Enemies &amp; GM Tools</a><ul>
+<li><a href="#141-enemy-stat-block">14.1 Enemy Stat Block</a></li>
+<li><a href="#142-threat-tiers">14.2 Threat Tiers</a></li>
+<li><a href="#143-behavior-tags">14.3 Behavior Tags</a></li>
+<li><a href="#144-difficulty-presets">14.4 Difficulty Presets</a></li>
+</ul>
+</li>
+<li><a href="#15-advancement">15. Advancement</a></li>
+<li><a href="#16-exploration">16. Exploration</a><ul>
+<li><a href="#161-exploration-turns">16.1 Exploration Turns</a></li>
+<li><a href="#162-dungeon-pressure-die">16.2 Dungeon Pressure Die</a></li>
+</ul>
+</li>
+<li><a href="#17-optional-modules">17. Optional Modules</a><ul>
+<li><a href="#171-player-facing-defense-ai-gm-solo-play">17.1 Player-Facing Defense (AI-GM / solo play)</a></li>
+<li><a href="#172-social-conflict">17.2 Social Conflict</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+  </aside>
+  <main class="content">
+    <header class="hero">
+      <h1 class="title">Unified <span class="accent">Dice</span> System</h1>
+      <p class="sub">A d10 dice-pool RPG of lean pools, assured skill, and abilities pushed until the Entropy Die turns on you.</p>
+      <div class="rule"><span class="pip">Core Rulebook · v5.1</span></div>
+    </header>
+<h1 id="unified-dice-system-game-rules">Unified Dice System — Game Rules</h1>
+<blockquote class="banner">
+<p><strong>VERSION 5.1 — CURRENT AUTHORITATIVE RULESET</strong>
+Supersedes <code>GAME_RULES.md</code> (v1), <code>GAME_RULES_v3.md</code> (v3), and <code>UDS_PATCH_v4.md</code> (v4 patch).
+<strong>5.1 replaces v5's dice-stacking growth with the Power Ratio + Assured Success structure</strong> —
+pools stay small at every level, and bonuses scale through Assured Successes, rerolls, flat damage, and Margin instead of ever-bigger handfuls of dice.
+The v4 patch is fully folded into this document — do not apply it separately.
+Design rationale and the v3/v4 teardown live in <code>DESIGN_NOTES_v5.md</code> (the v5.1 overhaul is Part 3).
+This file is plain Markdown by design. Rendering markup (Homebrewery, page tags) belongs in an export copy, never in this source file.</p>
+</blockquote>
+<hr />
+<h2 id="1-rules-vocabulary">1. Rules Vocabulary</h2>
+<ul>
+<li><strong>Pool:</strong> How many d10s you roll.</li>
+<li><strong>Success Threshold (ST):</strong> The minimum face value on a die that counts as a success. Lower is better. Set by your finesse attribute (DEX, INT, or CHA).</li>
+<li><strong>Success:</strong> Any die ≥ Success Threshold.</li>
+<li><strong>Critical Success:</strong> A natural 10. Counts as <strong>2 Successes</strong> and triggers crit riders.</li>
+<li><strong>Assured Success (AS):</strong> A guaranteed success added to your roll's total. Counts exactly like a rolled success — toward Evasion, Resolve, Difficulty, and Margin. The one limit: <strong>AS alone can never carry an action.</strong> You must roll <strong>at least one real success</strong> for AS to apply at all (see Global Rules).</li>
+<li><strong>Evasion:</strong> Successes an attacker needs to land a hit on you.</li>
+<li><strong>Resolve:</strong> Successes a mental or social attack needs to affect you.</li>
+<li><strong>Margin:</strong> Successes (rolled + AS) beyond what you needed, capped at <strong>AR/2</strong> (min 1, max 4). Margin adds to damage and powers stunts.</li>
+<li><strong>Armor:</strong> Flat reduction to Physical damage after a hit lands.</li>
+<li><strong>Magic Resistance (MR):</strong> Flat reduction to Elemental and Magical damage after a hit lands.</li>
+<li><strong>Flat Damage:</strong> Fixed damage from a weapon tier or purchased ability effect. Applied only after a hit lands.</li>
+<li><strong>Reroll:</strong> Pick up one or more failed dice and roll them again; the new result stands. The pre-roll bonus that does <em>not</em> grow the pool.</li>
+<li><strong>Grit:</strong> Short-term endurance. Damage goes here first. Restores every scene.</li>
+<li><strong>Health:</strong> Lasting harm. Damage goes here when Grit is 0. At 0 Health you are Dying.</li>
+<li><strong>Entropy Die:</strong> A die tracking how stable an ability is. Steps down on a bad roll. Backlash when the d4 fails.</li>
+</ul>
+<blockquote>
+<p><strong>The Three-Currency Rule.</strong> Every bonus in this system is exactly one of three things:
+<strong>dice</strong> (added to the pool <em>before</em> you roll — see the Pool rules), <strong>Assured Successes</strong>
+(counted <em>with</em> the roll, but only if you land ≥1 real success), or <strong>flat damage</strong> (added
+<em>after</em> a hit lands). Rerolls are a fourth, narrow lever that improves a roll without enlarging
+the pool. <strong>Nothing else adds dice</strong> beyond your attribute and one point of situational swing —
+if a feat, trait, condition, or homebrew effect would "give dice," it grants an AS, a reroll,
+or flat damage instead. This is what keeps pools small at every character level.</p>
+</blockquote>
+<hr />
+<h2 id="2-core-resolution">2. Core Resolution</h2>
+<p>One engine resolves everything: attacks, spells, persuasion, climbing, lockpicking.</p>
+<h3 id="21-build-the-roll">2.1 Build the Roll</h3>
+<ol>
+<li>Identify the action type:
+   * <strong>Physical</strong> (attacks, athletics, movement, grapples)
+   * <strong>Magical / Mental</strong> (spells, abilities, perception, tactics)
+   * <strong>Social</strong> (persuasion, intimidation, leadership, deception)</li>
+<li><strong>Pool Attribute</strong> sets how many dice you roll, divided by the table's <strong>Power Ratio</strong> (see 2.2):
+   * <strong>PWR</strong> for Physical · <strong>AURA</strong> for Magical/Mental · <strong>CHA</strong> for Social</li>
+<li><strong>Finesse Attribute</strong> sets your Success Threshold:
+   * <strong>DEX</strong> for Physical · <strong>INT</strong> for Magical/Mental · <strong>CHA</strong> for Social</li>
+<li>Build the Pool: <strong>(Pool Attribute ÷ Power Ratio, round up) + situational ±1.</strong> Nothing else adds dice.</li>
+<li>Note your <strong>Assured Successes</strong> (from your one applicable Skill and any AS effects) — these are counted <em>after</em> the roll, not added to the pool.</li>
+<li>Roll. Count rolled successes (natural <strong>10 = 2 successes</strong>), then add your Assured Successes — but only if you rolled <strong>at least one</strong> real success.</li>
+<li>Compare the total to the target number (Evasion, Resolve, or Difficulty).</li>
+</ol>
+<h3 id="22-power-ratio-table-dial">2.2 Power Ratio (Table Dial)</h3>
+<p>The <strong>Power Ratio</strong> controls how many dice an attribute buys. It is the single knob a table turns at session zero to set overall character power. <strong>Pool dice = Pool Attribute ÷ Power Ratio (round up).</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Dial</th>
+<th style="text-align: center;">Ratio</th>
+<th style="text-align: center;">ATT 1</th>
+<th style="text-align: center;">ATT 2</th>
+<th style="text-align: center;">ATT 3</th>
+<th style="text-align: center;">ATT 4</th>
+<th style="text-align: center;">ATT 5</th>
+<th style="text-align: left;">Feel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Heroic</strong></td>
+<td style="text-align: center;">1:1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">Big, reliable pools — pulpy, forgiving</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Standard</strong></td>
+<td style="text-align: center;">2:1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;"><em>Recommended.</em> Lean pools; AS and Margin carry growth</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Gritty</strong></td>
+<td style="text-align: center;">3:1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Sparse dice; every success matters; lethal</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>Round <strong>up</strong>: at Standard, ATT 3 → 2 dice (3÷2 = 1.5 → 2).</li>
+<li>The dial applies to <strong>PC pools only</strong>. Enemy pools (§14) are fixed numbers calibrated at <strong>Standard</strong> — see §14 for Heroic/Gritty enemy adjustments.</li>
+<li>Because growth flows through Assured Successes, rerolls, threshold, flat damage, and Margin, even a Heroic level-cap character rarely rolls more than ~5 dice. That is the point.</li>
+</ul>
+<h3 id="23-success-threshold-scale">2.3 Success Threshold Scale</h3>
+<p>All attributes run <strong>1–5</strong>. Each point is a meaningful jump.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: center;">Finesse Attribute</th>
+<th style="text-align: center;">Success Threshold</th>
+<th style="text-align: center;">Per-Die Chance</th>
+<th style="text-align: center;">Entropy Steps Down On</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">6+</td>
+<td style="text-align: center;">50%</td>
+<td style="text-align: center;">1–5</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">5+</td>
+<td style="text-align: center;">60%</td>
+<td style="text-align: center;">1–4</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4+</td>
+<td style="text-align: center;">70%</td>
+<td style="text-align: center;">1–3</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3+</td>
+<td style="text-align: center;">80%</td>
+<td style="text-align: center;">1–2</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">2+</td>
+<td style="text-align: center;">90%</td>
+<td style="text-align: center;">1 only</td>
+</tr>
+</tbody>
+</table></div>
+<p>The GM may shift the threshold ±1 for strong fictional positioning or severe hardship (−1 is better, +1 is worse).</p>
+<h3 id="24-difficulty-non-combat">2.4 Difficulty (Non-Combat)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Difficulty</th>
+<th style="text-align: center;">Successes Needed</th>
+<th style="text-align: left;">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Easy</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Climb a knotted rope</td>
+</tr>
+<tr>
+<td style="text-align: left;">Moderate</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Pick a standard lock</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hard</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Leap a collapsing bridge</td>
+</tr>
+<tr>
+<td style="text-align: left;">Extreme</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Recall a secret only three people know</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="25-margin">2.5 Margin</h3>
+<p><strong>Margin = total successes − target number, capped at AR/2</strong> (minimum 1, maximum 4).</p>
+<ul>
+<li>The cap scales with the actor's Ability Rank: AR 1–3 → 1, AR 4–5 → 2, AR 6–7 → 3, AR 8+ → 4. This is how a veteran's good rolls <em>land harder</em> without rolling more dice — the pool stays small, the payoff grows.</li>
+<li>In combat, Margin adds to damage (see 6.4).</li>
+<li>Out of combat, Margin buys quality: faster, quieter, extra information, style.</li>
+<li>Margin 0 is still a success — barely.</li>
+</ul>
+<h3 id="global-rules">Global Rules</h3>
+<ul>
+<li>Always round down — <strong>except</strong> Pool dice, which round <strong>up</strong> (so a 1-attribute always rolls at least 1 die).</li>
+<li>Only one Skill applies per roll (it grants Assured Successes, not dice — see §4).</li>
+<li><strong>Situational dice cap at ±1.</strong> This is the <em>only</em> thing besides your attribute that changes pool size.</li>
+<li><strong>No character effect adds dice.</strong> Feats, traits, conditions, and abilities grant Assured Successes, rerolls, or flat damage. (The sole exception is <strong>the Channeler</strong> — its Read and React and Overcharge mechanics are the one specialization built around adding dice, traded against Entropy risk; see §13.)</li>
+<li><strong>Pool floor: 1 die.</strong> Dice penalties (Heavy, Off-Balance, Staggered, Terrified, etc.) never reduce a pool below <strong>1 die</strong> — because pools are small now, a penalty thins your odds rather than erasing your turn. (Penalties also still stack their <em>other</em> effects.)</li>
+<li><strong>The one-success guard:</strong> Assured Successes only count if you roll <strong>at least one</strong> real success. Roll all failures and your AS evaporate — you cannot win on guaranteed successes alone.</li>
+</ul>
+<hr />
+<h2 id="3-character-statistics">3. Character Statistics</h2>
+<h3 id="31-attributes">3.1 Attributes</h3>
+<p>Attributes run <strong>1–5</strong>. Characters start at 1 in all five. Every attribute has exactly <strong>one offensive job and one defensive job</strong> — no attribute does double duty in the same arena.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">Offensive Role</th>
+<th style="text-align: left;">Defensive Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>PWR</strong></td>
+<td style="text-align: left;">Physical pool size (÷ Power Ratio)</td>
+<td style="text-align: left;">Grit bonus (Grit = 6 + AR + PWR)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DEX</strong></td>
+<td style="text-align: left;">Physical Success Threshold; Initiative</td>
+<td style="text-align: left;">Evasion = 1 + DEX/2</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>INT</strong></td>
+<td style="text-align: left;">Magical/Mental Success Threshold</td>
+<td style="text-align: left;">Entropy stability</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AURA</strong></td>
+<td style="text-align: left;">Magical/Mental pool size (÷ Power Ratio)</td>
+<td style="text-align: left;">Magic Resistance = AURA/2</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CHA</strong></td>
+<td style="text-align: left;">Social pool size (÷ Power Ratio) AND threshold</td>
+<td style="text-align: left;">Resolve = 1 + CHA/2</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>Why CHA is allowed both social roles:</strong> social conflict is symmetric — your CHA offense
+meets the target's CHA-based Resolve. The double role is self-balancing, and a high CHA buys
+a small pool through the Power Ratio just like any other pool attribute.</p>
+</blockquote>
+<h3 id="32-ability-rank-ar">3.2 Ability Rank (AR)</h3>
+<p>AR is the overall power tier of a character.</p>
+<ul>
+<li><strong>Base AR = (PWR + DEX + INT + AURA) / 2</strong> (round down)</li>
+<li>AR may also be bought directly with CCP. AR bonuses stack unless stated otherwise.</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: center;">AR</th>
+<th style="text-align: center;">Ability Slots</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1–3</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">4–6</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">7–9</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: center;">10–12</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td style="text-align: center;">13+</td>
+<td style="text-align: center;">5</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="33-derived-defenses">3.3 Derived Defenses</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Defense</th>
+<th style="text-align: left;">Formula</th>
+<th style="text-align: left;">Defends Against</th>
+<th style="text-align: left;">Reduced Damage Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Evasion</strong></td>
+<td style="text-align: left;">1 + DEX/2, + gear</td>
+<td style="text-align: left;">Physical &amp; Magical attacks</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Armor</strong></td>
+<td style="text-align: left;">Gear + Traits</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Physical</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Magic Resistance</strong></td>
+<td style="text-align: left;">AURA/2, + gear</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Elemental &amp; Magical</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Resolve</strong></td>
+<td style="text-align: left;">1 + CHA/2</td>
+<td style="text-align: left;">Mental &amp; Social attacks</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Psychological damage that beats Resolve is not reduced.</strong> There is no Willpower Armor. Mind attacks are hard to land and frightening when they do.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Attack Nature</th>
+<th style="text-align: left;">Hit Check</th>
+<th style="text-align: left;">Damage Reduction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Physical</td>
+<td style="text-align: left;">Evasion</td>
+<td style="text-align: left;">Armor</td>
+</tr>
+<tr>
+<td style="text-align: left;">Magical (single target)</td>
+<td style="text-align: left;">Evasion</td>
+<td style="text-align: left;">Magic Resistance</td>
+</tr>
+<tr>
+<td style="text-align: left;">Magical (area)</td>
+<td style="text-align: left;">Half Evasion (round down)</td>
+<td style="text-align: left;">Magic Resistance</td>
+</tr>
+<tr>
+<td style="text-align: left;">Mental / Social</td>
+<td style="text-align: left;">Resolve</td>
+<td style="text-align: left;">None</td>
+</tr>
+<tr>
+<td style="text-align: left;">Ephemeral</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">None</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hybrid</td>
+<td style="text-align: left;">Evasion (weapon carries it)</td>
+<td style="text-align: left;">Armor + MR, split by component</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="4-skills">4. Skills</h2>
+<p>A Skill is practiced competence in a domain. <strong>Skills grant Assured Successes</strong> — guaranteed successes counted with your roll. Training makes you <em>reliably</em> good without handing you more dice to roll, which is what keeps pools flat as characters advance.</p>
+<h3 id="41-training-levels">4.1 Training Levels</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Training</th>
+<th style="text-align: center;">Assured Successes</th>
+<th style="text-align: center;">CCP Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Untrained</td>
+<td style="text-align: center;">+0</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Trained</td>
+<td style="text-align: center;">+1</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: left;">Expert</td>
+<td style="text-align: center;">+2</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Master</td>
+<td style="text-align: center;">+3</td>
+<td style="text-align: center;">5</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>A Skill's AS count only if you roll <strong>≥1 real success</strong> (the one-success guard, §2 Global Rules). Training sharpens a hit; it cannot manufacture one from a whiff.</li>
+<li>Only <strong>one Skill</strong> may apply to a roll. Skills also gate Feat access (see 11).</li>
+</ul>
+<h3 id="42-skill-domains">4.2 Skill Domains</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Domain</th>
+<th style="text-align: left;">Covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Martial</td>
+<td style="text-align: left;">Weapons, fighting technique, battlefield movement</td>
+</tr>
+<tr>
+<td style="text-align: left;">Athletics</td>
+<td style="text-align: left;">Physical feats, endurance, raw body</td>
+</tr>
+<tr>
+<td style="text-align: left;">Subtlety</td>
+<td style="text-align: left;">Stealth, deception, infiltration</td>
+</tr>
+<tr>
+<td style="text-align: left;">Arcana</td>
+<td style="text-align: left;">Magic theory, spell control, ability use</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tactics</td>
+<td style="text-align: left;">Battlefield reading, leadership, positioning</td>
+</tr>
+<tr>
+<td style="text-align: left;">Medicine</td>
+<td style="text-align: left;">Healing, poison, body knowledge</td>
+</tr>
+<tr>
+<td style="text-align: left;">Survival</td>
+<td style="text-align: left;">Wilderness, tracking, harsh environments</td>
+</tr>
+<tr>
+<td style="text-align: left;">Social</td>
+<td style="text-align: left;">Persuasion, intimidation, reading people</td>
+</tr>
+<tr>
+<td style="text-align: left;">Craft</td>
+<td style="text-align: left;">Making and modifying things</td>
+</tr>
+<tr>
+<td style="text-align: left;">Lore</td>
+<td style="text-align: left;">History, creature knowledge, world knowledge</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="43-armor-mastery-special-training-martial-domain">4.3 Armor Mastery (Special Training, Martial Domain)</h3>
+<p>Armor Mastery does not add dice. It removes armor penalties (see 7.1).</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Tier</th>
+<th style="text-align: center;">CCP</th>
+<th style="text-align: left;">Benefit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Trained</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Remove the +1 Success Threshold penalty from Medium and Heavy armor</td>
+</tr>
+<tr>
+<td style="text-align: left;">Expert</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Reduce armor Evasion/Initiative penalty by 1</td>
+</tr>
+<tr>
+<td style="text-align: left;">Master</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">No penalties from any armor</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="5-survival-resources">5. Survival Resources</h2>
+<h3 id="51-grit">5.1 Grit</h3>
+<p>Short-term endurance: exertion, bruises, morale, the will to keep fighting.</p>
+<ul>
+<li><strong>Grit = 6 + AR + PWR</strong></li>
+<li>Damage applies to Grit first. Restores fully after every <strong>scene</strong>.</li>
+</ul>
+<h3 id="52-health">5.2 Health</h3>
+<p>Lasting harm: deep wounds, fractures, trauma.</p>
+<ul>
+<li><strong>Health = 2 + (AR / 2)</strong></li>
+<li>Recovers slowly — downtime, care, or magic (setting-dependent).</li>
+</ul>
+<h3 id="53-dying">5.3 Dying</h3>
+<p>At <strong>0 Health</strong> you are <strong>Down</strong> — unconscious and dying. You die if:</p>
+<ul>
+<li>you take any further damage, <strong>or</strong></li>
+<li>the scene ends before an ally stabilizes you (Moderate Medicine check — 2 successes — or any Heal Health effect).</li>
+</ul>
+<p>A stabilized character wakes at 1 Health after the scene with +2 Exhaustion.</p>
+<h3 id="54-exhaustion-recovery">5.4 Exhaustion &amp; Recovery</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: center;">Level</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Strained</td>
+<td style="text-align: left;">−1 die to all pools</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Weary</td>
+<td style="text-align: left;">+1 Success Threshold</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Spent</td>
+<td style="text-align: left;">Cannot use Abilities</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Broken</td>
+<td style="text-align: left;">Max Grit = 0, half speed</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">Death's Door</td>
+<td style="text-align: left;">Unconscious; any damage kills</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Scene end:</strong> Grit restores fully.</li>
+<li><strong>Long Rest:</strong> Full Grit; recover Health per setting; remove ability locks; reduce Exhaustion by 1d4. <strong>Entropy Dice do not reset on rest.</strong></li>
+</ul>
+<hr />
+<h2 id="6-combat">6. Combat</h2>
+<h3 id="61-action-economy">6.1 Action Economy</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Action Type</th>
+<th style="text-align: center;">Per Turn</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Standard Action</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Primary action — full, deliberate execution</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Quick Action</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Fast and efficient, done alongside other things</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Reaction</strong></td>
+<td style="text-align: center;">1/round</td>
+<td style="text-align: left;">Outside your turn, in response to a trigger</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Movement</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Free. Move one zone.</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Double Move:</strong> Spend your Standard Action to move one additional zone.</li>
+<li><strong>Quick Repositioning:</strong> Adjustments within your Engaged Zone are free.</li>
+<li><strong>Sustained Abilities:</strong> Activate as a Standard Action; pay a Quick Action each round to maintain or the ability ends.</li>
+</ul>
+<h3 id="62-zones">6.2 Zones</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Zone</th>
+<th style="text-align: left;">Distance</th>
+<th style="text-align: left;">Movement Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Engaged</td>
+<td style="text-align: left;">Where you are</td>
+<td style="text-align: left;">None</td>
+</tr>
+<tr>
+<td style="text-align: left;">Adjacent</td>
+<td style="text-align: left;">One zone away</td>
+<td style="text-align: left;">1 Move</td>
+</tr>
+<tr>
+<td style="text-align: left;">Far</td>
+<td style="text-align: left;">Two zones</td>
+<td style="text-align: left;">1 Move + Standard Action</td>
+</tr>
+<tr>
+<td style="text-align: left;">Extreme</td>
+<td style="text-align: left;">Three or more zones</td>
+<td style="text-align: left;">Cannot reach in one turn</td>
+</tr>
+</tbody>
+</table></div>
+<p>A zone is roughly the space where a small group could melee — a room, a corridor section, a treeline, a hilltop.</p>
+<h3 id="63-initiative">6.3 Initiative</h3>
+<p>No roll. <strong>Initiative = DEX + AR − armor penalty.</strong></p>
+<p>Tiebreakers: higher DEX, then higher AR, then PCs decide among themselves (GM decides for NPCs).</p>
+<p><strong>Surprise:</strong> Partial surprise → −2 Initiative for the scene start. Full ambush → ambushers each act once, surprised targets may only use a reaction; then run normal Initiative.</p>
+<h3 id="64-attack-sequence">6.4 Attack Sequence</h3>
+<ol>
+<li>Roll your <strong>Attack Pool</strong> at your <strong>Success Threshold</strong>.</li>
+<li>Count rolled successes (10 = 2 successes). If you rolled <strong>≥1</strong>, add your <strong>Assured Successes</strong> (Skill + AS effects). If you rolled <strong>0</strong>, the attack misses outright — AS cannot save it.</li>
+<li>Compare your <strong>total successes</strong> to the defender's <strong>Evasion</strong> (or <strong>Resolve</strong> for mental attacks):
+   * Total &lt; target → <strong>Miss</strong>
+   * Total ≥ target → <strong>Hit</strong></li>
+<li><strong>Damage = Flat Damage (weapon or ability) + Margin − applicable reduction</strong>, where <strong>Margin = total successes − target, capped at AR/2</strong> (min 1, max 4).
+   * Physical: subtract Armor · Magical/Elemental: subtract MR · Psychological/Ephemeral: no reduction</li>
+<li>Apply damage to <strong>Grit first</strong>, overflow to <strong>Health</strong>.</li>
+<li>Resolve <strong>Impact Riders</strong>.</li>
+</ol>
+<blockquote>
+<p><strong>Worked example (Standard dial).</strong> PWR 3 → 2 dice (3÷2 round up). DEX 2 → threshold 5+.
+Trained Martial = +1 Assured Success. AR 3 → Margin cap 1.
+Roll: 8, 4 → 1 rolled success (the 8). ≥1, so the +1 AS counts → <strong>2 total successes</strong>.
+Target Evasion 2 → hit. Margin = 2 − 2 = 0.
+Common sword (2) + Margin 0 = 2 damage − Armor 1 = <strong>1 damage</strong> to Grit.</p>
+<p><em>Same character, hotter roll:</em> 10, 6 → 2 + 1 = 3 rolled, +1 AS = 4 total. Margin = 4 − 2 = 2, but <strong>capped at AR/2 = 1</strong>. Sword 2 + 1 = 3 − Armor 1 = <strong>2 damage</strong>, and the natural 10 fires the <strong>Brutal</strong> rider. Note the pool never grew — the roll and the cap did the scaling.</p>
+</blockquote>
+<h3 id="65-impact-riders">6.5 Impact Riders</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Rider</th>
+<th style="text-align: left;">Trigger</th>
+<th style="text-align: left;">Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Glancing</strong></td>
+<td style="text-align: left;">Hit, but final damage = 0</td>
+<td style="text-align: left;">Target is <strong>Off-Balance</strong> (−1 die next roll)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Overwhelm</strong></td>
+<td style="text-align: left;">Final damage ≥ 4</td>
+<td style="text-align: left;">Target is <strong>Staggered</strong> (−2 dice, no Double Move, 1 round)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Brutal</strong></td>
+<td style="text-align: left;">Hit, and the roll contains a natural 10</td>
+<td style="text-align: left;">Choose until your next turn: <strong>Sundered Plates</strong> (target Armor −1, min 0) or <strong>Cracked Guard</strong> (target Evasion −1, min 0)</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="7-equipment-economy">7. Equipment &amp; Economy</h2>
+<h3 id="71-armor-shields">7.1 Armor &amp; Shields</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Armor</th>
+<th style="text-align: center;">EP Cost</th>
+<th style="text-align: center;">Protection</th>
+<th style="text-align: left;">Penalty (Evasion &amp; Initiative)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">None</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Light</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">+1 Armor</td>
+<td style="text-align: left;">None</td>
+</tr>
+<tr>
+<td style="text-align: left;">Medium</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">+2 Armor</td>
+<td style="text-align: left;">−1</td>
+</tr>
+<tr>
+<td style="text-align: left;">Heavy</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">+3 Armor</td>
+<td style="text-align: left;">−2</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Without Armor Mastery (Trained):</strong> Medium and Heavy armor also impose <strong>+1 Success Threshold on all Physical rolls</strong>.</li>
+<li><strong>Requirements:</strong> Medium needs PWR 2+. Heavy needs PWR 3+.</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Shield</th>
+<th style="text-align: center;">EP Cost</th>
+<th style="text-align: left;">Benefit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Evasion Shield</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">+1 Evasion (occupies 1 hand)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Armor Shield</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">+1 Armor (occupies 1 hand)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Armor Tiers (Magic Resistance)</strong> are GM loot rewards only — never purchasable at creation.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Tier</th>
+<th style="text-align: center;">Armor Bonus</th>
+<th style="text-align: center;">Magic Resistance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Common</td>
+<td style="text-align: center;">+0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: left;">Uncommon</td>
+<td style="text-align: center;">+0</td>
+<td style="text-align: center;">+1</td>
+</tr>
+<tr>
+<td style="text-align: left;">Rare</td>
+<td style="text-align: center;">+1</td>
+<td style="text-align: center;">+2</td>
+</tr>
+<tr>
+<td style="text-align: left;">Relic</td>
+<td style="text-align: center;">+2</td>
+<td style="text-align: center;">+4</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="72-weapon-tiers">7.2 Weapon Tiers</h3>
+<p>Weapons deal <strong>flat damage</strong> on a hit. Margin adds on top.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Tier</th>
+<th style="text-align: center;">Flat Damage</th>
+<th style="text-align: center;">EP Cost</th>
+<th style="text-align: center;">Base Trait Slots</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Mundane</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: left;">Common</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: left;">Rare</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Relic</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">5</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Dual Wielding:</strong> main-hand any one-handed weapon, off-hand must have the <strong>Light</strong> trait. While dual wielding, <strong>reroll one failed die per attack</strong> (the off-hand cleans up a miss rather than enlarging the pool); you cannot use a shield. Only the main-hand weapon's flat damage applies.</p>
+<h3 id="73-weapon-traits-wp">7.3 Weapon Traits (WP)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Trait</th>
+<th style="text-align: center;">WP</th>
+<th style="text-align: left;">Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Accurate</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">−1 Success Threshold with this weapon</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Heavy</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">+2 flat damage, −1 die from attack pool</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Blunt</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Ignore 1 point of enemy Armor</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Piercing</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">+1 flat damage if any damage is dealt</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Defensive</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">+1 Evasion vs melee while wielding</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Reach</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Attack into the Adjacent Zone</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Reliable</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Reroll one die showing a 1 (once per attack)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Wounding</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">On a hit, target −1 die on their next roll</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Two-Handed</strong></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: left;">Requires two hands; <strong>+1 flat damage</strong>; +1 bonus WP</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Executioner</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">+1 flat damage vs targets at 0 Grit</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Hooking</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">On a hit, pull target 1 zone toward you, or pin them in their zone until their next turn</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Brace</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Reroll one failed die on Opportunity Attacks if you didn't move this turn</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Feinting</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">On a miss vs Evasion, reroll one failed die on your next attack vs that target</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Serrated</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">If you deal damage, target Armor −1 for the scene</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Suppressing</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">On a hit (even at 0 damage), target −1 die on their next roll</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Vicious</strong></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">On a hit containing a natural 10, up to 2 of the final damage applies directly to Health</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Light</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Usable in the off-hand for Dual Wielding</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="74-loot-budgets-gm-tools">7.4 Loot Budgets (GM Tools)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Quality</th>
+<th style="text-align: center;">EP Budget</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Mundane</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: left;">Shoddy, damaged, civilian-grade</td>
+</tr>
+<tr>
+<td style="text-align: left;">Common</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Standard professional gear</td>
+</tr>
+<tr>
+<td style="text-align: left;">Uncommon</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">Expert craft or minor enchantment</td>
+</tr>
+<tr>
+<td style="text-align: left;">Rare</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">Heroic gear with history or a name</td>
+</tr>
+<tr>
+<td style="text-align: left;">Relic</td>
+<td style="text-align: center;">15+</td>
+<td style="text-align: left;">Artifact level</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Building loot:</strong> buy the chassis (weapon tier / armor category / shield) from the tables above, then convert remaining EP to WP at 1:1 (max 3 WP from conversion; Two-Handed bonus WP applies on top). Name it. Done.</p>
+<hr />
+<h2 id="8-abilities">8. Abilities</h2>
+<p>There are no spell lists. You build what your character actually does.</p>
+<h3 id="81-nature">8.1 Nature</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Nature</th>
+<th style="text-align: left;">Pool</th>
+<th style="text-align: left;">Threshold</th>
+<th style="text-align: left;">Hit Check</th>
+<th style="text-align: left;">Reduced By</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Physical</td>
+<td style="text-align: left;">PWR</td>
+<td style="text-align: left;">DEX</td>
+<td style="text-align: left;">Evasion</td>
+<td style="text-align: left;">Armor</td>
+</tr>
+<tr>
+<td style="text-align: left;">Magical</td>
+<td style="text-align: left;">AURA</td>
+<td style="text-align: left;">INT</td>
+<td style="text-align: left;">Evasion (half for area)</td>
+<td style="text-align: left;">Magic Resistance</td>
+</tr>
+<tr>
+<td style="text-align: left;">Mental</td>
+<td style="text-align: left;">AURA</td>
+<td style="text-align: left;">INT</td>
+<td style="text-align: left;">Resolve</td>
+<td style="text-align: left;">Nothing</td>
+</tr>
+<tr>
+<td style="text-align: left;">Social</td>
+<td style="text-align: left;">CHA</td>
+<td style="text-align: left;">CHA</td>
+<td style="text-align: left;">Resolve</td>
+<td style="text-align: left;">Nothing</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hybrid</td>
+<td style="text-align: left;">PWR + AURA</td>
+<td style="text-align: left;">DEX or INT</td>
+<td style="text-align: left;">Evasion (weapon carries it)</td>
+<td style="text-align: left;">Armor + MR, split</td>
+</tr>
+</tbody>
+</table></div>
+<p>An ability's roll uses the caster's pool attribute <strong>÷ Power Ratio</strong>, exactly like any other roll. Abilities scale through purchased flat damage, Assured Successes, and effects — not through bigger pools.</p>
+<h3 id="82-expression">8.2 Expression</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Expression</th>
+<th style="text-align: center;">DV</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Standalone</td>
+<td style="text-align: center;">+0</td>
+<td style="text-align: left;">Independent roll, independent targeting</td>
+</tr>
+<tr>
+<td style="text-align: left;">Integrated</td>
+<td style="text-align: center;">+2</td>
+<td style="text-align: left;">Woven into a weapon attack — one roll, one hit check, all effects apply</td>
+</tr>
+<tr>
+<td style="text-align: left;">Follow-up</td>
+<td style="text-align: center;">+4</td>
+<td style="text-align: left;">Triggers after your weapon attack lands. Own pool/threshold, no second hit check. Cannot trigger from an ally's hit; cannot chain</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="83-action-type-range-targeting">8.3 Action Type, Range, Targeting</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Action Type</th>
+<th style="text-align: center;">DV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Standard Action</td>
+<td style="text-align: center;">−2</td>
+</tr>
+<tr>
+<td style="text-align: left;">Quick Action</td>
+<td style="text-align: center;">+0</td>
+</tr>
+<tr>
+<td style="text-align: left;">Reaction</td>
+<td style="text-align: center;">+4</td>
+</tr>
+<tr>
+<td style="text-align: left;">Sustained (activation)</td>
+<td style="text-align: center;">+0</td>
+</tr>
+<tr>
+<td style="text-align: left;">Sustained (per round held)</td>
+<td style="text-align: center;">+2</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Range</th>
+<th style="text-align: left;">Reach</th>
+<th style="text-align: center;">DV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Touch</td>
+<td style="text-align: left;">Engaged Zone</td>
+<td style="text-align: center;">+0</td>
+</tr>
+<tr>
+<td style="text-align: left;">Reach</td>
+<td style="text-align: left;">Engaged or Adjacent</td>
+<td style="text-align: center;">+1</td>
+</tr>
+<tr>
+<td style="text-align: left;">Close</td>
+<td style="text-align: left;">Up to Adjacent</td>
+<td style="text-align: center;">+2</td>
+</tr>
+<tr>
+<td style="text-align: left;">Medium</td>
+<td style="text-align: left;">Up to Far</td>
+<td style="text-align: center;">+4</td>
+</tr>
+<tr>
+<td style="text-align: left;">Extreme</td>
+<td style="text-align: left;">Up to Extreme</td>
+<td style="text-align: center;">+6</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Targeting</th>
+<th style="text-align: center;">DV</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Self</td>
+<td style="text-align: center;">−2</td>
+<td style="text-align: left;">No hit check</td>
+</tr>
+<tr>
+<td style="text-align: left;">Single Target</td>
+<td style="text-align: center;">+0</td>
+<td style="text-align: left;">Full Evasion/Resolve</td>
+</tr>
+<tr>
+<td style="text-align: left;">Multi-Target</td>
+<td style="text-align: center;">+2 each extra</td>
+<td style="text-align: left;">Each defends separately</td>
+</tr>
+<tr>
+<td style="text-align: left;">Area — 1 zone</td>
+<td style="text-align: center;">+3</td>
+<td style="text-align: left;">Half Evasion; hits everyone in zone</td>
+</tr>
+<tr>
+<td style="text-align: left;">Area — each extra zone</td>
+<td style="text-align: center;">+2</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Cone</td>
+<td style="text-align: center;">+4</td>
+<td style="text-align: left;">Widens from caster</td>
+</tr>
+<tr>
+<td style="text-align: left;">Line</td>
+<td style="text-align: center;">+3</td>
+<td style="text-align: left;">Straight path</td>
+</tr>
+</tbody>
+</table></div>
+<p>Area, Cone, and Line hit allies too, by default.</p>
+<h3 id="84-effects-table">8.4 Effects Table</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Effect</th>
+<th style="text-align: center;">DV</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Assured Success</td>
+<td style="text-align: center;">+4 per AS</td>
+<td style="text-align: left;">Guaranteed success on this ability's roll, or granted to a target's next roll. Subject to the one-success guard</td>
+</tr>
+<tr>
+<td style="text-align: left;">Reroll</td>
+<td style="text-align: center;">+1 per reroll</td>
+<td style="text-align: left;">Reroll one failed die on this ability's roll (or a target's next roll)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Flat Damage (Physical)</td>
+<td style="text-align: center;">+3 per point</td>
+<td style="text-align: left;">Reduced by Armor</td>
+</tr>
+<tr>
+<td style="text-align: left;">Flat Damage (Magical/Elemental)</td>
+<td style="text-align: center;">+3 per point</td>
+<td style="text-align: left;">Reduced by MR</td>
+</tr>
+<tr>
+<td style="text-align: left;">Flat Damage (Psychological)</td>
+<td style="text-align: center;">+3 per point</td>
+<td style="text-align: left;">Checks Resolve; unreduced</td>
+</tr>
+<tr>
+<td style="text-align: left;">Flat Damage (Ephemeral)</td>
+<td style="text-align: center;">+5 per point</td>
+<td style="text-align: left;">Bypasses everything</td>
+</tr>
+<tr>
+<td style="text-align: left;">Damage over Time</td>
+<td style="text-align: center;">+2 per point</td>
+<td style="text-align: left;">+1 damage per round</td>
+</tr>
+<tr>
+<td style="text-align: left;">Heal Health</td>
+<td style="text-align: center;">+5 per point</td>
+<td style="text-align: left;">+1 Health restored</td>
+</tr>
+<tr>
+<td style="text-align: left;">Recoup Grit</td>
+<td style="text-align: center;">+3 per point</td>
+<td style="text-align: left;">+1 Grit restored</td>
+</tr>
+<tr>
+<td style="text-align: left;">Inflict Condition (minor)</td>
+<td style="text-align: center;">+2</td>
+<td style="text-align: left;">1 round base</td>
+</tr>
+<tr>
+<td style="text-align: left;">Inflict Condition (major)</td>
+<td style="text-align: center;">+4</td>
+<td style="text-align: left;">1 round base</td>
+</tr>
+<tr>
+<td style="text-align: left;">Duration increase</td>
+<td style="text-align: center;">+2 per round</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Persistent Duration</td>
+<td style="text-align: center;">+6</td>
+<td style="text-align: left;">Until removed; target may roll to clear</td>
+</tr>
+<tr>
+<td style="text-align: left;">Stackable Condition (max 2)</td>
+<td style="text-align: center;">+3</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Stackable Condition (max 3)</td>
+<td style="text-align: center;">+5</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Move / Reposition</td>
+<td style="text-align: center;">+2 per zone</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Create / Shape (minor)</td>
+<td style="text-align: center;">+2</td>
+<td style="text-align: left;">Small effect or object</td>
+</tr>
+<tr>
+<td style="text-align: left;">Create / Shape (major)</td>
+<td style="text-align: center;">+5</td>
+<td style="text-align: left;">Large or complex</td>
+</tr>
+<tr>
+<td style="text-align: left;">Magical Shield</td>
+<td style="text-align: center;">+2 per point</td>
+<td style="text-align: left;">+1 Evasion, 1 round</td>
+</tr>
+<tr>
+<td style="text-align: left;">Magical Armor</td>
+<td style="text-align: center;">+3 per point</td>
+<td style="text-align: left;">+1 Armor, 1 round</td>
+</tr>
+<tr>
+<td style="text-align: left;">Threshold Band</td>
+<td style="text-align: center;">+4</td>
+<td style="text-align: left;">−1 Success Threshold for this ability</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="85-difficulty-value-the-entropy-die">8.5 Difficulty Value &amp; the Entropy Die</h3>
+<p><strong>DV = (Stability Base + Total Effect Cost) − AR</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: center;">Stability Base</th>
+<th style="text-align: left;">World</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">High Magic — stable, safe, even novices rarely face backlash</td>
+</tr>
+<tr>
+<td style="text-align: center;">20</td>
+<td style="text-align: left;">Standard — magic is a learned science with clear risks <em>(recommended)</em></td>
+</tr>
+<tr>
+<td style="text-align: center;">30</td>
+<td style="text-align: left;">Grim/Volatile — wild and dangerous; even masters fear a bad roll</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">DV</th>
+<th style="text-align: left;">Starting Entropy Die</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">0–10</td>
+<td style="text-align: left;">d20 (Perfectly Stable)</td>
+</tr>
+<tr>
+<td style="text-align: left;">11–20</td>
+<td style="text-align: left;">d12 (Reliable)</td>
+</tr>
+<tr>
+<td style="text-align: left;">21–30</td>
+<td style="text-align: left;">d10 (Standard)</td>
+</tr>
+<tr>
+<td style="text-align: left;">31–40</td>
+<td style="text-align: left;">d8 (Volatile)</td>
+</tr>
+<tr>
+<td style="text-align: left;">41–50</td>
+<td style="text-align: left;">d6 (Dangerous)</td>
+</tr>
+<tr>
+<td style="text-align: left;">51+</td>
+<td style="text-align: left;">d4 (Imminent Backlash)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>After each use</strong>, roll the ability's Entropy Die. If the result falls <strong>below your INT Success Threshold</strong> (the same threshold from 2.3), the ability works but the die steps down: d20 → d12 → d10 → d8 → d6 → d4.</p>
+<p><em>Example: INT 3 → threshold 4+. Entropy steps down on 1–3 (30%).</em> One investment, two payoffs: INT buys accuracy and stability with the same point.</p>
+<p><strong>Catastrophic Backlash</strong> — if the Entropy Die is a <strong>d4</strong> and the roll falls below your threshold:
+* The ability fails.
+* Take 1 Health damage (bypasses Grit).
+* Gain +1 Exhaustion.
+* The ability is <strong>Locked</strong> until a Long Rest.</p>
+<p><strong>Domain Affinity:</strong> each Specialization names a category of effects that start one Entropy Die tier higher (max d20).</p>
+<h3 id="86-ability-creation-procedure">8.6 Ability Creation Procedure</h3>
+<ol>
+<li>Name and describe it.</li>
+<li>Choose Nature → 3. Expression → 4. Action Type → 5. Range → 6. Targeting → 7. Effects.</li>
+<li>Total <strong>DV = (Stability Base + Effect Cost) − AR</strong>.</li>
+<li>Look up the starting Entropy Die; apply Domain Affinity if it qualifies.</li>
+<li>Note your Entropy step-down band from INT.</li>
+</ol>
+<h3 id="87-worked-examples">8.7 Worked Examples</h3>
+<p><strong>Conflagrate</strong> <em>(Magical · Standalone · Standard)</em>
+Standard −2, Close +2, Single +0, Flat Damage (Fire) ×2 +6, Condition minor (Burn) +2 → <strong>Cost +8, DV = (20+8) − AR.</strong>
+Roll AURA vs INT threshold. Successes ≥ Evasion: 2 Fire damage + Margin, reduced by MR; target gains <strong>Burn</strong>.</p>
+<p><strong>Spectral Echo</strong> <em>(Hybrid · Follow-up · Standard)</em>
+Standard −2, Follow-up +4, Touch +0, Single +0, Flat Damage (Arcane) ×2 +6 → <strong>Cost +8.</strong>
+When your weapon attack hits, roll AURA vs INT threshold; deal 2 Arcane + Margin, reduced by MR. No weapon traits or riders apply to the echo.</p>
+<p><strong>Warlord's Command</strong> <em>(Social · Standalone · Quick)</em>
+Quick +0, Close +2, Single +0, Move/Reposition +2, Assured Success ×1 (granted) +4 → <strong>Cost +8.</strong>
+One ally moves one zone free and gains <strong>+1 Assured Success</strong> on their next roll. Willing allies don't check Resolve.</p>
+<p><strong>Mind Shatter</strong> <em>(Mental · Standalone · Standard)</em>
+Standard −2, Medium +4, Single +0, Flat Damage (Psychological) ×3 +9, Condition major (Shaken) +4 → <strong>Cost +15.</strong>
+Roll AURA vs INT threshold against the target's Resolve. On a hit: 3 Psychological damage + Margin, unreduced; target is <strong>Shaken</strong>.</p>
+<hr />
+<h2 id="9-character-creation">9. Character Creation</h2>
+<h3 id="91-the-three-budgets">9.1 The Three Budgets</h3>
+<ul>
+<li><strong>CCP (Character Creation Points):</strong> innate — Attributes, Skills, Traits, Feats, AR.</li>
+<li><strong>EP (Equipment Points):</strong> gear chassis — armor, shields, weapon tiers.</li>
+<li><strong>WP (Weapon Points):</strong> weapon traits.</li>
+</ul>
+<h3 id="92-ccp-table">9.2 CCP Table</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Purchase</th>
+<th style="text-align: right;">CCP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">+1 Attribute (any of PWR, DEX, INT, AURA, CHA)</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;">+1 AR</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Skill: Trained (+1 AS)</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: left;">Skill: Expert (+2 AS)</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Skill: Master (+3 AS)</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td style="text-align: left;">Armor Mastery: Trained / Expert / Master</td>
+<td style="text-align: right;">1 / 3 / 5</td>
+</tr>
+<tr>
+<td style="text-align: left;">Trait</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td style="text-align: left;">Feat: Trained tier</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td style="text-align: left;">Feat: Expert tier</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Feat: Master tier</td>
+<td style="text-align: right;">4</td>
+</tr>
+</tbody>
+</table></div>
+<p>Attribute hard cap: <strong>5</strong>. <strong>All attributes cost the same (3 CCP).</strong> Under v5 the pool/finesse split existed because raw dice were the premium currency; the Power Ratio now meters every pool attribute down to a small handful, so a pool point and a finesse point are worth roughly the same — one flat price keeps the math honest and the choice purely about character concept.</p>
+<h3 id="93-starting-package">9.3 Starting Package</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Item</th>
+<th style="text-align: left;">Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">CCP</td>
+<td style="text-align: left;">10 — intentionally tight; forces committed identity choices</td>
+</tr>
+<tr>
+<td style="text-align: left;">EP</td>
+<td style="text-align: left;">10</td>
+</tr>
+<tr>
+<td style="text-align: left;">Starting weapon</td>
+<td style="text-align: left;">One free <strong>Common</strong> weapon (2 flat damage)</td>
+</tr>
+<tr>
+<td style="text-align: left;">WP</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr>
+<td style="text-align: left;">Specialization</td>
+<td style="text-align: left;">One free, + one free Spec Feat from its list</td>
+</tr>
+<tr>
+<td style="text-align: left;">Trivial gear</td>
+<td style="text-align: left;">Free</td>
+</tr>
+<tr>
+<td style="text-align: left;">Unused CCP</td>
+<td style="text-align: left;">Carries forward</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Gritty toggle:</strong> at session zero the table may downgrade the free weapon to Mundane (1 damage) for a harsher early game.</p>
+<h3 id="94-procedure">9.4 Procedure</h3>
+<ol>
+<li><strong>Concept</strong> — name, background, role.</li>
+<li><strong>Specialization</strong> — choose one (0 CCP) + its free Spec Feat.</li>
+<li><strong>Spend CCP</strong> — attributes, skills, traits, feats.</li>
+<li><strong>Spend EP</strong> — armor, shield, weapon tier upgrade.</li>
+<li><strong>Spend WP</strong> — weapon traits (remaining EP converts 1:1, max 3).</li>
+<li><strong>Build Abilities</strong> — slots from AR (3.2).</li>
+<li><strong>Audit</strong> — verify budgets, compute Grit, Health, Evasion, Resolve, MR, Initiative, AR.</li>
+</ol>
+<hr />
+<h2 id="10-traits-who-you-are">10. Traits — Who You Are</h2>
+<p>Innate qualities. Always passive, always on. <strong>2 CCP each, no prerequisites, no repeats.</strong></p>
+<h3 id="physical">Physical</h3>
+<ul>
+<li><strong>Ironhide</strong> — +1 Natural Armor permanently. Cannot combine with Grit Guard.</li>
+<li><strong>Nimble</strong> — +1 Evasion permanently.</li>
+<li><strong>Grit Guard</strong> — While you have Grit, +2 Natural Armor and +1 Evasion. All of it vanishes at 0 Grit.</li>
+<li><strong>Last Step</strong> — While you have Grit, +1 Evasion. Lost at 0 Grit.</li>
+<li><strong>Ambidextrous</strong> — No off-hand penalties. While dual wielding, +1 flat damage on attacks.</li>
+<li><strong>Quickfoot</strong> — Reroll one failed die on movement rolls; act before non-Quickfoot characters at tied Initiative; move through occupied zones freely.</li>
+</ul>
+<h3 id="mental">Mental</h3>
+<ul>
+<li><strong>Extreme Focus</strong> — At the start of your turn, roll 1d10. That number is an additional Critical Success value for your rolls this turn (in addition to 10s).</li>
+<li><strong>Unshakeable</strong> — Immune to morale and fear conditions; intimidation auto-fails against you. −1 die on all CHA rolls.</li>
+<li><strong>Pain Tolerance</strong> — Act normally at 0 Grit until you take Health damage.</li>
+<li><strong>Instinct</strong> — Cannot be fully ambushed; always act in surprise rounds. Once per scene, reroll one Initiative-dependent check.</li>
+</ul>
+<h3 id="background">Background</h3>
+<ul>
+<li><strong>Unnatural Vitality</strong> — Ignore the first level of Exhaustion gained each day.</li>
+<li><strong>Survivor</strong> — At 1 Health: +1 Assured Success on all rolls, and ignore the first source of further Health damage each scene.</li>
+<li><strong>Hardened</strong> — Psychological conditions and fear cannot reduce your dice pools. −1 die on Social rolls.</li>
+<li><strong>Road Worn</strong> — Harsh environments and scarcity never impose roll penalties. Reroll one failed die on Survival and navigation.</li>
+</ul>
+<h3 id="presence">Presence</h3>
+<ul>
+<li><strong>Commanding Presence</strong> — Allies within 2 zones may reroll one failed die vs fear/morale. Once per scene, grant one ally an immediate out-of-turn reaction.</li>
+<li><strong>Unsettling</strong> — Enemies' first roll against you each scene is at +1 Success Threshold. Reroll one failed die on intimidate; −1 die to comfort or persuade warmly.</li>
+<li><strong>Blood-Price Marked</strong> — Enemies who know you've killed suffer −1 die on their first roll against you; allies who watch you fight may reroll one failed die on their next morale roll.</li>
+</ul>
+<hr />
+<h2 id="11-feats-what-youve-learned">11. Feats — What You've Learned</h2>
+<p>Active, conditional, or triggered techniques. Gated by Skill Domain. No cap on count. A feat must be plausible from the character's background and investment.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Tier</th>
+<th style="text-align: left;">Prerequisite</th>
+<th style="text-align: center;">CCP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Trained</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: left;">Expert</td>
+<td style="text-align: left;">Expert domain skill, OR relevant attribute 4+, OR AR 4+</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Master</td>
+<td style="text-align: left;">Master domain skill, OR relevant attribute 5, OR AR 8+</td>
+<td style="text-align: center;">4</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="martial-domain-combat-technique">Martial Domain — Combat Technique</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Feat</th>
+<th style="text-align: center;">Tier</th>
+<th style="text-align: left;">Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Press the Advantage</strong></td>
+<td style="text-align: center;">Trained</td>
+<td style="text-align: left;">When you Stagger a target, make one extra attack against them free</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Weapon Leverage</strong></td>
+<td style="text-align: center;">Trained</td>
+<td style="text-align: left;">Once/scene: forgo your weapon's flat damage to ignore the target's Armor entirely (Margin damage only)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Controlled Aggression</strong></td>
+<td style="text-align: center;">Trained</td>
+<td style="text-align: left;">Move into a zone and attack the same turn: +1 Assured Success on that attack</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Dirty Fighting</strong></td>
+<td style="text-align: center;">Trained</td>
+<td style="text-align: left;">Once/scene: attack an enemy who already acted this round as if their Evasion were 1</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Brace and Answer</strong></td>
+<td style="text-align: center;">Trained</td>
+<td style="text-align: left;">Once/scene: when hit in melee, attack that attacker as a reaction before damage applies</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Iron Hands</strong></td>
+<td style="text-align: center;">Trained</td>
+<td style="text-align: left;">Unarmed strikes count as a Common weapon with Reliable. Reroll one failed die on grapples. Can't be meaningfully disarmed</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Battlefield Predator</strong></td>
+<td style="text-align: center;">Expert</td>
+<td style="text-align: left;">Vs targets below half Grit, 9s also count as Critical Successes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Disarm and Dominate</strong></td>
+<td style="text-align: center;">Expert</td>
+<td style="text-align: left;">Once/scene: on a hit, deal no damage; target drops one held item and spends their next action retrieving it</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Redirect</strong></td>
+<td style="text-align: center;">Expert</td>
+<td style="text-align: left;">Once/scene: when an enemy misses you, redirect their attack to any target in the same zone</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Through the Guard</strong></td>
+<td style="text-align: center;">Expert</td>
+<td style="text-align: left;">Once/scene: turn a miss vs Evasion into a hit (Margin 0). Target gains +2 Evasion vs you for the scene</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Stand Your Ground</strong></td>
+<td style="text-align: center;">Expert</td>
+<td style="text-align: left;">If you haven't moved this turn, attack any enemy entering your zone as a reaction</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Flowing Strike</strong></td>
+<td style="text-align: center;">Expert</td>
+<td style="text-align: left;">When an unarmed attack hits, make a second unarmed attack at +1 Success Threshold, free</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Death Blow</strong></td>
+<td style="text-align: center;">Master</td>
+<td style="text-align: left;">Once/scene: on hitting a 0-Grit target, they must pass a survival check vs your threshold or be taken out regardless of Health</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Whirlwind</strong></td>
+<td style="text-align: center;">Master</td>
+<td style="text-align: left;">Once/scene: one attack roll vs every enemy in your zone; each defends separately</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>The Long Count</strong></td>
+<td style="text-align: center;">Master</td>
+<td style="text-align: left;">Once/scene: choose one enemy you've already attacked. Your attacks vs them auto-satisfy Evasion (Margin 0 unless you exceed it) for the scene</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="athletics-domain-resilience-recovery">Athletics Domain — Resilience &amp; Recovery</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Feat</th>
+<th style="text-align: center;">Tier</th>
+<th style="text-align: left;">Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Second Wind</strong></td>
+<td style="text-align: center;">Trained</td>
+<td style="text-align: left;">Once/scene, free: recover Grit equal to PWR + AR</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Shake It Off</strong></td>
+<td style="text-align: center;">Trained</td>
+<td style="text-align: left;">Once/scene: remove a condition gained from an attack before it affects your next roll</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Grounded</strong></td>
+<td style="text-align: center;">Trained</td>
+<td style="text-align: left;">When reduced to 0 Grit, your next roll gains +1 Assured Success</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Dig Deep</strong></td>
+<td style="text-align: center;">Expert</td>
+<td style="text-align: left;">Once/scene: take 2 Health damage (bypasses Grit) instead of a level of Exhaustion</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Absorb and Convert</strong></td>
+<td style="text-align: center;">Expert</td>
+<td style="text-align: left;">Once/scene, after taking 4+ damage in one hit: reroll one failed die on each roll until end of your next turn</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Controlled Collapse</strong></td>
+<td style="text-align: center;">Expert</td>
+<td style="text-align: left;">Once/scene: when you'd hit 0 Grit, choose to land at 1 or 0; attacker triggers no "reduced to 0" effects</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Unkillable Momentum</strong></td>
+<td style="text-align: center;">Master</td>
+<td style="text-align: left;">Once/scene: at 0 Health, keep acting for PWR rounds before going Down</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Inured</strong></td>
+<td style="text-align: center;">Master</td>
+<td style="text-align: left;">Choose a damage type or condition category: it deals minimum damage (1) and its conditions last half duration</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="arcana-domain-ability-magic-enhancement">Arcana Domain — Ability &amp; Magic Enhancement</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Feat</th>
+<th style="text-align: center;">Tier</th>
+<th style="text-align: left;">Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Precision Targeting</strong></td>
+<td style="text-align: center;">Trained</td>
+<td style="text-align: left;">Exclude up to INT targets from your Area/Cone/Line abilities</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Lingering Effect</strong></td>
+<td style="text-align: center;">Trained</td>
+<td style="text-align: left;">Once/scene: delay a Fleeting condition you applied by one roll</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Echo Anchor</strong></td>
+<td style="text-align: center;">Trained</td>
+<td style="text-align: left;">Once/scene: reapply a condition you just applied with a Standalone ability — no action, no Entropy roll</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Empower</strong></td>
+<td style="text-align: center;">Expert</td>
+<td style="text-align: left;">Once/scene: double an ability's flat damage on one use. Entropy rolls normally</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Condition Expertise</strong></td>
+<td style="text-align: center;">Expert</td>
+<td style="text-align: left;">Choose a condition: abilities you build that apply it cost −2 DV and last one tier longer from you</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Split Cast</strong></td>
+<td style="text-align: center;">Expert</td>
+<td style="text-align: left;">Once/scene: split a Single Target ability between two targets; each takes half the successes and half the flat damage (round down). One Entropy roll</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Void the Entropy</strong></td>
+<td style="text-align: center;">Master</td>
+<td style="text-align: left;">Once/scene: use an ability with no Entropy roll. Not usable at d4</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Sculpt</strong></td>
+<td style="text-align: center;">Master</td>
+<td style="text-align: left;">Define the exact shape of your Area/Cone/Line effects within their purchased range</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="tactics-domain-precision-setup">Tactics Domain — Precision &amp; Setup</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Feat</th>
+<th style="text-align: center;">Tier</th>
+<th style="text-align: left;">Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Exploit Opening</strong></td>
+<td style="text-align: center;">Trained</td>
+<td style="text-align: left;">When a target in your zone uses their Reaction, your next roll vs them is at −1 Success Threshold</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Threat Assessment</strong></td>
+<td style="text-align: center;">Trained</td>
+<td style="text-align: left;">Designate a Priority target at combat start; always know their Grit and Health. Re-designate at the start of your turns</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Flanking Discipline</strong></td>
+<td style="text-align: center;">Trained</td>
+<td style="text-align: left;">When you and an ally share a zone with an enemy, +1 flat damage against that enemy</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Bait and Punish</strong></td>
+<td style="text-align: center;">Expert</td>
+<td style="text-align: left;">Once/scene: when an enemy targets you and fails, make one free attack or apply one condition as a reaction</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Layered Pressure</strong></td>
+<td style="text-align: center;">Expert</td>
+<td style="text-align: left;">Conditions you apply to already-conditioned targets last one tier longer</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Zone Control</strong></td>
+<td style="text-align: center;">Expert</td>
+<td style="text-align: left;">Once/scene: declare a Controlled Zone — enemies entering spend a Quick Action or take a condition you could normally apply</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Predicted Move</strong></td>
+<td style="text-align: center;">Master</td>
+<td style="text-align: left;">Once/scene: when an enemy declares an action — it auto-fails, or you take a full action first</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Masterwork Setup</strong></td>
+<td style="text-align: center;">Master</td>
+<td style="text-align: left;">Once/scene: when you land a condition, apply a second different condition of equal or lower tier free</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="survival-subtlety-domains-utility-exploration">Survival &amp; Subtlety Domains — Utility &amp; Exploration</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Feat</th>
+<th style="text-align: center;">Tier</th>
+<th style="text-align: left;">Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Ghost Walk</strong></td>
+<td style="text-align: center;">Trained</td>
+<td style="text-align: left;">Leave no physical trace. Once/scene, move through an occupied zone without triggering reactions</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>First Read</strong></td>
+<td style="text-align: center;">Trained</td>
+<td style="text-align: left;">At the start of any non-combat scene, ask the GM two honest questions about the environment</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Prepared Ground</strong></td>
+<td style="text-align: center;">Expert</td>
+<td style="text-align: left;">Combat in a location you explored: gain one free environmental advantage</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Shadow Operative</strong></td>
+<td style="text-align: center;">Expert</td>
+<td style="text-align: left;">Once/scene, outside enemies' Engaged Zones: drop out of active awareness until you draw attention</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>One Step Ahead</strong></td>
+<td style="text-align: center;">Master</td>
+<td style="text-align: left;">Once/scene: negate one consequence and describe what you'd already prepared</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Unseen Architecture</strong></td>
+<td style="text-align: center;">Master</td>
+<td style="text-align: left;">During exploration, make one permanent subtle modification enemies won't find without specific cause</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="advanced-feats-capstones">Advanced Feats — Capstones</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Feat</th>
+<th style="text-align: left;">Prerequisites</th>
+<th style="text-align: left;">Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Deathless Rhythm</strong></td>
+<td style="text-align: left;">Master Martial, PWR 5, AR 6+</td>
+<td style="text-align: left;">Once/scene: at 0 Health, stay at 1 and immediately take a full turn out of order</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Inevitable</strong></td>
+<td style="text-align: left;">Master Tactics, INT 5, AR 8+</td>
+<td style="text-align: left;">One target per combat cannot benefit from Evasion against you</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entropic Mastery</strong></td>
+<td style="text-align: left;">Master Arcana, INT 5</td>
+<td style="text-align: left;">When an ability's Entropy Die steps down, use that ability again free (no Entropy roll). Not at d4</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Ghost in the Machine</strong></td>
+<td style="text-align: left;">Master Subtlety, DEX 5</td>
+<td style="text-align: left;">Undetectable by mundane means while still; detection vs your DEX while moving. Once/scene, act without breaking Shadow Operative</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Apex Predator</strong></td>
+<td style="text-align: left;">Master Martial, PWR 5, DEX 4, AR 8+</td>
+<td style="text-align: left;">At combat start, perceiving enemies check Resolve vs your AR/2 or are Terrified of you. Your attacks vs Terrified targets always trigger Overwhelm</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="12-conditions">12. Conditions</h2>
+<h3 id="tags">Tags</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Tag</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Fleeting</strong></td>
+<td style="text-align: left;">Consumed on the next relevant roll. No tracking</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Timed</strong></td>
+<td style="text-align: left;">Lasts its purchased duration; expires naturally</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Breakable</strong></td>
+<td style="text-align: left;">Can be ended early with a Standard Action doing the stated thing</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Persistent</strong></td>
+<td style="text-align: left;">Until removed. Target may spend a Quick Action to roll vs the applier's INT or AURA</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Escalating</strong></td>
+<td style="text-align: left;">Worsens as defined in its entry</td>
+</tr>
+</tbody>
+</table></div>
+<p>Reapplying a condition refreshes its duration. Escalating conditions worsen per their entry. Stacking is a purchased ability property, not a condition property.</p>
+<h3 id="minor-conditions">Minor Conditions</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Category</th>
+<th style="text-align: left;">Tags</th>
+<th style="text-align: left;">Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Off-Balance</strong></td>
+<td style="text-align: left;">Physical</td>
+<td style="text-align: left;">Fleeting</td>
+<td style="text-align: left;">−1 die on next roll</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Slowed</strong></td>
+<td style="text-align: left;">Physical</td>
+<td style="text-align: left;">Timed</td>
+<td style="text-align: left;">No Double Move; movement costs a Quick Action</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Weakened</strong></td>
+<td style="text-align: left;">Physical</td>
+<td style="text-align: left;">Timed</td>
+<td style="text-align: left;">−1 die on PWR rolls; −1 flat damage from physical sources (min 0)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Rattled</strong></td>
+<td style="text-align: left;">Mental</td>
+<td style="text-align: left;">Fleeting</td>
+<td style="text-align: left;">+1 Success Threshold on next roll</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Distracted</strong></td>
+<td style="text-align: left;">Mental</td>
+<td style="text-align: left;">Timed</td>
+<td style="text-align: left;">No Reactions until your next turn</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Exposed</strong></td>
+<td style="text-align: left;">Mental</td>
+<td style="text-align: left;">Fleeting</td>
+<td style="text-align: left;">−1 Evasion (min 0) until start of your next turn</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Marked</strong></td>
+<td style="text-align: left;">Magical</td>
+<td style="text-align: left;">Fleeting</td>
+<td style="text-align: left;">Next attack vs target (any source) gains +1 Assured Success</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Dimmed</strong></td>
+<td style="text-align: left;">Magical</td>
+<td style="text-align: left;">Fleeting</td>
+<td style="text-align: left;">−1 die from next ability roll (min 1)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="major-conditions">Major Conditions</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Category</th>
+<th style="text-align: left;">Tags</th>
+<th style="text-align: left;">Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Staggered</strong></td>
+<td style="text-align: left;">Physical</td>
+<td style="text-align: left;">Timed</td>
+<td style="text-align: left;">−2 dice on all rolls; no Double Move</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Pinned</strong></td>
+<td style="text-align: left;">Physical</td>
+<td style="text-align: left;">Timed, Breakable</td>
+<td style="text-align: left;">Can't leave Engaged Zone; −1 die physical. <em>Break: PWR roll vs applier</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Broken Guard</strong></td>
+<td style="text-align: left;">Physical</td>
+<td style="text-align: left;">Timed</td>
+<td style="text-align: left;">Evasion 0; Armor halved</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Shaken</strong></td>
+<td style="text-align: left;">Mental</td>
+<td style="text-align: left;">Timed, Breakable</td>
+<td style="text-align: left;">+1 Success Threshold; no Powers or once-per-scene abilities. <em>Break: Standard Action to steel yourself</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Terrified</strong></td>
+<td style="text-align: left;">Mental</td>
+<td style="text-align: left;">Timed, Escalating</td>
+<td style="text-align: left;">Must move away from source; −2 dice near it. <em>Escalates: at Extreme Zone, compulsion ends but −2 persists</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Disrupted</strong></td>
+<td style="text-align: left;">Magical</td>
+<td style="text-align: left;">Fleeting</td>
+<td style="text-align: left;">Next ability: Entropy steps down before the roll and its threshold is +1</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="special-conditions">Special Conditions</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Category</th>
+<th style="text-align: left;">Tags</th>
+<th style="text-align: left;">Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Bleed</strong></td>
+<td style="text-align: left;">Physical</td>
+<td style="text-align: left;">Timed, Breakable</td>
+<td style="text-align: left;">2 damage (ignores Armor) each time target takes a Standard or Quick Action. <em>Break: bind the wound</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Burn</strong></td>
+<td style="text-align: left;">Fire</td>
+<td style="text-align: left;">Timed, Breakable</td>
+<td style="text-align: left;">3 Fire damage (vs MR) at start of target's turn. <em>Break: extinguish</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Poison</strong></td>
+<td style="text-align: left;">Toxic</td>
+<td style="text-align: left;">Timed, Escalating</td>
+<td style="text-align: left;">Roll the Poison Die (base d4) at start of turn — that much Toxic damage (vs MR). <em>Escalates: each application steps the die up (d4→d6→d8→d10→d12); stacks tracked separately</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Flinch</strong></td>
+<td style="text-align: left;">Bludgeon</td>
+<td style="text-align: left;">Timed</td>
+<td style="text-align: left;">−1 die from PWR pool; taking damage costs Reaction or next Quick Action</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Frostbite</strong></td>
+<td style="text-align: left;">Cold</td>
+<td style="text-align: left;">Timed, Escalating</td>
+<td style="text-align: left;">Movement costs a Quick Action. <em>Escalates: second application fully immobilizes until one expires</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Shocked</strong></td>
+<td style="text-align: left;">Electric</td>
+<td style="text-align: left;">Timed, Escalating</td>
+<td style="text-align: left;">Lose next Quick Action. <em>Escalates: lose Standard Action instead</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Cursed</strong></td>
+<td style="text-align: left;">Arcane</td>
+<td style="text-align: left;">Persistent</td>
+<td style="text-align: left;">Once per round, the applier may force a reroll of one die the target rolled</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Unraveling</strong></td>
+<td style="text-align: left;">Ephemeral</td>
+<td style="text-align: left;">Timed, Escalating</td>
+<td style="text-align: left;">Each turn, −1 to the next stat in order: Evasion → Armor → MR → Resolve. Restores when it ends</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Haunted</strong></td>
+<td style="text-align: left;">Psychological</td>
+<td style="text-align: left;">Timed, Breakable, Escalating</td>
+<td style="text-align: left;">+1 ST on CHA and INT rolls; penalty grows +1 each turn it fires. <em>Break: confront it — resets the escalation, doesn't end it</em></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="13-specializations">13. Specializations</h2>
+<p>Archetype-agnostic philosophies — a tanky mage is Resolute, a rage mage is Devastating. Choose one at creation (0 CCP). Each grants: <strong>Identity, Passive, Power (1/scene), Price, Domain Affinity, and one free Spec Feat.</strong></p>
+<h3 id="the-resolute">The Resolute</h3>
+<p><em>Built to still be standing when everyone else has fallen.</em></p>
+<ul>
+<li><strong>Passive — Iron Presence:</strong> At or below half Grit: +1 Assured Success on all rolls and +1 flat damage.</li>
+<li><strong>Power — Defiant Stand:</strong> When damage would drop your Grit to 0 or below, negate that hit. Until your next turn you can't go below 1 Grit.</li>
+<li><strong>Price — The Long Game:</strong> In combat, you cannot restore Grit above half maximum by any means.</li>
+<li><strong>Domain Affinity — Endurance:</strong> Magical Armor, Magical Shield, Recoup, Heal, Duration.</li>
+<li><strong>Spec Feats (pick one):</strong> <strong>Bloodied Resolve</strong> (once/scene, on taking Health damage, gain that much Grit) · <strong>Immovable</strong> (no forced movement works on you) · <strong>Armor of Scars</strong> (+1 Natural Armor) · <strong>Threshold Mentality</strong> (first time at 0 Grit each scene: your next roll counts every die as a success).</li>
+</ul>
+<h3 id="the-precise">The Precise</h3>
+<p><em>The battlefield is a problem you've already solved.</em></p>
+<ul>
+<li><strong>Passive — Read the Room:</strong> At the start of your turn pick a visible target: −1 Success Threshold against them until your next turn.</li>
+<li><strong>Power — Perfect Execution:</strong> Once/scene, vs your Read target: the roll auto-satisfies Evasion. Damage and effects resolve normally.</li>
+<li><strong>Price — Tunnel Vision:</strong> Everyone except your Read target gets +1 Evasion against you.</li>
+<li><strong>Domain Affinity — Control:</strong> Inflict Condition, Move/Reposition, Threshold Band, Duration.</li>
+<li><strong>Spec Feats:</strong> <strong>Exploit Weakness</strong> (+1 flat damage vs targets with any condition or reduced stat) · <strong>Setup Artist</strong> (you apply a condition → next ally vs that target may reroll one failed die) · <strong>Patient Aim</strong> (didn't move: reroll one failed die on your next roll this turn) · <strong>Pressure Points</strong> (on any Critical Success, apply a free minor condition).</li>
+</ul>
+<h3 id="the-devastating">The Devastating</h3>
+<p><em>Does this make the next hit hurt more? The answer is always yes.</em></p>
+<ul>
+<li><strong>Passive — Escalating Force:</strong> Every 5 total final damage you deal this scene: +1 flat damage on subsequent attacks. No ceiling.</li>
+<li><strong>Power — Unleash:</strong> Once/scene, before rolling: double all your flat damage bonuses on this attack.</li>
+<li><strong>Price — Burn Hot:</strong> Every time one of your Entropy Dice steps down, take 1 Health damage (bypasses Grit).</li>
+<li><strong>Domain Affinity — Destruction:</strong> Flat Damage, Damage over Time, Area.</li>
+<li><strong>Spec Feats:</strong> <strong>Overkill</strong> (excess damage beyond a kill carries to one adjacent enemy) · <strong>Momentum</strong> (drop a target to 0 Grit: +1 Assured Success on your next roll) · <strong>Rend</strong> (deal 4+ in one hit: target Armor −1 for the scene) · <strong>Volatile Output</strong> (once/scene: reroll your whole pool, take the second result).</li>
+</ul>
+<h3 id="the-channeler">The Channeler</h3>
+<p><em>You don't cast abilities — you inhabit them.</em></p>
+<ul>
+<li><strong>Passive — Read and React:</strong> Roll the Entropy Die <em>before</em> using an ability. If it wouldn't step down: proceed with +1 die. If it would: proceed anyway, or cancel (die doesn't move, action is spent).</li>
+<li><strong>Built-in — Overcharge:</strong> Add up to +3 dice to an ability's pool. The Entropy Die steps down on any result of X or less, where X = dice added (stacks with the normal band).</li>
+<li><strong>Power — Last Word:</strong> Once/scene: an ability auto-succeeds at maximum — every die counts as a 10. The Entropy Die then steps down (two tiers, via Brittle Precision).</li>
+<li><strong>Price — Brittle Precision:</strong> Your Entropy Dice step down two tiers instead of one.</li>
+<li><strong>Domain Affinity — Chosen Mastery:</strong> After each Long Rest, pick one ability to start a tier higher.</li>
+<li><strong>Spec Feats:</strong> <strong>Controlled Burn</strong> (take 1 Health to prevent one of the two Brittle tiers) · <strong>Expanded Attunement</strong> (+1 Ability Slot) · <strong>Echo Cast</strong> (once/scene: repeat an ability with no Entropy roll; no Last Word/Overcharge on it) · <strong>Calculated Risk</strong> (Overcharge that doesn't step down: +1 flat damage per die added).</li>
+</ul>
+<h3 id="the-architect">The Architect</h3>
+<p><em>By the time the first blow lands, the outcome is already decided.</em></p>
+<ul>
+<li><strong>Passive — Architect's Gambit:</strong> Once/scene, before a round starts: swap the Initiative positions of one friendly and one enemy for that round.</li>
+<li><strong>Power — Pour It Through:</strong> Once/scene: one ally in your zone gains all your flat damage bonuses (gear, traits, effects) until your next turn. You make no attacks while it's active.</li>
+<li><strong>Price — The Weight of the Plan:</strong> Your own weapon counts as one tier lower (minimum Mundane).</li>
+<li><strong>Domain Affinity — Support:</strong> Heal, Recoup, extra Targets, Create/Shape, Inflict Condition.</li>
+<li><strong>Spec Feats:</strong> <strong>Coordinated Strike</strong> (once/scene: designate a target; the next two allies acting against it each get +1 Assured Success) · <strong>Disrupting Presence</strong> (enemies starting within 1 zone: +1 ST on their first roll) · <strong>Rally</strong> (once/scene: an ally who hears you removes one condition) · <strong>Interceptor</strong> (once/scene: redirect a hit on an adjacent ally to yourself).</li>
+</ul>
+<hr />
+<h2 id="14-enemies-gm-tools">14. Enemies &amp; GM Tools</h2>
+<h3 id="141-enemy-stat-block">14.1 Enemy Stat Block</h3>
+<p>Every enemy lists: <strong>Pool · Threshold · Evasion · Armor · MR · Damage · Grit/Health · Margin Cap · Menace · Behavior tag.</strong></p>
+<p>Enemies attack exactly like PCs: roll Pool at Threshold vs the PC's Evasion; damage = Damage + Margin − PC's Armor, where the enemy's <strong>Margin Cap</strong> stands in for AR/2 (Fodder/Standard 1, Elite 2, Boss 3). Enemy pools are <strong>fixed numbers</strong> — they do <em>not</em> use the Power Ratio. (<strong>Menace</strong> is only used by the optional player-facing module, 17.1.)</p>
+<h3 id="142-threat-tiers">14.2 Threat Tiers</h3>
+<p>Calibrated per PC, against a fresh <strong>Standard-dial</strong> starting character (Common weapon, 2-die pool + 1 Skill AS, threshold 5+, Evasion 1–2).</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Tier</th>
+<th style="text-align: center;">Target Rounds</th>
+<th style="text-align: center;">Pool</th>
+<th style="text-align: center;">Threshold</th>
+<th style="text-align: center;">Evasion</th>
+<th style="text-align: center;">Armor</th>
+<th style="text-align: center;">MR</th>
+<th style="text-align: center;">Damage</th>
+<th style="text-align: center;">Grit / Health</th>
+<th style="text-align: center;">Margin Cap</th>
+<th style="text-align: center;">Menace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Fodder</td>
+<td style="text-align: center;">~2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">6+</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">3 / 1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: left;">Standard</td>
+<td style="text-align: center;">~4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">5+</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">6 / 2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: left;">Elite</td>
+<td style="text-align: center;">6–8</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">4+</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">10 / 4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Boss</td>
+<td style="text-align: center;">10+</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">4+</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">15 / 6</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+</tr>
+</tbody>
+</table></div>
+<p>Design per-PC, multiply enemy count by party size. Elites and Bosses assume on-tier (advanced) PCs or a coordinated party.</p>
+<p><strong>Dial adjustments (match the table to your PCs' Power Ratio):</strong>
+* <strong>Heroic (1:1):</strong> PCs roll fatter pools and hit more reliably — give Standard-and-up enemies <strong>+1 Evasion</strong> and <strong>+2 Grit</strong> so fights still last their target rounds.
+* <strong>Standard (2:1):</strong> use the table as written.
+* <strong>Gritty (3:1):</strong> PCs roll sparse pools — give enemies <strong>−1 Evasion</strong> (minimum 1) so PCs aren't whiffing for whole scenes; leave damage and Grit alone (lethality is the point).</p>
+<h3 id="143-behavior-tags">14.3 Behavior Tags</h3>
+<ul>
+<li><strong>Aggressive:</strong> focuses wounded or isolated targets.</li>
+<li><strong>Tactical:</strong> uses cover, retreats, targets casters and support.</li>
+<li><strong>Relentless:</strong> one free attack when reduced to 0 Grit.</li>
+<li><strong>Protector:</strong> may take a hit for an adjacent ally.</li>
+</ul>
+<h3 id="144-difficulty-presets">14.4 Difficulty Presets</h3>
+<ul>
+<li><strong>Low Danger:</strong> simpler enemies, Stability Base 10.</li>
+<li><strong>Standard:</strong> baseline, Stability Base 20.</li>
+<li><strong>Brutal:</strong> smart enemies, hidden traps, Stability Base 30.</li>
+</ul>
+<p>A fuller bestiary lives in <code>Extras UDS/Enemy Beastiary.md</code>.</p>
+<hr />
+<h2 id="15-advancement">15. Advancement</h2>
+<p>Level-Ups are awarded at major milestones (recommended: every 1–3 sessions).</p>
+<p>Each Level-Up grants:</p>
+<ul>
+<li><strong>+2 Grit</strong></li>
+<li><strong>+1 Health</strong> on odd-numbered Level-Ups</li>
+<li><strong>+1 AR</strong> on even-numbered Level-Ups</li>
+<li><strong>CCP:</strong> Slow +3 · Standard +5 · Fast +7</li>
+</ul>
+<p>Level-Up CCP buys anything from the creation table (9.2). Attribute cap 5 always applies.</p>
+<p><strong>Alternate awards (GM discretion):</strong> +1 CCP for a standout scene, +2 for a major objective or boss, +3 for an arc climax.</p>
+<hr />
+<h2 id="16-exploration">16. Exploration</h2>
+<h3 id="161-exploration-turns">16.1 Exploration Turns</h3>
+<p><strong>1 Exploration Turn = 10 minutes.</strong> Each turn: <strong>Party Action</strong> (Move / Search / Force / Interact / Short Rest — no Health recovery) → <strong>Consequences Tick</strong> (light burns, noise builds, timers advance) → pressure roll.</p>
+<ul>
+<li><strong>Careful Search:</strong> +1 turn, −1 Success Threshold on the roll.</li>
+<li><strong>Rush:</strong> −1 turn, +1 Success Threshold.</li>
+<li><strong>Torch:</strong> 6 turns. <strong>Lantern:</strong> 24 turns.</li>
+</ul>
+<h3 id="162-dungeon-pressure-die">16.2 Dungeon Pressure Die</h3>
+<p>Start at <strong>d12</strong> (dangerous zones d10 or d8). At the end of each Exploration Turn, roll it:</p>
+<ul>
+<li>On a <strong>1</strong>: a complication occurs (encounter, hazard, alarm, loss) and the die steps down (d12→d10→d8→d6→d4).</li>
+<li>On a <strong>1 at d4</strong>: a <strong>major event</strong>, then reset to d12.</li>
+<li><strong>Relief</strong> (step the die up one): secure rest, leaving the zone, or spending real resources to stabilize.</li>
+</ul>
+<hr />
+<h2 id="17-optional-modules">17. Optional Modules</h2>
+<h3 id="171-player-facing-defense-ai-gm-solo-play">17.1 Player-Facing Defense (AI-GM / solo play)</h3>
+<p>For tables where <strong>players roll all dice</strong> (the standard UDS playtest protocol), enemies never roll. When an enemy attacks:</p>
+<ol>
+<li>The defending player rolls a <strong>Defense Check</strong>: pool = <strong>DEX ÷ Power Ratio</strong> (dodge) or <strong>PWR ÷ Power Ratio</strong> (brace — requires a shield or weapon in hand), at their Physical threshold. A shield grants <strong>+1 Assured Success</strong> to brace, and a defensive Skill grants its AS as normal.</li>
+<li><strong>Total successes ≥ enemy Menace → the attack misses.</strong></li>
+<li>Otherwise: take <strong>enemy Damage + shortfall (Menace − total successes, capped at the enemy's Margin Cap) − your Armor</strong>.</li>
+</ol>
+<p>This is the mirror of 14.1 — the player rolls to dodge instead of the enemy rolling to hit. Use one mode or the other for a whole scene, never both.</p>
+<h3 id="172-social-conflict">17.2 Social Conflict</h3>
+<p>Social pressure is an attack vs <strong>Resolve</strong>: roll CHA pool at CHA threshold; successes ≥ Resolve means the target genuinely shifts. Margin sets the size of the shift (Margin 0: a small concession; Margin at your cap: meaningful cooperation).</p>
+<ul>
+<li>PCs are never mind-controlled. A social hit on a PC imposes a <strong>condition</strong> (e.g., Rattled, Shaken) or a complication, never a scripted action — the player decides how the pressure lands.</li>
+<li>Repeated identical attempts on the same target don't roll; change the leverage or accept the answer.</li>
+</ul>
+<hr />
+<p><em>End of Game Rules v5.1. For what changed and why, see <code>DESIGN_NOTES_v5.md</code> (the v5.1 overhaul is Part 3).</em></p>
+  </main>
+</div>
+<a href="#" class="top-link" id="topLink" aria-label="Back to top">↑</a>
+<script>
+(function(){
+  // Mobile nav toggle
+  var sb=document.getElementById('sidebar'), btn=document.getElementById('menuBtn');
+  if(btn){btn.addEventListener('click',function(){sb.classList.toggle('open');});}
+  document.querySelectorAll('.toc a').forEach(function(a){
+    a.addEventListener('click',function(){sb.classList.remove('open');});
+  });
+  // Back-to-top
+  var top=document.getElementById('topLink');
+  window.addEventListener('scroll',function(){
+    top.classList.toggle('show', window.scrollY>600);
+  });
+  // Scroll-spy: highlight current section in the TOC
+  var links={}, targets=[];
+  document.querySelectorAll('.toc a[href^="#"]').forEach(function(a){
+    var id=a.getAttribute('href').slice(1); links[id]=a;
+    var el=document.getElementById(id); if(el) targets.push(el);
+  });
+  var spy=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        Object.values(links).forEach(function(l){l.classList.remove('active');});
+        var a=links[e.target.id]; if(a){a.classList.add('active');
+          a.scrollIntoView({block:'nearest'});}
+      }
+    });
+  },{rootMargin:'-10% 0px -80% 0px', threshold:0});
+  targets.forEach(function(t){spy.observe(t);});
+})();
+</script>
+</body>
+</html>
