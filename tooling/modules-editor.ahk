@@ -320,7 +320,10 @@ class ModulesEditor {
     ; -------------------------------------------------------------- actions
     AddNew() {
         this.CommitForm()
-        m := this.NewModule()
+        sel := FileSelect(3, this.LibraryDir()
+            , "Select the document's HTML file  (Cancel for a blank entry)"
+            , "HTML (*.html; *.htm)")
+        m := (sel = "") ? this.NewModule() : this.ModuleFromHtml(sel)
         this.Modules.Push(m)
         this.lv.Add(, m["title"], m["type"], m["status"])
         this.SelectIndex(this.Modules.Length)
