@@ -366,6 +366,36 @@ class ModulesEditor {
         this.SelectIndex(this.Modules.Length ? 1 : 0)
     }
 
+    ; Copy any picked HTML files (modules with a pending _src) into the library,
+    ; at the location their href points to. Returns false to abort the save.
+    CopyPendingFiles() {
+        repo := this.RepoRoot()
+        for m in this.Modules {
+            src  := m.Has("_src") ? m["_src"] : ""
+            href := Trim(m["href"])
+            if (src = "" || href = "")
+                continue
+            dest := repo "\" StrReplace(href, "/", "\")
+            if FileExist(dest) {
+                if (MsgBox("Overwrite " href " ?", "File exists", "YesNo Icon!") != "Yes") {
+                    m["_src"] := ""          ; user declined; don't ask again
+                    continue
+                }
+            }
+            SplitPath(dest, , &destDir)
+            try {
+                if !DirExist(destDir)
+                    DirCreate(destDir)
+                FileCopy(src, dest, true)
+            } catch as e {
+                MsgBox("Copy failed for " href ":`n" e.Message "`n`nSave aborted.", "Error", "IconX")
+                return false
+            }
+            m["_src"] := ""                   ; copied; don't recopy on next save
+        }
+        return true
+    }
+
     SaveFile() {
         this.CommitForm()
         errs := this.Validate()
@@ -383,6 +413,9 @@ class ModulesEditor {
                 return
             }
         }
+        ; copy newly-picked HTML files into the library before writing modules.js
+        if !this.CopyPendingFiles()
+            return
         content := this.Serialize()
         try {
             f := FileOpen(this.FilePath, "w", "UTF-8-RAW")
