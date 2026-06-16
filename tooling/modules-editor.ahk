@@ -30,7 +30,7 @@ class ModulesEditor {
         this.LoadFile()
         this.BuildGui()
         this.RefreshList()
-        this.gui.Show("w760 h470")
+        this.gui.Show("w760 h500")
         this.SelectIndex(this.Modules.Length ? 1 : 0)
     }
 
@@ -120,49 +120,119 @@ class ModulesEditor {
         m["tags"] := []
         m["type"] := "Tutorial"
         m["status"] := "learning"
+        m["_src"] := ""          ; editor-only: pending source HTML to copy on save (never serialized)
+        return m
+    }
+
+    ; ---------------------------------------------------------- file helpers
+    ; Repo root = the directory that holds modules.js (this.FilePath).
+    RepoRoot() {
+        SplitPath(this.FilePath, , &dir)
+        return dir
+    }
+
+    LibraryDir() {
+        return this.RepoRoot() "\library"
+    }
+
+    ; Filename (no extension) -> URL-safe slug. Empty -> "doc".
+    Slugify(name) {
+        s := StrLower(Trim(name))
+        s := RegExReplace(s, "[\s_]+", "-")     ; spaces/underscores -> hyphen
+        s := RegExReplace(s, "[^a-z0-9-]", "")  ; drop everything else
+        s := RegExReplace(s, "-+", "-")         ; collapse repeats
+        s := Trim(s, "-")                        ; trim edge hyphens
+        return (s = "") ? "doc" : s
+    }
+
+    DecodeEntities(s) {
+        s := StrReplace(s, "&lt;", "<")
+        s := StrReplace(s, "&gt;", ">")
+        s := StrReplace(s, "&quot;", '"')
+        s := StrReplace(s, "&#39;", "'")
+        s := StrReplace(s, "&amp;", "&")        ; do & last to avoid double-decoding
+        return s
+    }
+
+    ; Best-effort parse of <title> and <meta name="description">. Never throws.
+    ParseHtmlMeta(path) {
+        out := Map("title", "", "blurb", "")
+        try {
+            raw := FileRead(path, "UTF-8")
+        } catch {
+            return out
+        }
+        if RegExMatch(raw, "is)<title[^>]*>(.*?)</title>", &mt)
+            out["title"] := this.DecodeEntities(Trim(mt[1]))
+        ; find the <meta ...> tag whose name attr is description (any attr order)
+        if RegExMatch(raw, "is)<meta\s+[^>]*name\s*=\s*([\x22\x27])description\1[^>]*>", &mm)
+            if RegExMatch(mm[0], "is)content\s*=\s*([\x22\x27])(.*?)\1", &mc)
+                out["blurb"] := this.DecodeEntities(Trim(mc[2]))
+        return out
+    }
+
+    ; Build a prefilled module from a picked HTML file.
+    ModuleFromHtml(path) {
+        m := this.NewModule()
+        SplitPath(path, &fileName, , , &nameNoExt)
+        meta := this.ParseHtmlMeta(path)
+        m["title"] := (meta["title"] != "") ? meta["title"] : nameNoExt
+        m["blurb"] := meta["blurb"]
+        libDir := this.LibraryDir()
+        if (SubStr(path, 1, StrLen(libDir) + 1) = libDir "\") {
+            ; already inside library/ -> link to its existing path, no copy
+            m["href"] := StrReplace(SubStr(path, StrLen(this.RepoRoot()) + 2), "\", "/")
+        } else {
+            ; outside library/ -> derive dest from filename slug; copy on save
+            m["href"] := "library/" this.Slugify(nameNoExt) "/" fileName
+            m["_src"] := path
+        }
         return m
     }
 
     ; ------------------------------------------------------------------ GUI
     BuildGui() {
-        this.gui := Gui("+MinSize720x470", "Modules Editor — " this.FilePath)
+        this.gui := Gui("+MinSize720x500", "Modules Editor — " this.FilePath)
         this.gui.OnEvent("Close", (*) => ExitApp())
         this.gui.SetFont("s9", "Segoe UI")
 
-        this.lv := this.gui.AddListView("x8 y8 w330 h450", ["Title", "Type", "Status"])
+        this.lv := this.gui.AddListView("x8 y40 w330 h418", ["Title", "Type", "Status"])
         this.lv.OnEvent("ItemSelect", this.OnItemSelect.Bind(this))
         this.lv.ModifyCol(1, 180)
         this.lv.ModifyCol(2, 80)
         this.lv.ModifyCol(3, 64)
 
-        this.AddLabel("Title",    350, 12)
-        this.ctrl["title"]    := this.gui.AddEdit("x440 y10 w310")
-        this.AddLabel("Blurb",    350, 44)
-        this.ctrl["blurb"]    := this.gui.AddEdit("x440 y42 w310 r3 +Wrap")
-        this.AddLabel("Type",     350, 110)
-        this.ctrl["type"]     := this.gui.AddComboBox("x440 y108 w150", this.Types)
-        this.AddLabel("Category", 350, 142)
-        this.ctrl["category"] := this.gui.AddEdit("x440 y140 w310")
-        this.AddLabel("Code",     350, 174)
-        this.ctrl["code"]     := this.gui.AddEdit("x440 y172 w310")
-        this.AddLabel("Tags",     350, 206)
-        this.ctrl["tags"]     := this.gui.AddEdit("x440 y204 w310")
-        this.gui.AddText("x440 y228 w310 cGray", "comma-separated")
-        this.AddLabel("Status",   350, 254)
-        this.ctrl["status"]   := this.gui.AddDropDownList("x440 y252 w150", this.Statuses)
-        this.AddLabel("Href",     350, 286)
-        this.ctrl["href"]     := this.gui.AddEdit("x440 y284 w310")
-        this.AddLabel("Steps",    350, 318)
-        this.ctrl["steps"]    := this.gui.AddEdit("x440 y316 w80 +Number")
-        this.AddLabel("Progress", 350, 350)
-        this.ctrl["progress"] := this.gui.AddEdit("x440 y348 w80 +Number")
+        this.AddLabel("Title",    350, 42)
+        this.ctrl["title"]    := this.gui.AddEdit("x440 y40 w310")
+        this.AddLabel("Blurb",    350, 74)
+        this.ctrl["blurb"]    := this.gui.AddEdit("x440 y72 w310 r3 +Wrap")
+        this.AddLabel("Type",     350, 140)
+        this.ctrl["type"]     := this.gui.AddComboBox("x440 y138 w150", this.Types)
+        this.AddLabel("Category", 350, 172)
+        this.ctrl["category"] := this.gui.AddEdit("x440 y170 w310")
+        this.AddLabel("Code",     350, 204)
+        this.ctrl["code"]     := this.gui.AddEdit("x440 y202 w310")
+        this.AddLabel("Tags",     350, 236)
+        this.ctrl["tags"]     := this.gui.AddEdit("x440 y234 w310")
+        this.gui.AddText("x440 y258 w310 cGray", "comma-separated")
+        this.AddLabel("Status",   350, 284)
+        this.ctrl["status"]   := this.gui.AddDropDownList("x440 y282 w150", this.Statuses)
+        this.AddLabel("Href",     350, 316)
+        this.ctrl["href"]     := this.gui.AddEdit("x440 y314 w310")
+        this.AddLabel("Steps",    350, 348)
+        this.ctrl["steps"]    := this.gui.AddEdit("x440 y346 w80 +Number")
+        this.AddLabel("Progress", 350, 380)
+        this.ctrl["progress"] := this.gui.AddEdit("x440 y378 w80 +Number")
 
-        this.gui.AddButton("x440 y386 w74",  "Add New").OnEvent("Click", (*) => this.AddNew())
-        this.gui.AddButton("x519 y386 w74",  "Delete").OnEvent("Click", (*) => this.DeleteSel())
-        this.gui.AddButton("x598 y386 w74",  "Move Up").OnEvent("Click", (*) => this.Move(-1))
-        this.gui.AddButton("x677 y386 w74",  "Move Down").OnEvent("Click", (*) => this.Move(1))
-        this.gui.AddButton("x440 y422 w150", "Save to File").OnEvent("Click", (*) => this.SaveFile())
-        this.gui.AddButton("x598 y422 w153", "Reload").OnEvent("Click", (*) => this.Reload())
+        ; top toolbar
+        this.gui.AddButton("x8   y8   w90",  "Add New").OnEvent("Click", (*) => this.AddNew())
+        this.gui.AddButton("x666 y8   w86",  "Reload").OnEvent("Click", (*) => this.Reload())
+        ; list-management row, under the ListView (gap between Delete and the Move buttons)
+        this.gui.AddButton("x8   y462 w70",  "Delete").OnEvent("Click", (*) => this.DeleteSel())
+        this.gui.AddButton("x150 y462 w88",  "Move Up").OnEvent("Click", (*) => this.Move(-1))
+        this.gui.AddButton("x242 y462 w96",  "Move Down").OnEvent("Click", (*) => this.Move(1))
+        ; prominent save, bottom-right under the form
+        this.gui.AddButton("x500 y462 w252", "Save to File").OnEvent("Click", (*) => this.SaveFile())
     }
 
     AddLabel(text, x, y) {
@@ -253,7 +323,10 @@ class ModulesEditor {
     ; -------------------------------------------------------------- actions
     AddNew() {
         this.CommitForm()
-        m := this.NewModule()
+        sel := FileSelect(3, this.LibraryDir()
+            , "Select the document's HTML file  (Cancel for a blank entry)"
+            , "HTML (*.html; *.htm)")
+        m := (sel = "") ? this.NewModule() : this.ModuleFromHtml(sel)
         this.Modules.Push(m)
         this.lv.Add(, m["title"], m["type"], m["status"])
         this.SelectIndex(this.Modules.Length)
@@ -296,6 +369,36 @@ class ModulesEditor {
         this.SelectIndex(this.Modules.Length ? 1 : 0)
     }
 
+    ; Copy any picked HTML files (modules with a pending _src) into the library,
+    ; at the location their href points to. Returns false to abort the save.
+    CopyPendingFiles() {
+        repo := this.RepoRoot()
+        for m in this.Modules {
+            src  := m.Has("_src") ? m["_src"] : ""
+            href := Trim(m["href"])
+            if (src = "" || href = "")
+                continue
+            dest := repo "\" StrReplace(href, "/", "\")
+            if FileExist(dest) {
+                if (MsgBox("Overwrite " href " ?", "File exists", "YesNo Icon!") != "Yes") {
+                    m["_src"] := ""          ; user declined; don't ask again
+                    continue
+                }
+            }
+            SplitPath(dest, , &destDir)
+            try {
+                if !DirExist(destDir)
+                    DirCreate(destDir)
+                FileCopy(src, dest, true)
+            } catch as e {
+                MsgBox("Copy failed for " href ":`n" e.Message "`n`nSave aborted.", "Error", "IconX")
+                return false
+            }
+            m["_src"] := ""                   ; copied; don't recopy on next save
+        }
+        return true
+    }
+
     SaveFile() {
         this.CommitForm()
         errs := this.Validate()
@@ -313,6 +416,9 @@ class ModulesEditor {
                 return
             }
         }
+        ; copy newly-picked HTML files into the library before writing modules.js
+        if !this.CopyPendingFiles()
+            return
         content := this.Serialize()
         try {
             f := FileOpen(this.FilePath, "w", "UTF-8-RAW")

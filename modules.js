@@ -53,5 +53,17 @@ window.MODULES = [
     href:     "library/UDS-Rules/GAME_RULES_v5.html",
     steps:    25,
     progress: 0
+  },
+  {
+    title:    "Valley Signal — Business Plan",
+    blurb:    "A local business's Google listing is its real front door now — and out here, most of those doors are dusty. Valley Signal keeps them fresh: hours, photos, posts, reviews, and a simple website, all maintained for the owner so they never have to think about it.",
+    type:     "Plan",
+    category: "Business",
+    code:     "PLN",
+    tags:     ["business", "plan", "work"],
+    status:   "planned",
+    href:     "library/business-plan/business-plan.html",
+    steps:    11,
+    progress: 0
   }
 ];

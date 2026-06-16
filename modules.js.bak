@@ -29,7 +29,7 @@ window.MODULES = [
     status:   "learning",
     href:     "library/blender-rigging/index.html",
     steps:    10,
-    progress: 8
+    progress: 0
   },
   {
     title:    "Pelvic Floor Training — Postpartum Prolapse to Lifting",
@@ -40,6 +40,18 @@ window.MODULES = [
     status:   "solid",
     href:     "library/pelvic-floor-training/pelvic-floor-training-guide.html",
     steps:    8,
-    progress: 100
+    progress: 0
+  },
+  {
+    title:    "Unified Dice Game",
+    blurb:    "A unique table top rule set",
+    type:     "Rules",
+    category: "Game Rules",
+    code:     "RUL",
+    tags:     ["Games", "Rules", "Dice"],
+    status:   "solid",
+    href:     "library/UDS-Rules/GAME_RULES_v5.html",
+    steps:    25,
+    progress: 0
   }
 ];

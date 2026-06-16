@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valley Signal — Business Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#16291F;
+    --pine-2:#1F3A2C;
+    --pine-3:#2C5040;
+    --larch:#D2922E;
+    --larch-soft:#E3B36A;
+    --river:#4C707A;
+    --paper:#F1EFE6;
+    --paper-2:#E8E5D8;
+    --card:#FBFAF4;
+    --ink:#19211C;
+    --stone:#5C6258;
+    --line:rgba(22,41,31,.16);
+    --line-strong:rgba(22,41,31,.34);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    font-size:18px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{max-width:920px;margin:0 auto;padding:0 32px;}
+
+  .mono{font-family:"Space Mono",monospace;}
+  .eyebrow{
+    font-family:"Space Mono",monospace;
+    font-size:12px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--larch);
+    font-weight:700;
+  }
+
+  h1,h2,h3,h4{font-family:"Archivo",sans-serif;line-height:1.08;margin:0;}
+
+  /* ---------- HERO / TITLE BLOCK ---------- */
+  .hero{
+    background:var(--pine);
+    color:var(--paper);
+    position:relative;
+    overflow:hidden;
+    border-bottom:3px solid var(--larch);
+  }
+  .hero .contours{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    opacity:.5;
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:2;padding:88px 32px 64px;max-width:920px;margin:0 auto;}
+  .coord-row{
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.12em;
+    color:var(--larch-soft);text-transform:uppercase;
+    border-bottom:1px solid rgba(241,239,230,.22);
+    padding-bottom:16px;margin-bottom:40px;
+  }
+  .hero h1{
+    font-size:clamp(44px,8vw,86px);
+    font-weight:800;
+    letter-spacing:-.02em;
+    color:var(--paper);
+  }
+  .hero h1 .pin{color:var(--larch);}
+  .hero .sub{
+    font-size:clamp(19px,2.4vw,24px);
+    max-width:34ch;
+    margin-top:24px;
+    color:#DCE0D4;
+    line-height:1.4;
+  }
+  .hero .meta{
+    margin-top:48px;
+    display:flex;flex-wrap:wrap;gap:36px;
+    font-family:"Space Mono",monospace;font-size:12.5px;
+    letter-spacing:.06em;color:#AAB3A4;
+  }
+  .hero .meta b{display:block;color:var(--paper);font-weight:700;letter-spacing:.02em;margin-top:4px;font-size:13px;}
+  .stamp{
+    position:absolute;right:32px;top:64px;z-index:3;
+    width:128px;height:128px;
+  }
+  @media(max-width:680px){.stamp{display:none;}}
+
+  /* ---------- SECTIONS ---------- */
+  section.block{padding:64px 0;border-bottom:1px solid var(--line);}
+  section.block:last-of-type{border-bottom:none;}
+  .sec-head{display:flex;gap:20px;align-items:baseline;margin-bottom:28px;}
+  .sec-num{
+    font-family:"Space Mono",monospace;font-weight:700;font-size:13px;
+    color:var(--larch);letter-spacing:.1em;white-space:nowrap;
+    padding-top:8px;
+  }
+  .sec-title{font-size:clamp(28px,4vw,40px);font-weight:700;letter-spacing:-.015em;color:var(--pine);}
+  .lede{font-size:21px;line-height:1.5;color:var(--ink);margin:0 0 24px;}
+  p{margin:0 0 18px;}
+  .block p:last-child{margin-bottom:0;}
+  strong{font-weight:500;color:var(--pine);}
+  em{color:var(--river);font-style:italic;}
+  a{color:var(--river);}
+
+  .indent{padding-left:calc(20px + 5.5ch);}
+  @media(max-width:680px){.indent{padding-left:0;} .sec-head{flex-direction:column;gap:4px;} .sec-num{padding-top:0;}}
+
+  /* ---------- CARDS / GRID ---------- */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px;}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr;}}
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:24px 26px;
+  }
+  .card h4{font-size:15px;font-family:"Space Mono",monospace;font-weight:700;letter-spacing:.04em;color:var(--pine);text-transform:uppercase;margin-bottom:10px;}
+  .card p{font-size:16px;line-height:1.55;margin:0;color:var(--stone);}
+  .card p strong{color:var(--ink);font-weight:500;}
+
+  /* tier cards */
+  .tiers{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:12px;}
+  @media(max-width:680px){.tiers{grid-template-columns:1fr;}}
+  .tier{background:var(--card);border:1px solid var(--line-strong);border-radius:4px;padding:28px;position:relative;}
+  .tier.feature{background:var(--pine);color:var(--paper);border-color:var(--pine);}
+  .tier .kicker{font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--larch);font-weight:700;}
+  .tier h3{font-size:26px;margin:8px 0 4px;color:inherit;}
+  .tier.feature h3{color:var(--paper);}
+  .tier .price{font-family:"Space Mono",monospace;font-size:30px;font-weight:700;margin:14px 0 2px;color:var(--pine);}
+  .tier.feature .price{color:var(--larch-soft);}
+  .tier .per{font-family:"Space Mono",monospace;font-size:12px;color:var(--stone);letter-spacing:.04em;}
+  .tier.feature .per{color:#AAB3A4;}
+  .tier ul{list-style:none;padding:0;margin:18px 0 0;}
+  .tier li{font-size:15.5px;line-height:1.45;padding:7px 0 7px 22px;position:relative;border-top:1px solid var(--line);color:var(--stone);}
+  .tier.feature li{border-color:rgba(241,239,230,.16);color:#D7DBCF;}
+  .tier li:before{content:"›";position:absolute;left:0;color:var(--larch);font-family:"Space Mono",monospace;}
+  .tier li strong{color:var(--ink);font-weight:500;}
+  .tier.feature li strong{color:var(--paper);}
+
+  /* ---------- DATA TABLE ---------- */
+  .ledger{width:100%;border-collapse:collapse;margin-top:8px;font-family:"Space Mono",monospace;font-size:14px;}
+  .ledger th{text-align:left;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--larch);font-weight:700;padding:0 12px 12px;border-bottom:2px solid var(--line-strong);}
+  .ledger th:last-child,.ledger td:last-child{text-align:right;}
+  .ledger td{padding:13px 12px;border-bottom:1px solid var(--line);color:var(--ink);}
+  .ledger td.label{font-family:"Newsreader",serif;font-size:16px;}
+  .ledger tr.total td{border-bottom:none;border-top:2px solid var(--line-strong);font-weight:700;color:var(--pine);padding-top:14px;}
+  .ledger .note{color:var(--stone);}
+
+  /* ---------- RISK ROWS ---------- */
+  .risk{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:3px;overflow:hidden;margin-bottom:14px;}
+  @media(max-width:680px){.risk{grid-template-columns:1fr;}}
+  .risk .r-risk{padding:18px 22px;background:var(--paper-2);border-right:1px solid var(--line);}
+  @media(max-width:680px){.risk .r-risk{border-right:none;border-bottom:1px solid var(--line);}}
+  .risk .r-fix{padding:18px 22px;background:var(--card);}
+  .risk h4{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;}
+  .risk .r-risk h4{color:#9A4A2E;}
+  .risk .r-fix h4{color:var(--pine-3);}
+  .risk p{font-size:15.5px;line-height:1.5;margin:0;color:var(--stone);}
+  .risk p strong{color:var(--ink);font-weight:500;}
+
+  /* ---------- ROADMAP ---------- */
+  .phase{display:flex;gap:24px;padding:24px 0;border-bottom:1px solid var(--line);}
+  .phase:last-child{border-bottom:none;}
+  .phase .pnum{font-family:"Archivo",sans-serif;font-weight:800;font-size:40px;color:var(--paper-2);line-height:.9;-webkit-text-stroke:1.5px var(--larch);min-width:64px;}
+  .phase .pbody h4{font-size:19px;color:var(--pine);margin-bottom:6px;}
+  .phase .pbody .ptag{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--river);margin-bottom:10px;}
+  .phase .pbody p{font-size:16px;color:var(--stone);margin:0;}
+
+  /* ---------- CALLOUT ---------- */
+  .callout{
+    background:var(--pine);color:var(--paper);border-radius:4px;
+    padding:32px 36px;margin:8px 0;position:relative;
+  }
+  .callout .q{font-size:23px;line-height:1.42;font-family:"Newsreader",serif;font-style:italic;color:#EDEFE5;}
+  .callout .q b{font-style:normal;color:var(--larch-soft);font-weight:500;}
+
+  ul.clean{list-style:none;padding:0;margin:16px 0 0;}
+  ul.clean li{padding:10px 0 10px 26px;position:relative;border-bottom:1px solid var(--line);font-size:16.5px;color:var(--ink);}
+  ul.clean li:last-child{border-bottom:none;}
+  ul.clean li:before{content:"◇";position:absolute;left:0;color:var(--larch);font-size:13px;top:13px;}
+  ul.clean li strong{color:var(--pine);font-weight:500;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--pine);color:#AAB3A4;padding:48px 32px;border-top:3px solid var(--larch);}
+  footer .wrap{max-width:920px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px;align-items:flex-end;}
+  footer .mono{font-size:12px;letter-spacing:.08em;}
+  footer b{color:var(--paper);}
+
+  /* focus + motion */
+  a:focus-visible{outline:2px solid var(--larch);outline-offset:3px;}
+  @media(prefers-reduced-motion:no-preference){
+    .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease;}
+    .reveal.in{opacity:1;transform:none;}
+  }
+
+  /* print */
+  @media print{
+    body{background:#fff;font-size:11pt;}
+    .hero{background:#fff;color:#000;border-bottom:2px solid #000;}
+    .hero .contours,.stamp{display:none;}
+    .hero h1,.hero h1 .pin,.hero .sub,.hero .meta b{color:#000;}
+    .coord-row,.hero .meta{color:#333;}
+    section.block{padding:22px 0;page-break-inside:avoid;}
+    .tier.feature,.callout,.card{background:#fff!important;color:#000!important;border:1px solid #999!important;}
+    .tier.feature h3,.tier.feature .price,.tier.feature li,.tier.feature li strong,.callout .q,.callout .q b{color:#000!important;}
+    footer{background:#fff;color:#000;border-top:2px solid #000;}
+    footer b{color:#000;}
+    .reveal{opacity:1!important;transform:none!important;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <svg class="contours" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g fill="none" stroke="#2C5040" stroke-width="1.4">
+      <path d="M-40,470 C180,420 340,500 560,440 C760,386 920,470 1240,400"/>
+      <path d="M-40,420 C180,366 360,448 580,388 C780,334 940,420 1240,348"/>
+      <path d="M-40,372 C200,318 360,398 600,338 C800,286 960,372 1240,300"/>
+      <path d="M-40,322 C200,272 380,350 620,292 C820,242 980,326 1240,256"/>
+      <path d="M-40,274 C220,228 400,302 640,248 C840,200 1000,280 1240,214"/>
+      <path d="M-40,226 C240,184 420,254 660,206 C860,162 1020,236 1240,174"/>
+      <path d="M-40,178 C260,142 440,206 680,166 C880,128 1040,194 1240,138"/>
+      <path d="M-40,130 C280,100 460,158 700,126 C900,98 1060,152 1240,104"/>
+    </g>
+  </svg>
+
+  <svg class="stamp" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="60" cy="60" r="56" fill="none" stroke="#D2922E" stroke-width="1.5"/>
+    <circle cx="60" cy="60" r="48" fill="none" stroke="#D2922E" stroke-width="0.8" stroke-dasharray="2 4"/>
+    <path d="M60 38c-9 0-16 7-16 16 0 12 16 28 16 28s16-16 16-28c0-9-7-16-16-16z" fill="#D2922E"/>
+    <circle cx="60" cy="54" r="6" fill="#16291F"/>
+    <text x="60" y="103" text-anchor="middle" font-family="Space Mono, monospace" font-size="8" fill="#E3B36A" letter-spacing="1">EST. 2026</text>
+  </svg>
+
+  <div class="hero-inner">
+    <div class="coord-row">
+      <span>Methow Valley · Okanogan County, WA</span>
+      <span>48.48° N / 120.18° W</span>
+    </div>
+    <div class="eyebrow" style="margin-bottom:18px;">Business Plan · Working Draft</div>
+    <h1>Valley <span class="pin">Signal</span></h1>
+    <p class="sub">Done-for-you online presence for the businesses that keep the valley running.</p>
+    <div class="meta">
+      <span>Model<b>Independent build · Subscription</b></span>
+      <span>Market<b>Rural local business</b></span>
+      <span>Engine<b>AI content + the listings layer</b></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- 01 SUMMARY -->
+  <section class="block reveal">
+    <div class="sec-head"><div class="sec-num">01 — N</div><h2 class="sec-title">Executive summary</h2></div>
+    <div class="indent">
+      <p class="lede">A local business's Google listing is its real front door now — and out here, most of those doors are dusty. Valley Signal keeps them fresh: hours, photos, posts, reviews, and a simple website, all maintained for the owner so they never have to think about it.</p>
+      <p>The premise is narrow on purpose. National platforms chase small businesses in metros with marketing budgets; they ignore the café in Twisp and the salon in Winthrop because the customer-acquisition math doesn't work for them at a distance. That neglected tier is the whole opportunity, and it's reachable by someone who lives here, is trusted here, and can automate the busywork with AI.</p>
+      <p>The business is built independently rather than resold through an agency platform. That trades a $400–500/month platform floor for low-margin variable costs and an owned AI content engine — the one piece that actually differentiates the service and can't be bought off a shelf. The result is a high-margin, relationship-driven subscription with a clear path from five founding customers to a defensible local franchise.</p>
+    </div>
+  </section>
+
+  <!-- 02 OPPORTUNITY -->
+  <section class="block reveal">
+    <div class="sec-head"><div class="sec-num">02 — NE</div><h2 class="sec-title">The opportunity</h2></div>
+    <div class="indent">
+      <p class="lede">The problem is visible from any Main Street: businesses with no website, listings with wrong hours, and social accounts that go four or five months between posts.</p>
+      <p>A quick scan of just a few categories across Winthrop, Twisp, and Mazama surfaces <strong>40+ independent businesses</strong> — and that's before counting trades, lodging, and services. The owners aren't neglecting their presence because they lack a tool; they're neglecting it because operations come first and they can't see what staying current would earn them. That apathy is the real competitor, and it's why "here's a dashboard" has never worked on them.</p>
+      <p>The sharpest insight from the local data is <em>who the customer actually is</em>. The marquee tourist spots — the breweries and ice-cream shops with 700-plus reviews — are thriving and already findable; they're the hardest sell and need the service least. The real prospect is the <strong>service-and-locals tier</strong>: salons, the barber, the one-person auto shop, the small boutiques, the ranch and lodging. Real revenue, loyal customers, and almost no reason they've ever invested in being found online.</p>
+      <div class="grid2" style="margin-top:24px;">
+        <div class="card"><h4>The wedge</h4><p>A rural market the national players write off — reachable through <strong>local presence and trust</strong>, not ad spend.</p></div>
+        <div class="card"><h4>The unlock</h4><p>AI removes the per-client content labor that made serving tiny businesses <strong>unprofitable</strong> for everyone else.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 LANDSCAPE -->
+  <section class="block reveal">
+    <div class="sec-head"><div class="sec-num">03 — E</div><h2 class="sec-title">Competitive landscape</h2></div>
+    <div class="indent">
+      <p>"Local presence management" is a mature, crowded industry. Direct-to-business tools (Yext, Birdeye, Podium, Synup, Thryv) sell listings sync and review management at $80–300/month. White-label reseller platforms (Vendasta, GoHighLevel) exist so an operator can rebrand and resell that plumbing — at the cost of a $400–500/month platform floor.</p>
+      <p>Valley Signal goes independent for three reasons that compound:</p>
+      <ul class="clean">
+        <li><strong>Margin.</strong> No platform fee means profitability on the first client, not the third.</li>
+        <li><strong>Ownership.</strong> The AI content engine — the actual differentiator — is built, not licensed, so no competitor ships the same thing.</li>
+        <li><strong>Fit.</strong> The incumbents aren't designed for rural micro-business or for an owner who won't open a portal. The product can be.</li>
+      </ul>
+      <p style="margin-top:22px;">The defensible position isn't novel technology — it's the combination no national vendor can replicate: <strong>local trust, an AI-automated content treadmill, and a rural niche they've chosen to ignore.</strong></p>
+    </div>
+  </section>
+
+  <!-- 04 SOLUTION -->
+  <section class="block reveal">
+    <div class="sec-head"><div class="sec-num">04 — SE</div><h2 class="sec-title">How it works</h2></div>
+    <div class="indent">
+      <p class="lede">Everything rides one always-fresh source of truth — the data spine — and every service is just another view onto it.</p>
+      <p>For each business, Valley Signal maintains a single record of hours, menu, photos, voice, and reviews, then fans it out across the surfaces that matter: <strong>Google Business Profile, Apple Maps, Bing Places, and Meta</strong> — all of which have free APIs. Access is sanctioned and clean: the owner adds Valley Signal as a <strong>Manager</strong> on their Google profile, keeps ownership, and can leave anytime. No workarounds, no password-sharing — the one thing that could get a listing suspended is the one thing the service exists to prevent.</p>
+
+      <p style="margin-top:24px;"><strong>The intake is designed around a single assumption: the owner will go silent.</strong> They hired the service precisely because they don't keep up with this. So the system produces good output whether or not they participate — owner input is an enhancement, never a requirement.</p>
+
+      <div class="grid2" style="margin-top:8px;">
+        <div class="card"><h4>Capture what exists</h4><p>Their sporadic Facebook post or updated Square menu is detected automatically and fanned out — <strong>no new behavior asked of them.</strong></p></div>
+        <div class="card"><h4>One text thread</h4><p>A single number they text like a friend. AI structures "closed tmrw" or a photo into the right update and a <strong>one-tap confirm.</strong></p></div>
+        <div class="card"><h4>Timed nudges</h4><p>A weekly "anything new? reply <em>same</em>" and a pre-holiday hours check — catching the most damaging stale data at the right moment.</p></div>
+        <div class="card"><h4>Evergreen autopilot</h4><p>When they're silent, the profile stays alive on recycled photos, reviews, and standing items. <strong>That's what makes "zero effort" true.</strong></p></div>
+      </div>
+      <p style="margin-top:22px;">One safety rule governs all of it: <strong>factual changes</strong> — hours, closures, contact info — always confirm before going live, because wrong hours are worse than stale hours. Marketing posts can run more autonomously.</p>
+    </div>
+  </section>
+
+  <!-- 05 SERVICES -->
+  <section class="block reveal">
+    <div class="sec-head"><div class="sec-num">05 — S</div><h2 class="sec-title">Services &amp; packaging</h2></div>
+    <div class="indent">
+      <p>One simple core offer, with a premium tier that earned its place by adding real value rather than gating features. Both ride the same spine, so the premium tier is almost pure margin.</p>
+      <div class="tiers">
+        <div class="tier">
+          <div class="kicker">Core</div>
+          <h3>Always Current</h3>
+          <div class="price">$149</div>
+          <div class="per">/ month / location · $299 setup</div>
+          <ul>
+            <li>Listings kept fresh &amp; consistent on <strong>Google, Apple, Bing, Meta</strong></li>
+            <li>AI-drafted posts from your signals</li>
+            <li>Review replies, handled</li>
+            <li>One-tap text approval flow</li>
+            <li>Holiday-hours protection</li>
+          </ul>
+        </div>
+        <div class="tier feature">
+          <div class="kicker">Premium</div>
+          <h3>Current + Found</h3>
+          <div class="price">Add-on</div>
+          <div class="per">everything in Core, plus —</div>
+          <ul>
+            <li><strong>Self-updating one-page website</strong>, fed by the same data</li>
+            <li><strong>Review generation</strong> campaigns</li>
+            <li>Real Facebook / Instagram cadence</li>
+            <li>Inbound message triage</li>
+            <li><strong>Monthly results report</strong></li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin-top:26px;"><strong>Out of scope, on purpose.</strong> Paid ad management and full SEO consulting don't ride the spine — they add per-client labor and make the business accountable for someone else's budget, which is exactly the churn trap. They stay separate, higher-touch, and only on request.</p>
+      <p><strong>Later-stage: the valley hub.</strong> Once a cluster of clients exists, a single visitor-facing directory — "what's open in the Methow this week," aimed at tourists who want a current, trusted source — becomes a shared asset fed by the same spine. It opens featured-placement upsells, directory-only listings, and sponsorship, and it's a retention lock once locals and visitors rely on it. Treated as upside to grow into, never a launch-day dependency.</p>
+    </div>
+  </section>
+
+  <!-- 06 PRICING -->
+  <section class="block reveal">
+    <div class="sec-head"><div class="sec-num">06 — SW</div><h2 class="sec-title">Pricing</h2></div>
+    <div class="indent">
+      <p>Priced on value, not cost. The marginal cost to serve a client is a few dollars a month, so the constraint is willingness-to-pay and time-per-client — not cost-plus. The frame that overcomes rural price resistance: <em>this pays for itself if it brings you one more table a week.</em></p>
+      <ul class="clean">
+        <li><strong>$149 / month per location</strong> — flagship, everything in Core included (range $129–169).</li>
+        <li><strong>$299 one-time setup</strong> — covers onboarding labor and filters tire-kickers.</li>
+        <li><strong>Month-to-month by default</strong> — "cancel anytime" is a selling point against the agencies' opaque contracts.</li>
+        <li><strong>Annual option at ~17% off</strong> (pay for ten) — front-loads cash and carries clients past the slow-month cancellation reflex.</li>
+        <li><strong>Founding five at $89 / month, locked for life</strong> — in exchange for a public review and referrals. The testimonial flywheel that lets everyone after them pay full price.</li>
+      </ul>
+      <div class="callout" style="margin-top:28px;">
+        <p class="q">Don't sell the listing — sell the relief. <b>Five visibly happy local businesses with five-star reviews is the asset that makes the next sale easy.</b></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 ECONOMICS -->
+  <section class="block reveal">
+    <div class="sec-head"><div class="sec-num">07 — W</div><h2 class="sec-title">Cost structure &amp; unit economics</h2></div>
+    <div class="indent">
+      <p>Going independent inverts the cost shape: a small fixed overhead instead of a platform fee, and a marginal cost per client that rounds to noise.</p>
+
+      <table class="ledger" aria-label="Fixed monthly overhead">
+        <thead><tr><th>Fixed overhead (all clients)</th><th>Monthly</th></tr></thead>
+        <tbody>
+          <tr><td class="label">Listing APIs — Google, Apple, Bing, Meta</td><td>$0</td></tr>
+          <tr><td class="label">Hosting / deploy <span class="note">(static, scales w/ traffic)</span></td><td>$0–50</td></tr>
+          <tr><td class="label">Domain</td><td>~$1</td></tr>
+          <tr class="total"><td class="label">Total fixed</td><td>$20–60</td></tr>
+        </tbody>
+      </table>
+
+      <table class="ledger" style="margin-top:30px;" aria-label="Variable cost per client">
+        <thead><tr><th>Variable, per client</th><th>Monthly</th></tr></thead>
+        <tbody>
+          <tr><td class="label">AI content <span class="note">(Haiku-class, cached)</span></td><td>~$0.15</td></tr>
+          <tr><td class="label">SMS approval flow <span class="note">(+ A2P 10DLC reg.)</span></td><td>$1–3</td></tr>
+          <tr class="total"><td class="label">Marginal cost / client</td><td>~$2–3</td></tr>
+        </tbody>
+      </table>
+
+      <p style="margin-top:26px;">At $149 revenue against ~$3 marginal cost, gross margin is extreme — which is the point of the independent build. <strong>The real costs aren't on this ledger:</strong> a one-time investment of build hours to reach what a reseller hands over on day one, and the ongoing role of being the on-call engineer when an API changes. The genuine scaling limit is <strong>time per client</strong> — onboarding plus the human-in-loop touchpoints — so margin is protected by keeping onboarding and the approval flow truly automated.</p>
+    </div>
+  </section>
+
+  <!-- 08 TOOLING -->
+  <section class="block reveal">
+    <div class="sec-head"><div class="sec-num">08 — NW</div><h2 class="sec-title">What gets built</h2></div>
+    <div class="indent">
+      <p>The independent stack, in rough build order. Most of it is connector-and-pipeline work squarely in a developer's wheelhouse.</p>
+      <div class="grid2" style="margin-top:8px;">
+        <div class="card"><h4>Spine + GBP manager</h4><p>The shared data record and Google Business Profile integration via Manager access.</p></div>
+        <div class="card"><h4>AI content pipeline</h4><p>Messy text/photo/voice → structured intent → drafted post → confirmation message.</p></div>
+        <div class="card"><h4>SMS approval flow</h4><p>The single text-thread interface, A2P-registered, one-tap confirm.</p></div>
+        <div class="card"><h4>Surface connectors</h4><p>Apple Business Connect, Bing Places, Meta Graph — fan-out from the spine.</p></div>
+        <div class="card"><h4>Self-updating sites</h4><p>One-page templates rendered live from the spine — current by construction.</p></div>
+        <div class="card"><h4>Prospect scanner</h4><p>Scores every business in the valley by listing health; ranks "no website + stale" as hot leads. The lead engine.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 GTM -->
+  <section class="block reveal">
+    <div class="sec-head"><div class="sec-num">09 — N·NE</div><h2 class="sec-title">Go-to-market</h2></div>
+    <div class="indent">
+      <p>Sales here is relationship-driven and local — that's a constraint and an advantage. The motion is deliberately small at first because the founder <em>is</em> the product until it's productized.</p>
+      <ul class="clean">
+        <li><strong>Seed with the founding five</strong> at the locked rate, in person, in exchange for reviews and referrals.</li>
+        <li><strong>Run the prospect scanner</strong> to turn the whole valley into a ranked lead list instead of guesswork.</li>
+        <li><strong>Let word of mouth compound</strong> — in a community this size, five five-star testimonials are the growth engine.</li>
+        <li><strong>Use presence as the moat</strong> — being local means catching what owners would never think to report, the one thing a faceless agency can't do.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10 RISKS -->
+  <section class="block reveal">
+    <div class="sec-head"><div class="sec-num">10 — E·SE</div><h2 class="sec-title">Risks &amp; mitigations</h2></div>
+    <div class="indent">
+      <div class="risk">
+        <div class="r-risk"><h4>Risk</h4><p><strong>Low willingness to pay.</strong> The worst-presence businesses are the least eager to fix it.</p></div>
+        <div class="r-fix"><h4>Mitigation</h4><p>Reframe cost as ROI ("one more table a week"); seed with discounted founders to prove it locally.</p></div>
+      </div>
+      <div class="risk">
+        <div class="r-risk"><h4>Risk</h4><p><strong>Invisible ROI → churn.</strong> A café can't tell which walk-ins came from a post.</p></div>
+        <div class="r-fix"><h4>Mitigation</h4><p>The monthly report makes calls, directions, and review growth visible — value you can point at.</p></div>
+      </div>
+      <div class="risk">
+        <div class="r-risk"><h4>Risk</h4><p><strong>Baseline SMB churn.</strong> Small businesses close, pivot, or change hands.</p></div>
+        <div class="r-fix"><h4>Mitigation</h4><p>Price it into the model; annual plans absorb the volatility; keep acquisition cost near zero.</p></div>
+      </div>
+      <div class="risk">
+        <div class="r-risk"><h4>Risk</h4><p><strong>Platform dependency.</strong> Google or Meta can change API quotas and policies.</p></div>
+        <div class="r-fix"><h4>Mitigation</h4><p>Spread across four surfaces; keep the spine portable so no single platform is load-bearing.</p></div>
+      </div>
+      <div class="risk">
+        <div class="r-risk"><h4>Risk</h4><p><strong>Time per client caps growth</strong> before the work is productized.</p></div>
+        <div class="r-fix"><h4>Mitigation</h4><p>Automate onboarding and approval first; treat anything that scales linearly with headcount as a bug.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 ROADMAP -->
+  <section class="block reveal">
+    <div class="sec-head"><div class="sec-num">11 — SUMMIT</div><h2 class="sec-title">Roadmap</h2></div>
+    <div class="indent">
+      <div class="phase">
+        <div class="pnum">1</div>
+        <div class="pbody">
+          <div class="ptag">Prove it · Core only</div>
+          <h4>Nail the core service and land five founders</h4>
+          <p>Ship the spine, GBP integration, AI pipeline, and text approval. Sign the founding five at the locked rate, collect reviews, and prove the "zero-effort, stays-fresh" promise holds in the real world.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="pnum">2</div>
+        <div class="pbody">
+          <div class="ptag">Deepen · Premium</div>
+          <h4>Add the spine-fed upsells</h4>
+          <p>Self-updating websites, review generation, social cadence, and the monthly report. Convert founders and new clients to Premium and to annual billing as the track record builds.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="pnum">3</div>
+        <div class="pbody">
+          <div class="ptag">Compound · The hub</div>
+          <h4>Stand up the valley hub and scale the territory</h4>
+          <p>Launch the visitor-facing directory as a shared asset, lean into the tourist-traffic angle, and layer featured placement and sponsorship revenue once it has real traffic.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="mono">VALLEY SIGNAL · <b>BUSINESS PLAN</b> · WORKING DRAFT</div>
+    <div class="mono">Methow Valley, WA · 2026</div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var els=document.querySelectorAll('.reveal');
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    },{threshold:.12});
+    els.forEach(function(el){io.observe(el);});
+  })();
+</script>
+
+</body>
+</html>
