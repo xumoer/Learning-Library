@@ -14,16 +14,8 @@ learning-library/
 │   ├── workflows/build-modules.yml   ← GitHub Action that rebuilds modules.js
 │   └── scripts/build-modules.js      ← scan script (reads <meta> tags)
 └── library/
-    ├── blender-rigging/
+    ├── document-name/
     │   └── index.html
-    ├── pelvic-floor-training/
-    │   └── pelvic-floor-training-guide.html
-    ├── UDS-Rules/
-    │   └── GAME_RULES_v5.html
-    ├── business-plan/
-    │   └── business-plan.html
-    └── Godot4-2d-platformer/
-        └── index.html
 ```
 
 Each document lives in its own folder under `library/` (flat — no per-type subfolders). The hub groups them into shelves by their `type`.
