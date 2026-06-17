@@ -153,7 +153,7 @@
 <footer>
   <div class="wrap">
     <h3>How this library works</h3>
-    <p>Each document is its own folder under <code>library/</code> with its page inside it. The shelves above are generated from <code>modules.js</code>, grouped by document type. To add one: create your page under <code>library/&lt;name&gt;/</code>, then add an entry to the <code>MODULES</code> array in <code>modules.js</code> (copy the template at the top of that file). Commit, push, and it's live.</p>
+    <p>Each document is its own folder under <code>library/</code> with its page inside it. The shelves above are generated from <code>modules.js</code>, grouped by document type. To add one: create your page under <code>library/&lt;name&gt;/</code> with the required <code>&lt;meta&gt;</code> tags (title, blurb, type). Push, and a GitHub Action rebuilds <code>modules.js</code> automatically — no manual editing needed.</p>
     <p style="margin-top:16px;color:var(--ink-dim)">Served over HTTPS by GitHub Pages, so embedded videos and external resources load exactly like any website — no local server, no Node, nothing to run.</p>
     <p style="margin-top:16px"><span class="muted">Replace this with your repo:</span> <a href="#" id="repolink">github.com/your-username/learning-library</a></p>
   </div>
@@ -246,7 +246,7 @@
 
     var addCard = '<article class="card add" aria-label="How to add a new document">'
       + '<div class="plus">+</div>'
-      + '<div>Add a document: drop your page in<br><code>library/your-doc/</code><br>then add an entry to <code>modules.js</code>.</div>'
+      + '<div>Add a document: drop your page in<br><code>library/your-doc/</code><br>with the required <code>&lt;meta&gt;</code> tags, push, done.</div>'
       + '</article>';
 
     // build one shelf per type
