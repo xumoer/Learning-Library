@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Self-describing metadata: title & blurb MUST match the modules.js card. -->
+  <title>Sewing Fundamentals for Absolute Beginners</title>
+  <meta name="title"    content="Sewing Fundamentals for Absolute Beginners">
+  <meta name="blurb"    content="Start from zero: how a sewing machine works, how to thread it and wind a bobbin, how to pick fabric, thread, and needles, the core stitches, and your first real project — a tote bag.">
+  <meta name="type"     content="Tutorial">
+  <meta name="category" content="Craft">
+  <meta name="code"     content="TUT">
+  <meta name="tags"     content="sewing, sewing machine, beginner, fabric, thread, needles, bobbin, tension, tote bag">
+  <meta name="status"   content="learning">
+  <meta name="steps"    content="9">
+  <meta name="progress" content="0">
+
+  <style>
+    :root{
+      --bg:#0f1115; --panel:#171a21; --panel-2:#1d212b; --border:#2a2f3a;
+      --text:#e7e9ee; --muted:#9aa3b2; --accent:#6ea8fe; --accent-2:#8ad6a1;
+      --warn:#f0c674; --warn-bg:#2a2412; --code:#0b0d11;
+      --pink:#e59ac9;
+      --radius:12px; --maxw:820px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; background:var(--bg); color:var(--text);
+      font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      padding:0 18px 80px;
+    }
+    .wrap{max-width:var(--maxw); margin:0 auto}
+    a{color:var(--accent)}
+    .top{display:flex; align-items:center; gap:14px; padding:18px 0; font-size:.92rem}
+    .top a.lib{color:var(--muted); text-decoration:none}
+    .top a.lib:hover{color:var(--text)}
+    header.head{padding:8px 0 4px}
+    header.head h1{font-size:2rem; line-height:1.2; margin:.2em 0}
+    header.head .blurb{color:var(--muted); font-size:1.05rem; margin:0 0 .4em}
+    .meta-row{color:var(--muted); font-size:.85rem; display:flex; flex-wrap:wrap; gap:6px 14px; margin:.5em 0 1.2em}
+    .meta-row span{background:var(--panel); border:1px solid var(--border); border-radius:999px; padding:3px 11px}
+    h2{font-size:1.45rem; margin:2.2em 0 .5em; padding-top:.4em}
+    h3{font-size:1.15rem; margin:1.6em 0 .4em}
+    p{margin:.7em 0}
+    code{background:var(--code); padding:.12em .4em; border-radius:6px; font-size:.92em;
+      font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    pre{background:var(--code); border:1px solid var(--border); border-radius:10px;
+      padding:14px 16px; overflow:auto}
+    pre code{background:none; padding:0}
+    ul,ol{padding-left:1.3em}
+    li{margin:.3em 0}
+
+    /* Intro / overview */
+    .lead{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:6px 20px; margin:1.4em 0}
+    .toc{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:8px; margin:1em 0}
+    .toc a{display:block; background:var(--panel-2); border:1px solid var(--border); border-radius:8px; padding:8px 12px; text-decoration:none; color:var(--text); font-size:.92rem}
+    .toc a:hover{border-color:var(--accent)}
+    .toc a b{color:var(--accent-2)}
+
+    /* Step blocks */
+    .step{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+      padding:4px 20px 16px; margin:1.4em 0}
+    .step > h2{margin-top:.6em}
+    .step .teaches{color:var(--accent-2); font-size:.9rem; font-weight:600; letter-spacing:.02em; text-transform:uppercase; margin:.8em 0 .2em}
+    .ready{background:var(--panel-2); border-left:3px solid var(--accent-2); border-radius:8px;
+      padding:10px 14px; margin:1em 0 .2em; color:var(--text); font-size:.95rem}
+    .ready b{color:var(--accent-2)}
+
+    /* Video embed + fallback link */
+    .video{margin:1.1em 0}
+    .video iframe{width:100%; aspect-ratio:16/9; border:0; border-radius:10px; background:#000}
+    .video .watch{display:inline-block; margin-top:.5em; font-size:.9rem; color:var(--muted); text-decoration:none}
+    .video .watch:hover{color:var(--accent)}
+    .ts{display:inline-block; margin:.2em 0; font-size:.92rem; color:var(--accent); text-decoration:none}
+    .ts:hover{text-decoration:underline}
+    .vidcaption{font-size:.85rem; color:var(--muted); margin:.2em 0 .6em}
+
+    /* Pitfalls / gotchas */
+    .pitfall{background:var(--warn-bg); border:1px solid #4a3d18; border-left:4px solid var(--warn);
+      border-radius:10px; padding:2px 16px; margin:1em 0}
+    .pitfall::before{content:"⚠ Gotcha"; display:block; color:var(--warn); font-weight:600; font-size:.85rem; margin:.7em 0 -.3em}
+
+    /* Version-change flag */
+    .versionflag{background:var(--panel-2); border:1px dashed var(--border); border-radius:8px;
+      padding:2px 14px; margin:.9em 0; font-size:.95rem}
+    .versionflag::before{content:"↻ Worth knowing"; display:block; color:var(--accent); font-weight:600; font-size:.82rem; margin:.6em 0 -.3em}
+
+    /* Tip box */
+    .tip{background:var(--panel-2); border:1px solid var(--border); border-left:4px solid var(--accent-2);
+      border-radius:10px; padding:2px 16px; margin:1em 0}
+    .tip::before{content:"💡 Tip"; display:block; color:var(--accent-2); font-weight:600; font-size:.85rem; margin:.7em 0 -.3em}
+
+    /* Glossary */
+    .glossary{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:6px 20px; margin:1.2em 0}
+    .glossary dt{font-weight:600; color:var(--text); margin-top:.7em}
+    .glossary dd{margin:.1em 0 .2em; color:var(--muted)}
+
+    /* Tables */
+    table{border-collapse:collapse; width:100%; margin:1em 0; font-size:.92rem}
+    th,td{border:1px solid var(--border); padding:8px 10px; text-align:left; vertical-align:top}
+    th{background:var(--panel-2); color:var(--accent-2)}
+    tr:nth-child(even) td{background:rgba(255,255,255,.015)}
+
+    /* Inline SVG diagram holder */
+    figure.diagram{margin:1.2em 0; text-align:center}
+    figure.diagram svg{max-width:100%; height:auto; background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:10px}
+    figure.diagram figcaption{color:var(--muted); font-size:.85rem; margin-top:.4em}
+
+    /* Resources */
+    .resources a{display:inline-block}
+    hr{border:0; border-top:1px solid var(--border); margin:2.4em 0}
+    .checklist{list-style:none; padding-left:0}
+    .checklist li{padding-left:1.6em; position:relative}
+    .checklist li::before{content:"☐"; position:absolute; left:0; color:var(--accent)}
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <a class="lib" href="../../index.html">← Library</a>
+  </div>
+
+  <header class="head">
+    <h1>Sewing Fundamentals for Absolute Beginners</h1>
+    <p class="blurb">Start from zero: how a sewing machine works, how to thread it and wind a bobbin, how to choose fabric, thread, and needles, the core stitches, and your first real project — a tote bag.</p>
+    <div class="meta-row">
+      <span>For: Total beginner (zero experience)</span>
+      <span>Goal: Confidently start your first project</span>
+      <span>Version: Current best practices, June 2026</span>
+    </div>
+  </header>
+
+  <div class="lead">
+    <p>By the end of this tutorial you'll understand the parts of a sewing machine, be able to wind a bobbin and thread the machine top-to-bottom, know how to pick the right fabric / thread / needle combination, recognize the handful of stitches you'll actually use, diagnose the most common stitch problems, and sew a finished tote bag from start to finish.</p>
+    <p>You don't need any prior knowledge. Work through the steps in order — each one builds on the last. Most steps include a short verified video and a self-check so you know when you're ready to move on. Plan on a relaxed afternoon for the first read-through, plus a machine and some scrap cotton to practice on.</p>
+  </div>
+
+  <nav class="toc">
+    <a href="#s1"><b>1.</b> Your beginner toolkit</a>
+    <a href="#s2"><b>2.</b> Meet your machine</a>
+    <a href="#s3"><b>3.</b> Wind &amp; load the bobbin</a>
+    <a href="#s4"><b>4.</b> Thread the top of the machine</a>
+    <a href="#s5"><b>5.</b> Understand fabric</a>
+    <a href="#s6"><b>6.</b> Thread &amp; needles</a>
+    <a href="#s7"><b>7.</b> The stitches that matter</a>
+    <a href="#s8"><b>8.</b> Tension &amp; troubleshooting</a>
+    <a href="#s9"><b>9.</b> Your first project: a tote bag</a>
+  </nav>
+
+  <!-- ===================== STEP 1 ===================== -->
+  <section class="step" id="s1">
+    <h2>1. Gather your beginner toolkit</h2>
+    <p class="teaches">What you need on the table before you sew a single stitch</p>
+    <p>You can start sewing with a surprisingly short list. Don't buy a giant kit — get these basics, all of which are cheap and last for years:</p>
+    <ul>
+      <li><b>A sewing machine</b> — any basic mechanical machine with a straight stitch and a zigzag is plenty. A built-in needle threader and a top-loading (drop-in) bobbin are nice-to-haves, not requirements.</li>
+      <li><b>Fabric scissors (shears)</b> — a sharp pair used <i>only</i> on fabric. Cutting paper with them dulls them fast.</li>
+      <li><b>Thread</b> — good-quality all-purpose polyester thread in a neutral color to start.</li>
+      <li><b>Machine needles</b> — a pack of Universal needles in size 80/12 (we'll cover sizing in Step 6).</li>
+      <li><b>Pins + a pincushion</b>, or <b>sewing clips</b> if you prefer not to fuss with pins.</li>
+      <li><b>A seam ripper</b> — for undoing mistakes. You <i>will</i> use it, and that's completely normal.</li>
+      <li><b>A measuring tape and/or clear ruler</b>, plus a <b>fabric marker</b> or tailor's chalk.</li>
+      <li><b>An iron and ironing board</b> — pressing seams as you go is the single biggest difference between "homemade" and "handmade."</li>
+    </ul>
+    <div class="tip">Keep a small basket of "scrap" fabric (old cotton sheets, fat quarters) next to the machine. Every new technique in this guide should be tried on scrap first, before you touch your real project.</div>
+    <div class="ready"><b>Ready to move on when…</b> you have a machine, thread, a few size 80/12 Universal needles, scissors, pins, and a seam ripper within arm's reach.</div>
+  </section>
+
+  <!-- ===================== STEP 2 ===================== -->
+  <section class="step" id="s2">
+    <h2>2. Meet your machine — the parts and what they do</h2>
+    <p class="teaches">A mental map of the machine so the rest of the guide makes sense</p>
+    <p>Every machine looks slightly different, but they all share the same core parts. Learn these names now and the videos (and your manual) will suddenly make sense.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram of a sewing machine with labelled parts">
+        <style>
+          .lbl{fill:#e7e9ee;font:13px system-ui;}
+          .lblm{fill:#9aa3b2;font:11px system-ui;}
+          .ln{stroke:#6ea8fe;stroke-width:1.4;fill:none;}
+          .body{fill:#1d212b;stroke:#2a2f3a;stroke-width:2;}
+          .part{fill:#2a2f3a;stroke:#6ea8fe;stroke-width:1.4;}
+          .accent{fill:#8ad6a1;}
+        </style>
+        <!-- machine body -->
+        <path class="body" d="M70 250 L70 120 Q70 95 95 95 L470 95 Q495 95 495 120 L495 175 L560 175 Q575 175 575 195 L575 250 Q575 265 560 265 L86 265 Q70 265 70 250 Z"/>
+        <!-- arm head -->
+        <rect class="part" x="95" y="120" width="55" height="120" rx="6"/>
+        <!-- spool pin + spool -->
+        <line class="ln" x1="300" y1="95" x2="300" y2="70"/>
+        <ellipse class="accent" cx="300" cy="66" rx="22" ry="9"/>
+        <text class="lblm" x="330" y="64">Spool pin (thread spool)</text>
+        <!-- bobbin winder -->
+        <circle class="part" cx="380" cy="110" r="8"/>
+        <text class="lblm" x="395" y="114">Bobbin winder</text>
+        <!-- handwheel -->
+        <circle class="part" cx="545" cy="150" r="26"/>
+        <circle class="accent" cx="545" cy="150" r="7"/>
+        <text class="lblm" x="505" y="120">Handwheel</text>
+        <!-- tension dial -->
+        <circle class="part" cx="160" cy="120" r="13"/>
+        <text class="lblm" x="150" y="100">Tension dial</text>
+        <!-- thread take-up lever -->
+        <line class="ln" x1="125" y1="135" x2="125" y2="160"/>
+        <circle class="accent" cx="125" cy="133" r="5"/>
+        <text class="lblm" x="40" y="150">Take-up lever</text>
+        <!-- needle + presser foot area -->
+        <line class="ln" x1="122" y1="240" x2="122" y2="285"/>
+        <rect class="accent" x="116" y="285" width="14" height="6"/>
+        <text class="lblm" x="135" y="300">Needle &amp; presser foot</text>
+        <!-- needle bar label -->
+        <text class="lblm" x="135" y="250">Needle bar</text>
+        <!-- needle plate / feed dogs -->
+        <rect class="part" x="95" y="300" width="180" height="14" rx="3"/>
+        <text class="lblm" x="120" y="332">Needle plate &amp; feed dogs</text>
+        <!-- bobbin area -->
+        <circle class="part" cx="150" cy="307" r="6"/>
+        <!-- stitch selector -->
+        <rect class="part" x="300" y="200" width="120" height="34" rx="6"/>
+        <text class="lblm" x="312" y="222">Stitch selector</text>
+      </svg>
+      <figcaption>The core parts shared by virtually every machine. Yours may place the dials differently — the <em>functions</em> are the same.</figcaption>
+    </figure>
+
+    <p>Here's what each does:</p>
+    <ul>
+      <li><b>Spool pin</b> — holds your spool of thread on top of the machine.</li>
+      <li><b>Bobbin winder</b> — spins thread onto the small bobbin that sits underneath (Step 3).</li>
+      <li><b>Thread guides &amp; tension dial</b> — the path the top thread follows; the dial controls how tightly it's held.</li>
+      <li><b>Take-up lever</b> — the metal arm that bobs up and down; the thread must pass through it.</li>
+      <li><b>Needle &amp; needle bar</b> — the needle clamps here and moves up/down to make stitches.</li>
+      <li><b>Presser foot</b> — clamps the fabric down against the machine. <b>Up</b> = load/remove fabric and thread; <b>Down</b> = sew.</li>
+      <li><b>Feed dogs</b> — the little metal "teeth" under the needle plate that pull the fabric through. You guide the fabric; <i>the machine</i> moves it. Don't pull.</li>
+      <li><b>Handwheel</b> — turn it toward you to raise/lower the needle by hand. Always turn it <i>toward</i> you, never away.</li>
+      <li><b>Stitch selector &amp; length/width controls</b> — choose the stitch type and how long/wide it is.</li>
+      <li><b>Reverse lever/button</b> — sews backward, used to lock stitches at the start and end of a seam.</li>
+    </ul>
+
+    <p class="teaches">Watch: a full machine walkthrough</p>
+    <div class="video">
+      <iframe src="https://www.youtube.com/embed/-pXGpbvwqUg"
+              title="How to Use A Sewing Machine for Absolute Beginners" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+      <a class="watch" href="https://www.youtube.com/watch?v=-pXGpbvwqUg" target="_blank" rel="noopener">▶ Watch on YouTube</a>
+    </div>
+    <p class="vidcaption">Whole machine tour for first-timers. If you have a Brother machine specifically, this one is also excellent:
+      <a class="ts" href="https://www.youtube.com/watch?v=DH3X9ECjfCE" target="_blank" rel="noopener">▶ How to Use a Sewing Machine for BEGINNERS!</a>, or Angela Wolf's setup walkthrough:
+      <a class="ts" href="https://www.youtube.com/watch?v=PMTzXsyOVoI" target="_blank" rel="noopener">▶ How to Set Up a Sewing Machine for Beginners</a>.</p>
+
+    <div class="tip">Dig out your machine's manual (or search "[brand] [model] manual PDF"). The threading path and bobbin style are model-specific, and the manual's diagram is the single most reliable reference you have.</div>
+    <div class="ready"><b>Ready to move on when…</b> you can point to the spool pin, tension dial, take-up lever, presser foot lever, feed dogs, and handwheel on your own machine without checking the diagram.</div>
+  </section>
+
+  <!-- ===================== STEP 3 ===================== -->
+  <section class="step" id="s3">
+    <h2>3. Wind and load the bobbin</h2>
+    <p class="teaches">Where the bottom thread comes from</p>
+    <p>A sewing machine stitch is made by <b>two</b> threads locking together: the top thread (from the spool) and the bottom thread (from the <b>bobbin</b>, a small spool that lives under the needle plate). Before you can sew, you need a bobbin wound with thread, then loaded into the machine.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 620 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="How a top thread and bobbin thread lock together">
+        <style>
+          .t1{stroke:#6ea8fe;stroke-width:2.4;fill:none}
+          .t2{stroke:#e59ac9;stroke-width:2.4;fill:none}
+          .fab{fill:#1d212b;stroke:#2a2f3a;stroke-width:2}
+          .cap{fill:#9aa3b2;font:12px system-ui}
+        </style>
+        <rect class="fab" x="40" y="80" width="540" height="40" rx="4"/>
+        <text class="cap" x="40" y="70">fabric (side view)</text>
+        <!-- top thread loops -->
+        <path class="t1" d="M90 80 V60 M90 60 C90 50 130 50 130 60 V80"/>
+        <path class="t1" d="M130 120 C130 130 90 130 90 120 V80"/>
+        <!-- repeating lockstitch -->
+        <path class="t1" d="M180 80 V60 M180 60 C180 50 220 50 220 60 V80 M220 120 C220 130 180 130 180 120"/>
+        <path class="t1" d="M270 80 V60 M270 60 C270 50 310 50 310 60 V80 M310 120 C310 130 270 130 270 120"/>
+        <!-- bobbin thread along bottom -->
+        <path class="t2" d="M70 116 H520"/>
+        <text class="cap" x="430" y="150"><tspan fill="#6ea8fe">— top thread</tspan>  <tspan fill="#e59ac9">— bobbin thread</tspan></text>
+      </svg>
+      <figcaption>A "lockstitch": the top thread (blue) loops down and catches the bobbin thread (pink) inside the fabric. That's why both must be present and balanced.</figcaption>
+    </figure>
+
+    <h3>Winding a bobbin</h3>
+    <ol>
+      <li>Put a spool of thread on the spool pin.</li>
+      <li>Lead the thread through the <b>bobbin-winding thread guide</b> (a small hook or disc near the top — check your manual).</li>
+      <li>Pass the thread end up through the small hole in the top of an empty bobbin, then place the bobbin on the <b>bobbin winder pin</b>.</li>
+      <li>Push the winder pin to the right (this engages it and usually disengages the needle).</li>
+      <li>Hold the thread tail, press the foot pedal, and let it wind. Most machines stop automatically when full. Trim the tail.</li>
+    </ol>
+
+    <h3>Loading the bobbin</h3>
+    <p>There are two styles. <b>Top-loading (drop-in)</b>: lift the clear cover by the needle, drop the bobbin in so the thread unwinds in the direction the diagram shows (usually counter-clockwise), and pull the thread through the slot. <b>Front-loading</b>: the bobbin goes into a removable bobbin <em>case</em> — drop it in so it spins clockwise as you pull, run the thread under the tension spring, then click the case back into the machine.</p>
+
+    <div class="versionflag">Most newer home machines (bought in the last several years) use the easier <b>top-loading drop-in</b> bobbin with a see-through cover. Older and some heavy-duty machines use a front-loading bobbin case. Both make identical stitches — just check which one you have, because the loading steps differ.</div>
+
+    <p class="teaches">Watch: winding a bobbin</p>
+    <div class="video">
+      <iframe src="https://www.youtube.com/embed/KxoAx0rB_u8"
+              title="How To: Wind a Bobbin (Sewing for Beginners)" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+      <a class="watch" href="https://www.youtube.com/watch?v=KxoAx0rB_u8" target="_blank" rel="noopener">▶ Watch on YouTube</a>
+    </div>
+    <p class="vidcaption">More options:
+      <a class="ts" href="https://www.youtube.com/watch?v=BgL4r4FMqkA" target="_blank" rel="noopener">▶ How To Wind A Bobbin On Your Sewing Machine — Beginner Tutorial</a> ·
+      <a class="ts" href="https://www.youtube.com/watch?v=pdWYRu5df6s" target="_blank" rel="noopener">▶ Thread the machine, wind a bobbin &amp; fix a bobbin mistake (auto-threader machines)</a></p>
+
+    <div class="pitfall">Wind bobbins evenly and not over-full. A lumpy or overfilled bobbin causes uneven tension and looping. And never mix thread types on top vs. bobbin for normal sewing — use the same all-purpose thread on both.</div>
+    <div class="ready"><b>Ready to move on when…</b> you've wound one full, even bobbin and clicked/dropped it into place, with a few inches of bobbin thread pulled out.</div>
+  </section>
+
+  <!-- ===================== STEP 4 ===================== -->
+  <section class="step" id="s4">
+    <h2>4. Thread the top of the machine</h2>
+    <p class="teaches">Getting the upper thread through the correct path</p>
+    <p>This is the step beginners fear most, and it's genuinely the most important skill to nail: the vast majority of "my machine is broken / my stitches are a mess" problems are actually a threading mistake. The good news — once you've done it five times it becomes automatic.</p>
+
+    <p>The universal sequence (your machine prints little numbered arrows for exactly this):</p>
+    <ol>
+      <li><b>Raise the presser foot</b> first. This opens the tension discs so the thread can seat properly. (Skipping this is the #1 cause of tension chaos.)</li>
+      <li>Turn the handwheel toward you to raise the needle and take-up lever to their <b>highest</b> point.</li>
+      <li>Spool on the pin → through the top thread guide → <b>down</b> the right-hand channel → around the bottom → <b>up</b> the left-hand channel.</li>
+      <li>Catch the thread in the <b>take-up lever</b> at the top (left to right through its eye/hook).</li>
+      <li>Come back <b>down</b> through the lower guides to the needle.</li>
+      <li>Thread the <b>needle front-to-back</b> (or use the built-in needle threader if your machine has one).</li>
+      <li>Pull a 4–6 inch tail through, then <b>raise the bobbin thread</b>: hold the top thread and turn the handwheel one full turn toward you; the needle dips and catches the bobbin thread, pulling up a loop. Tug it to free the tail and lay both threads back under the presser foot.</li>
+    </ol>
+
+    <p class="teaches">Watch: threading, start to finish</p>
+    <div class="video">
+      <iframe src="https://www.youtube.com/embed/tfSSQ-X58iA"
+              title="How To Thread A Sewing Machine | #beginnersewing" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+      <a class="watch" href="https://www.youtube.com/watch?v=tfSSQ-X58iA" target="_blank" rel="noopener">▶ Watch on YouTube</a>
+    </div>
+    <p class="vidcaption">Alternatives if your machine differs:
+      <a class="ts" href="https://www.youtube.com/watch?v=iQvt-XozXwA" target="_blank" rel="noopener">▶ First Steps: Threading Your Sewing Machine</a> ·
+      <a class="ts" href="https://www.youtube.com/watch?v=fzlT-SOqxZY" target="_blank" rel="noopener">▶ How to Thread a Sewing Machine for Absolute Beginners</a></p>
+
+    <div class="pitfall">If your stitches look like a bird's nest or the thread keeps snapping, <b>don't reach for the tension dial first.</b> Unthread completely and rethread from scratch with the presser foot up. This fixes the problem far more often than any adjustment.</div>
+    <div class="ready"><b>Ready to move on when…</b> you can thread the top and bring up the bobbin thread on your own, and you understand <i>why</i> the presser foot must be up while threading.</div>
+  </section>
+
+  <!-- ===================== STEP 5 ===================== -->
+  <section class="step" id="s5">
+    <h2>5. Understand fabric: woven vs. knit</h2>
+    <p class="teaches">Why your fabric choice can make sewing easy or miserable</p>
+    <p>Fabric falls into two big families, and the difference matters enormously for a beginner.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 620 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Woven fabric versus knit fabric structure">
+        <style>
+          .w{stroke:#6ea8fe;stroke-width:5;fill:none;stroke-linecap:round}
+          .k{stroke:#8ad6a1;stroke-width:4;fill:none;stroke-linecap:round}
+          .hd{fill:#e7e9ee;font:15px system-ui;font-weight:600}
+          .sb{fill:#9aa3b2;font:12px system-ui}
+        </style>
+        <text class="hd" x="60" y="30">WOVEN</text>
+        <text class="sb" x="60" y="48">threads cross at 90° — stable, little stretch</text>
+        <!-- woven grid -->
+        <g transform="translate(60,60)">
+          <line class="w" x1="0" y1="10" x2="200" y2="10"/>
+          <line class="w" x1="0" y1="35" x2="200" y2="35"/>
+          <line class="w" x1="0" y1="60" x2="200" y2="60"/>
+          <line class="w" x1="0" y1="85" x2="200" y2="85"/>
+          <line class="w" x1="20" y1="0" x2="20" y2="95"/>
+          <line class="w" x1="60" y1="0" x2="60" y2="95"/>
+          <line class="w" x1="100" y1="0" x2="100" y2="95"/>
+          <line class="w" x1="140" y1="0" x2="140" y2="95"/>
+          <line class="w" x1="180" y1="0" x2="180" y2="95"/>
+        </g>
+        <text class="hd" x="370" y="30">KNIT</text>
+        <text class="sb" x="370" y="48">interlocking loops — stretches, can curl</text>
+        <!-- knit loops -->
+        <g transform="translate(370,58)">
+          <path class="k" d="M10 90 C0 60 30 60 20 90 M40 90 C30 60 60 60 50 90 M70 90 C60 60 90 60 80 90 M100 90 C90 60 120 60 110 90 M130 90 C120 60 150 60 140 90 M160 90 C150 60 180 60 170 90"/>
+          <path class="k" d="M10 60 C0 30 30 30 20 60 M40 60 C30 30 60 30 50 60 M70 60 C60 30 90 30 80 60 M100 60 C90 30 120 30 110 60 M130 60 C120 30 150 30 140 60 M160 60 C150 30 180 30 170 60"/>
+          <path class="k" d="M10 30 C0 0 30 0 20 30 M40 30 C30 0 60 0 50 30 M70 30 C60 0 90 0 80 30 M100 30 C90 0 120 0 110 30 M130 30 C120 0 150 0 140 30 M160 30 C150 0 180 0 170 30"/>
+        </g>
+      </svg>
+      <figcaption>Woven = a rigid over-under grid (think shirt cotton). Knit = interlocking loops (think T-shirt). The structure is why one stretches and one doesn't.</figcaption>
+    </figure>
+
+    <p><b>Woven</b> fabrics (quilting cotton, poplin, broadcloth, linen, denim, canvas) are made of threads crossing at right angles. They're stable, hold their shape, don't stretch much, and feed through the machine predictably. <b>Knit</b> fabrics (jersey/T-shirt, interlock, ponte, French terry) are made of loops, so they stretch — wonderful to wear, but they can pucker, stretch out of shape, and curl at the edges while you sew.</p>
+
+    <div class="tip">Start with <b>mid-weight woven cotton</b> — quilting cotton or poplin. It's cheap, comes in endless prints, presses crisply, and forgives wobbly stitches. Avoid slippery fabrics (satin, chiffon), thick fabrics (heavy denim, fleece), and knits until you've got the basics down. When you're ready to try a knit, pick a <b>stable</b> one like ponte or interlock, which barely curl.</p></div>
+
+    <h3>A few fabric terms you'll meet immediately</h3>
+    <ul>
+      <li><b>Right side / wrong side</b> — the "good" (printed/finished) face vs. the back. Patterns say "right sides together," meaning the good faces touch on the inside.</li>
+      <li><b>Selvage</b> — the tightly finished, non-fraying edges running down both long sides of the fabric.</li>
+      <li><b>Grain</b> — the direction of the woven threads. Cutting "on grain" (parallel to the selvage) keeps your pieces from twisting.</li>
+      <li><b>Pre-wash</b> — wash and dry your fabric before cutting, so any shrinkage happens <i>before</i> you sew, not after.</li>
+    </ul>
+
+    <div class="ready"><b>Ready to move on when…</b> you can look at (or tug on) a piece of fabric and tell whether it's a woven or a knit, and you've got some mid-weight cotton to practice on.</div>
+  </section>
+
+  <!-- ===================== STEP 6 ===================== -->
+  <section class="step" id="s6">
+    <h2>6. Thread and needles — choosing the right combination</h2>
+    <p class="teaches">Matching fabric → thread → needle so stitches form cleanly</p>
+
+    <h3>Thread</h3>
+    <p>For almost everything a beginner sews, <b>all-purpose polyester thread</b> is the right answer: strong, slightly stretchy, works on nearly any fabric. <b>Cotton thread</b> is lovely on natural-fiber wovens like quilting cotton and is preferred by many quilters; it has little give, so it's less ideal for stretchy knits. Avoid bargain-bin thread — old or cheap thread is weak, linty, and snaps, which beginners often misread as a machine fault.</p>
+
+    <h3>Needles: reading the numbers</h3>
+    <p>Machine needles are labeled with two numbers like <b>80/12</b>. The first is the European size, the second American — they mean the same thing. <b>Smaller number = thinner needle</b> (for fine, delicate fabric); <b>bigger number = thicker needle</b> (for heavy fabric). The needle's <b>point type</b> matters too: a sharp/universal point for wovens, a rounded <b>ballpoint</b> for knits (it slips between loops instead of piercing and laddering them).</p>
+
+    <table>
+      <thead>
+        <tr><th>Fabric</th><th>Needle type</th><th>Size</th><th>Thread</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Fine / delicate (silk, chiffon, lawn)</td><td>Universal or Sharp</td><td>60/8 – 70/10</td><td>Fine all-purpose</td></tr>
+        <tr><td><b>Medium woven (quilting cotton, poplin, linen) — start here</b></td><td>Universal</td><td><b>80/12 – 90/14</b></td><td>All-purpose polyester</td></tr>
+        <tr><td>Knit / stretch (jersey, interlock, ponte)</td><td>Ballpoint / Jersey or Stretch</td><td>70/10 – 90/14</td><td>All-purpose polyester</td></tr>
+        <tr><td>Heavy (denim, canvas, upholstery)</td><td>Jeans/Denim</td><td>90/14 – 110/18</td><td>Heavy-duty / topstitching</td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip">A pack of <b>Universal 80/12</b> needles plus all-purpose polyester thread handles the great majority of beginner woven projects. When you start a project, do a quick test seam on a scrap of the same fabric first — if you see skipped stitches, snags, or holes, change the needle size or type.</div>
+
+    <div class="pitfall">Needles are consumables, not permanent. A dull or bent needle causes skipped stitches, snags, and a "thunk thunk" sound. Swap in a fresh needle every project or two (or after any time you hit a pin). Always change the needle with the machine's power off and the needle clamp screw firmly tightened — flat side of the needle shank usually faces the back.</div>
+
+    <div class="ready"><b>Ready to move on when…</b> you can read a needle size like "90/14," know which is bigger, and can name the right starting needle+thread for mid-weight cotton (Universal 80/12 + all-purpose polyester).</div>
+  </section>
+
+  <!-- ===================== STEP 7 ===================== -->
+  <section class="step" id="s7">
+    <h2>7. The stitches that actually matter</h2>
+    <p class="teaches">The three or four stitches you'll use 95% of the time</p>
+    <p>Your machine may offer dozens of decorative stitches. Ignore almost all of them for now. These are the ones that do the real work:</p>
+    <ul>
+      <li><b>Straight stitch</b> — the workhorse. Joins seams, topstitches, gathers. It's the strongest stitch and the one you'll use most. A length of about <b>2.5 mm</b> is a good default.</li>
+      <li><b>Backstitch (reverse)</b> — not a separate "fancy" stitch but a technique: at the start and end of every seam, sew forward a few stitches, hold the reverse button to go back over them, then continue. This <b>locks</b> the seam so it can't unravel. Do it on every seam.</li>
+      <li><b>Zigzag stitch</b> — the needle swings side to side. Use it to finish raw edges so they don't fray, to sew stretchy fabric (it flexes with the fabric), and for buttonholes. Adjustable in both width and length.</li>
+      <li><b>Stretch / triple straight stitch</b> (if your machine has it) — sews forward-back-forward for a stronger, slightly elastic seam, handy on knits.</li>
+    </ul>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 620 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Straight stitch versus zigzag stitch">
+        <style>
+          .s{stroke:#6ea8fe;stroke-width:3;fill:none}
+          .z{stroke:#8ad6a1;stroke-width:3;fill:none}
+          .dot{fill:#e7e9ee}
+          .cp{fill:#9aa3b2;font:13px system-ui}
+        </style>
+        <text class="cp" x="40" y="40">Straight stitch</text>
+        <line class="s" x1="40" y1="60" x2="300" y2="60"/>
+        <g class="dot"><circle cx="70" cy="60" r="3"/><circle cx="110" cy="60" r="3"/><circle cx="150" cy="60" r="3"/><circle cx="190" cy="60" r="3"/><circle cx="230" cy="60" r="3"/><circle cx="270" cy="60" r="3"/></g>
+        <text class="cp" x="40" y="115">Zigzag stitch</text>
+        <polyline class="z" points="40,140 70,110 100,140 130,110 160,140 190,110 220,140 250,110 280,140"/>
+      </svg>
+      <figcaption>Straight stitch runs in a line; zigzag swings side-to-side to finish edges and move with stretchy fabric.</figcaption>
+    </figure>
+
+    <p class="teaches">Watch: the basic stitches</p>
+    <div class="video">
+      <iframe src="https://www.youtube.com/embed/3XSNESUkWY8"
+              title="5 Basic Sewing Stitches for Beginners!" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+      <a class="watch" href="https://www.youtube.com/watch?v=3XSNESUkWY8" target="_blank" rel="noopener">▶ Watch on YouTube</a>
+    </div>
+    <p class="vidcaption">Want a deeper dive on just the zigzag?
+      <a class="ts" href="https://www.youtube.com/watch?v=zo0gMgiGhTw" target="_blank" rel="noopener">▶ How To: Zigzag Stitch (Sewing for Beginners)</a></p>
+
+    <h3>Practice drill (do this on scrap before any project)</h3>
+    <ol>
+      <li>Draw straight lines, gentle curves, and right-angle corners on scrap cotton with a marker.</li>
+      <li>Sew along them at a steady, slow speed. To <b>turn a corner</b>: stop with the needle <i>down</i> in the fabric, lift the presser foot, pivot the fabric, lower the foot, continue.</li>
+      <li>Start and end each line with a backstitch. Aim for an even <code>~1 cm</code> seam allowance from the edge — use the guide lines etched on the needle plate.</li>
+    </ol>
+
+    <div class="ready"><b>Ready to move on when…</b> you can sew a reasonably straight line, pivot a square corner, and backstitch to lock both ends without thinking hard about it.</div>
+  </section>
+
+  <!-- ===================== STEP 8 ===================== -->
+  <section class="step" id="s8">
+    <h2>8. Tension and troubleshooting</h2>
+    <p class="teaches">Reading your stitches and fixing the common problems</p>
+    <p>"Tension" is the tug-of-war between the top thread and bobbin thread. When they're balanced, the two threads lock <em>inside</em> the fabric and the stitch looks even on both sides. When they're off, you see one thread being pulled to the surface.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 620 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Balanced, too-tight, and too-loose tension">
+        <style>
+          .fb{fill:#1d212b;stroke:#2a2f3a;stroke-width:1.5}
+          .tp{stroke:#6ea8fe;stroke-width:2.2;fill:none}
+          .bb{stroke:#e59ac9;stroke-width:2.2;fill:none}
+          .h{fill:#e7e9ee;font:13px system-ui;font-weight:600}
+          .c{fill:#9aa3b2;font:11px system-ui}
+        </style>
+        <!-- balanced -->
+        <text class="h" x="20" y="25">Balanced ✓</text>
+        <rect class="fb" x="20" y="40" width="160" height="34"/>
+        <line class="c" x1="20" y1="57" x2="180" y2="57" stroke="#2a2f3a"/>
+        <path class="tp" d="M40 40 V52 M40 52 C40 62 70 62 70 52 V40"/>
+        <path class="tp" d="M100 40 V52 M100 52 C100 62 130 62 130 52 V40"/>
+        <path class="bb" d="M40 74 V62 M40 62 C40 52 70 52 70 62 V74"/>
+        <path class="bb" d="M100 74 V62 M100 62 C100 52 130 52 130 62 V74"/>
+        <text class="c" x="20" y="92">lock sits mid-fabric</text>
+        <!-- too tight -->
+        <text class="h" x="230" y="25">Top too tight</text>
+        <rect class="fb" x="230" y="40" width="160" height="34"/>
+        <path class="tp" d="M250 40 V42 M250 42 C250 50 280 50 280 42 V40"/>
+        <path class="bb" d="M250 74 V44 M250 44 C250 38 280 38 280 44 V74"/>
+        <text class="c" x="230" y="92">bobbin thread pulled up</text>
+        <text class="c" x="230" y="108">→ loosen top (lower number)</text>
+        <!-- too loose -->
+        <text class="h" x="440" y="25">Top too loose</text>
+        <rect class="fb" x="440" y="40" width="160" height="34"/>
+        <path class="bb" d="M460 74 V72 M460 72 C460 66 490 66 490 72 V74"/>
+        <path class="tp" d="M460 40 V70 M460 70 C460 76 490 76 490 70 V40"/>
+        <text class="c" x="440" y="92">loops on the underside</text>
+        <text class="c" x="440" y="108">→ tighten top (higher number)</text>
+      </svg>
+      <figcaption>Read which thread is misbehaving, then adjust the <b>top</b> tension dial first. Loops underneath = top too loose (raise the number); bobbin thread showing on top = top too tight (lower the number).</figcaption>
+    </figure>
+
+    <p>Before you ever touch the tension dial, run this checklist — it solves the large majority of problems:</p>
+    <ol>
+      <li><b>Rethread from scratch</b>, presser foot up. A bad thread path mimics a tension fault.</li>
+      <li><b>Check the bobbin</b> — wound evenly, loaded in the correct direction, thread through its tension slot.</li>
+      <li><b>Is the presser foot down?</b> Sewing with it up gives a tangled mess on the underside.</li>
+      <li><b>Fresh, correct needle?</b> Dull/bent/wrong-type needles skip stitches.</li>
+      <li><b>Clean out lint</b> from the bobbin area with a brush.</li>
+    </ol>
+    <p>Only after all that, adjust the <b>top</b> tension dial in small steps and test on scrap. The numbers usually run roughly 0–9 with about <b>4</b> as the normal middle. Leave the bobbin tension alone unless you're confident — it rarely needs changing.</p>
+
+    <p class="teaches">Watch: understanding tension problems</p>
+    <div class="video">
+      <iframe src="https://www.youtube.com/embed/ji786ELirvo"
+              title="How To: Deal & Understand Tension Problems (Sewing for Beginners)" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+      <a class="watch" href="https://www.youtube.com/watch?v=ji786ELirvo" target="_blank" rel="noopener">▶ Watch on YouTube</a>
+    </div>
+
+    <div class="pitfall">The infamous "bird's nest" of thread on the underside at the start of a seam is almost never a tension problem — it's usually that you started sewing without holding both thread tails behind the foot, or the presser foot was up. Hold the tails for the first few stitches.</div>
+    <div class="ready"><b>Ready to move on when…</b> you can look at a wonky stitch, say whether the top is too tight or too loose, and run the rethread-first checklist before touching any dial.</div>
+  </section>
+
+  <!-- ===================== STEP 9 ===================== -->
+  <section class="step" id="s9">
+    <h2>9. Your first project: a simple tote bag</h2>
+    <p class="teaches">Putting it all together into something you'll actually use</p>
+    <p>A tote bag is the classic first project: straight seams only, forgiving, and genuinely useful when you're done. It uses everything from the previous steps — cutting on grain, straight stitching, backstitching, pressing, and edge finishing.</p>
+
+    <h3>What you'll need</h3>
+    <ul class="checklist">
+      <li>About ½ yard / 0.5 m of mid-weight woven cotton or canvas (pre-washed and pressed)</li>
+      <li>All-purpose thread and a Universal 80/12 needle</li>
+      <li>Pins or clips, scissors, ruler, marker, iron</li>
+    </ul>
+
+    <h3>The basic method</h3>
+    <ol>
+      <li><b>Cut.</b> Two body rectangles (e.g. about 15&times;17 in / 38&times;43 cm) and two strap strips (about 4&times;24 in / 10&times;60 cm). Cut on grain, parallel to the selvage.</li>
+      <li><b>Make the straps.</b> Fold each strip in half lengthwise (wrong sides out), press, sew down the long edge, turn right-side out, and press flat. Or fold the raw edges to the center and topstitch both sides.</li>
+      <li><b>Sew the body.</b> Place the two rectangles <b>right sides together</b>. Sew down both sides and across the bottom with a straight stitch and a ~1 cm seam allowance, backstitching at the start and end. Leave the top open.</li>
+      <li><b>Finish the raw edges</b> inside with a zigzag stitch (or pinking shears) so they don't fray.</li>
+      <li><b>Hem the top.</b> Fold the top edge down about 1 cm, press, fold again, press, and topstitch all the way around.</li>
+      <li><b>Attach the straps.</b> Pin the strap ends to the inside of the top hem on each side, then stitch a reinforcing square or "X" through them for strength.</li>
+      <li><b>Turn right-side out and press.</b> Done.</li>
+    </ol>
+
+    <div class="tip">Follow one video tutorial start-to-finish for your first bag rather than improvising — measurements and the order of steps vary, and seeing it done removes the guesswork. Pick one below and match your fabric to it.</div>
+
+    <p class="teaches">Watch: a beginner tote bag, start to finish</p>
+    <div class="video">
+      <iframe src="https://www.youtube.com/embed/KpTIbj0MJcQ"
+              title="How to Sew a Tote Bag - Easy Step-by-Step Tutorial for Beginners!" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+      <a class="watch" href="https://www.youtube.com/watch?v=KpTIbj0MJcQ" target="_blank" rel="noopener">▶ Watch on YouTube</a>
+    </div>
+    <p class="vidcaption">Other beginner tote walkthroughs:
+      <a class="ts" href="https://www.youtube.com/watch?v=QuyIHOGj5Jc" target="_blank" rel="noopener">▶ DIY Lined Tote Bag — Whitney Sews</a> ·
+      <a class="ts" href="https://www.youtube.com/watch?v=icgyb5KaFeU" target="_blank" rel="noopener">▶ Tote Bag tutorial for ABSOLUTE BEGINNERS</a></p>
+
+    <div class="ready"><b>You've reached the goal when…</b> you've sewn a finished tote you'd actually carry — and you'll find the next project (a pillowcase, a zip pouch, simple pajama pants) is just a recombination of these same skills.</div>
+  </section>
+
+  <hr>
+
+  <!-- ===================== PITFALLS ===================== -->
+  <h2>Common beginner pitfalls</h2>
+  <div class="pitfall">Adjusting tension before rethreading. Most "tension problems" are threading or bobbin problems. Rethread first, every time.</div>
+  <div class="pitfall">Threading with the presser foot down. The tension discs stay closed, so the thread never seats — guaranteeing a messy underside.</div>
+  <div class="pitfall">Pulling the fabric through. The feed dogs move the fabric; you only guide it. Pulling bends needles and makes uneven stitches.</div>
+  <div class="pitfall">Sewing too fast too soon. Go slow. Speed comes naturally once your hands trust the machine.</div>
+  <div class="pitfall">Using a dull, bent, or wrong needle. It causes skipped stitches and snags people blame on the machine. Change needles often.</div>
+  <div class="pitfall">Skipping the iron. Pressing each seam as you sew it is what makes the finished item look professional.</div>
+  <div class="pitfall">Cutting paper patterns with your fabric shears. It dulls them. Keep a separate pair for paper.</div>
+
+  <!-- ===================== GLOSSARY ===================== -->
+  <h2>Glossary</h2>
+  <dl class="glossary">
+    <dt>Bobbin</dt><dd>The small lower spool that supplies the bottom thread of a stitch.</dd>
+    <dt>Backstitch</dt><dd>Sewing in reverse over the start/end of a seam to lock it so it won't unravel.</dd>
+    <dt>Feed dogs</dt><dd>The toothed metal bars under the needle plate that pull fabric through as you sew.</dd>
+    <dt>Lockstitch</dt><dd>The standard machine stitch, formed by the top and bobbin threads locking together inside the fabric.</dd>
+    <dt>Presser foot</dt><dd>The attachment that holds fabric flat against the feed dogs. Up to load/thread; down to sew.</dd>
+    <dt>Right / wrong side</dt><dd>The finished, outward-facing side of fabric vs. the back. "Right sides together" = good faces touching.</dd>
+    <dt>Seam allowance</dt><dd>The distance between the stitching line and the cut edge (often ~1 cm or ⅝ in).</dd>
+    <dt>Selvage</dt><dd>The tightly finished, non-fraying lengthwise edges of fabric.</dd>
+    <dt>Grain</dt><dd>The direction of the woven threads; cutting "on grain" keeps pieces from twisting.</dd>
+    <dt>Take-up lever</dt><dd>The arm that feeds the right amount of top thread for each stitch; the thread must pass through it.</dd>
+    <dt>Tension</dt><dd>The balance of pull between top and bobbin threads; controls how the stitch locks.</dd>
+    <dt>Topstitch</dt><dd>A line of stitching visible on the right side, used to finish edges or for decoration.</dd>
+    <dt>Universal needle</dt><dd>An all-rounder machine needle with a slightly rounded point, fine for most woven fabrics.</dd>
+  </dl>
+
+  <!-- ===================== RESOURCES ===================== -->
+  <h2>Resources to keep going</h2>
+  <h3>YouTube channels</h3>
+  <ul>
+    <li><a href="https://www.youtube.com/channel/UCP98fshDAd5bCKCGd0VRhng" target="_blank" rel="noopener">Easy Sewing for Beginners</a> — short, focused "learn to sew" videos covering each fundamental.</li>
+    <li><a href="https://www.youtube.com/watch?v=QuyIHOGj5Jc" target="_blank" rel="noopener">Whitney Sews</a> — friendly beginner projects and techniques.</li>
+  </ul>
+  <h3>Written references &amp; charts</h3>
+  <ul>
+    <li><a href="https://blog.wawak.com/post/sewing-machine-needle-and-thread-size-chart" target="_blank" rel="noopener">WAWAK — Sewing Machine Needle &amp; Thread Size Chart</a></li>
+    <li><a href="https://www.sewing.org/files/guidelines/22_115_sewing_machine_needle_charts.pdf" target="_blank" rel="noopener">Sewing.org — Sewing Machine Needle Charts (PDF)</a></li>
+    <li><a href="https://www.masterclass.com/articles/knit-vs-woven-learn-how-to-identify-the-two-fabric-types" target="_blank" rel="noopener">Knit vs. Woven fabrics — how to identify them</a></li>
+    <li><a href="https://mellysews.com/sewing-machine-tension/" target="_blank" rel="noopener">Melly Sews — Understanding Sewing Machine Tension</a></li>
+    <li><b>Your machine's own manual</b> — the definitive guide to <i>your</i> threading path and bobbin style. Search "[brand] [model] manual PDF" if you've lost the paper copy.</li>
+  </ul>
+
+  <p style="color:var(--muted);font-size:.9rem;margin-top:2em">Most of all: keep scrap fabric handy, sew slowly, and treat the seam ripper as a normal part of learning rather than a sign of failure. Everyone's first seams are wobbly.</p>
+
+</div>
+
+<!-- Library reading-progress tracker. ../../ reaches the repo root. -->
+<script src="../../progress.js"></script>
+</body>
+</html>
