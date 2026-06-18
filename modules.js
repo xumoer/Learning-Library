@@ -36,6 +36,18 @@ window.MODULES = [
     progress:    0
   },
   {
+    title:       "Sewing Fundamentals for Absolute Beginners",
+    blurb:       "Start from zero: how a sewing machine works, how to thread it and wind a bobbin, how to pick fabric, thread, and needles, the core stitches, and your first real project — a tote bag.",
+    type:        "Tutorial",
+    category:    "Craft",
+    code:        "TUT",
+    tags:        ["sewing", "sewing machine", "beginner", "fabric", "thread", "needles", "bobbin", "tension", "tote bag"],
+    status:      "learning",
+    href:        "library/Sewing-101/sewing-fundamentals.html",
+    steps:       9,
+    progress:    0
+  },
+  {
     title:       "Unified Dice Game",
     blurb:       "A unique table top rule set",
     type:        "Rules",
