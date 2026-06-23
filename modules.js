@@ -12,7 +12,7 @@
  * Required <meta> tags in each document:
  *   <meta name="title"    content="Your Title">
  *   <meta name="blurb"    content="Short description.">
- *   <meta name="type"     content="Tutorial|Info|Rules|Plan|…">
+ *   <meta name="type"     content="Tutorial|Exercise|Info|Rules|Plan|…">
  *
  * Optional:
  *   <meta name="category" content="Topic">
@@ -85,9 +85,9 @@ window.MODULES = [
   {
     title:       "Costochondritis Recovery — A Gentle Exercise Program",
     blurb:       "A safe, step-by-step routine of breathing, mobility, stretching and strengthening exercises to calm chest-wall pain from costochondritis and rebuild capacity over ~6 weeks.",
-    type:        "Tutorial",
+    type:        "Exercise",
     category:    "Health",
-    code:        "TUT",
+    code:        "EXR",
     tags:        ["costochondritis", "chest pain", "rib pain", "stretching", "physical therapy", "breathing", "posture", "rehab"],
     status:      "learning",
     href:        "library/costochondritis-exercises/costochondritis-exercises.html",
@@ -97,7 +97,7 @@ window.MODULES = [
   {
     title:       "Pelvic Floor Training — Postpartum Prolapse to Lifting",
     blurb:       "From symptom relief to confident lifting: a staged pelvic-floor program covering prolapse recovery and load progression.",
-    type:        "Tutorial",
+    type:        "Exercise",
     category:    "Health",
     tags:        ["pelvic floor", "postpartum", "prolapse"],
     status:      "solid",
@@ -108,7 +108,7 @@ window.MODULES = [
   {
     title:       "Thoracic Spine Recovery — Tier 1: Foundation",
     blurb:       "Acute-phase plan: calm costochondritis, gently mobilize the thoracic spine, and wake up a weak rhomboid. Five low-load exercises, Tonal-led.",
-    type:        "Plan",
+    type:        "Exercise",
     category:    "Health",
     tags:        ["thoracic spine", "costochondritis", "rhomboid", "mobility"],
     status:      "learning",
@@ -119,7 +119,7 @@ window.MODULES = [
   {
     title:       "Thoracic Spine Recovery — Tier 2: Rebuild",
     blurb:       "Subacute plan: load the mid-back, expand thoracic rotation and extension, and build scapular control. Five Tonal-led strength and mobility moves.",
-    type:        "Plan",
+    type:        "Exercise",
     category:    "Health",
     tags:        ["thoracic spine", "rhomboid", "scapular control", "mobility"],
     status:      "learning",
@@ -130,7 +130,7 @@ window.MODULES = [
   {
     title:       "Thoracic Spine Recovery — Tier 3: Resilience",
     blurb:       "Return-to-load plan: build robust pulling strength plus loaded thoracic extension and rotation for a durable mid-back. Five Tonal-led advanced moves.",
-    type:        "Plan",
+    type:        "Exercise",
     category:    "Health",
     tags:        ["thoracic spine", "rhomboid", "strength", "pulling"],
     status:      "learning",
