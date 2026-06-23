@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Self-describing metadata -->
+  <title>Costochondritis Recovery — A Gentle Exercise Program</title>
+  <meta name="title"    content="Costochondritis Recovery — A Gentle Exercise Program">
+  <meta name="blurb"    content="A safe, step-by-step routine of breathing, mobility, stretching and strengthening exercises to calm chest-wall pain from costochondritis and rebuild capacity over ~6 weeks.">
+  <meta name="type"     content="Tutorial">
+  <meta name="category" content="Health">
+  <meta name="code"     content="TUT">
+  <meta name="tags"     content="costochondritis, chest pain, rib pain, stretching, physical therapy, breathing, posture, rehab">
+  <meta name="status"   content="learning">
+  <meta name="steps"    content="9">
+  <meta name="progress" content="0">
+
+  <style>
+    :root{
+      --bg:#eef3f2; --paper:#ffffff; --panel:#f7faf9; --panel-2:#eef4f3;
+      --ink:#1d2a2c; --muted:#5a6b6e; --line:#dde7e5;
+      --teal:#1f7a6e; --teal-soft:#e2f1ee; --teal-deep:#155d54;
+      --sage:#4f8f5f; --sage-soft:#e6f1e8;
+      --warn:#b9821a; --warn-bg:#fbf2dd; --warn-line:#ecd39a;
+      --danger:#b3261e; --danger-bg:#fbe9e7; --danger-line:#f0bcb6;
+      --code:#0e1715;
+      --radius:14px; --maxw:840px;
+      --shadow:0 1px 2px rgba(20,40,38,.04), 0 10px 30px rgba(20,40,38,.06);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; background:var(--bg); color:var(--ink);
+      font:17px/1.68 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      padding:0 18px 90px; -webkit-font-smoothing:antialiased;
+    }
+    .wrap{max-width:var(--maxw); margin:0 auto}
+    a{color:var(--teal-deep)}
+
+    .top{display:flex; align-items:center; gap:14px; padding:18px 0 6px; font-size:.92rem}
+    .top a.lib{color:var(--muted); text-decoration:none}
+    .top a.lib:hover{color:var(--ink)}
+
+    header.head{
+      background:
+        radial-gradient(120% 120% at 90% -20%, rgba(31,122,110,.14), transparent 55%),
+        radial-gradient(90% 90% at -10% 0%, rgba(79,143,95,.10), transparent 55%),
+        var(--paper);
+      border:1px solid var(--line); border-radius:18px;
+      padding:30px 30px 26px; box-shadow:var(--shadow); margin-top:6px;
+    }
+    .eyebrow{font-size:.78rem; letter-spacing:.18em; text-transform:uppercase; color:var(--teal); font-weight:700; margin:0 0 .3em}
+    header.head h1{font-size:2.1rem; line-height:1.18; margin:.1em 0 .25em}
+    header.head .blurb{color:var(--muted); font-size:1.08rem; margin:0 0 1em; max-width:64ch}
+    .meta-row{color:var(--muted); font-size:.85rem; display:flex; flex-wrap:wrap; gap:8px 12px}
+    .meta-row span{background:var(--panel-2); border:1px solid var(--line); padding:4px 11px; border-radius:999px}
+
+    h2{font-size:1.5rem; margin:2.2em 0 .5em; line-height:1.25}
+    h3{font-size:1.12rem; margin:1.4em 0 .35em}
+    p{margin:.7em 0}
+    ul,ol{padding-left:1.25em}
+    li{margin:.32em 0}
+    strong{color:var(--teal-deep)}
+    code{background:var(--panel-2); padding:.1em .42em; border-radius:6px; font-size:.92em;
+      font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+
+    /* Section intro divider */
+    .lead{font-size:1.05rem; color:var(--ink)}
+
+    /* Step blocks */
+    .step{background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+      padding:6px 26px 22px; margin:1.5em 0; box-shadow:var(--shadow)}
+    .step > h2{margin-top:.75em; display:flex; align-items:baseline; gap:.55em}
+    .step > h2 .n{
+      flex:0 0 auto; display:inline-grid; place-items:center; width:1.7em; height:1.7em;
+      font-size:.78em; border-radius:50%; background:var(--teal); color:#fff; font-weight:700}
+    .teaches{color:var(--sage); font-size:.82rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; margin:.7em 0 .1em}
+    .ready{background:var(--sage-soft); border-left:4px solid var(--sage); border-radius:10px;
+      padding:11px 15px; margin:1.1em 0 .3em; font-size:.96rem}
+    .ready b{color:#2f6b3e}
+
+    /* How-to exercise card */
+    .howto{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:4px 18px 14px; margin:1em 0}
+    .howto h4{margin:.9em 0 .2em; font-size:1.02rem; color:var(--teal-deep)}
+    .dose{display:inline-flex; flex-wrap:wrap; gap:6px; margin:.4em 0 .2em}
+    .dose span{font-size:.78rem; background:var(--teal-soft); color:var(--teal-deep);
+      border:1px solid #cfe6e1; padding:3px 9px; border-radius:999px; font-weight:600}
+
+    /* Callouts */
+    .callout{border-radius:12px; padding:2px 18px; margin:1.1em 0; border:1px solid var(--line)}
+    .safety{background:var(--danger-bg); border:1px solid var(--danger-line); border-left:5px solid var(--danger)}
+    .safety::before{content:"🚑  Safety first — read this"; display:block; color:var(--danger); font-weight:800; font-size:.92rem; margin:.85em 0 -.2em; letter-spacing:.01em}
+    .pitfall{background:var(--warn-bg); border:1px solid var(--warn-line); border-left:5px solid var(--warn)}
+    .pitfall::before{content:"⚠  Gotcha"; display:block; color:var(--warn); font-weight:700; font-size:.85rem; margin:.8em 0 -.25em}
+    .tip{background:var(--teal-soft); border:1px solid #cfe6e1; border-left:5px solid var(--teal)}
+    .tip::before{content:"💡  Tip"; display:block; color:var(--teal-deep); font-weight:700; font-size:.85rem; margin:.8em 0 -.25em}
+
+    /* Video */
+    .video{margin:1.2em 0}
+    .video iframe{width:100%; aspect-ratio:16/9; border:0; border-radius:12px; background:#000}
+    .video .watch{display:inline-block; margin-top:.5em; font-size:.9rem; color:var(--muted); text-decoration:none}
+    .video .watch:hover{color:var(--teal-deep)}
+    .ts{display:inline-block; margin:.25em 0; font-size:.92rem; color:var(--teal-deep); text-decoration:none}
+    .ts:hover{text-decoration:underline}
+    .vid-meta{font-size:.82rem; color:var(--muted); margin:.1em 0 .3em}
+
+    /* Diagrams */
+    figure.diagram{margin:1.3em 0; text-align:center}
+    figure.diagram svg{max-width:100%; height:auto; background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:12px; box-shadow:var(--shadow)}
+    figure.diagram figcaption{color:var(--muted); font-size:.84rem; margin-top:.5em}
+
+    /* Pain scale */
+    .scale{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:1.1em 0}
+    .scale div{border-radius:12px; padding:12px 14px; border:1px solid var(--line); font-size:.92rem}
+    .scale .go{background:var(--sage-soft); border-color:#bfe0c6}
+    .scale .ease{background:var(--warn-bg); border-color:var(--warn-line)}
+    .scale .stop{background:var(--danger-bg); border-color:var(--danger-line)}
+    .scale b{display:block; font-size:1.05rem; margin-bottom:.15em}
+    @media(max-width:620px){.scale{grid-template-columns:1fr}}
+
+    /* Weekly table */
+    table.week{width:100%; border-collapse:collapse; margin:1.1em 0; font-size:.92rem; background:var(--paper); border-radius:12px; overflow:hidden; box-shadow:var(--shadow)}
+    table.week th,table.week td{border:1px solid var(--line); padding:9px 11px; text-align:left; vertical-align:top}
+    table.week th{background:var(--teal-soft); color:var(--teal-deep); font-weight:700}
+    table.week tr:nth-child(even) td{background:var(--panel)}
+
+    /* Glossary / resources */
+    .glossary{background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); padding:6px 24px; margin:1.2em 0; box-shadow:var(--shadow)}
+    .glossary dt{font-weight:700; color:var(--ink); margin-top:.8em}
+    .glossary dd{margin:.1em 0 .2em; color:var(--muted)}
+    .resources ul{list-style:none; padding-left:0}
+    .resources li{margin:.5em 0}
+    hr{border:0; border-top:1px solid var(--line); margin:2.6em 0}
+    .fine{font-size:.85rem; color:var(--muted)}
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <a class="lib" href="../../index.html">← Library</a>
+  </div>
+
+  <header class="head">
+    <p class="eyebrow">Health · Rehab Tutorial</p>
+    <h1>Costochondritis Recovery: A Gentle Exercise Program</h1>
+    <p class="blurb">A safe, worked-through routine — breathing, mobility, stretching, posture and strength — to calm chest-wall pain from costochondritis and rebuild capacity over about six weeks.</p>
+    <div class="meta-row">
+      <span>For: someone with (or suspecting) costochondritis, new to rehab</span>
+      <span>Goal: less pain, more movement, fewer flares</span>
+      <span>Best practice as of 2026</span>
+    </div>
+  </header>
+
+  <div class="callout safety">
+    <p><strong>This tutorial is education, not a diagnosis or medical advice.</strong> Chest pain has many causes, and some are emergencies. Before you do <em>any</em> of these exercises, two things must be true:</p>
+    <ol>
+      <li><strong>A doctor has examined you and confirmed your pain is musculoskeletal (costochondritis), not your heart, lungs, or another serious cause.</strong> Costochondritis is a "diagnosis of exclusion" — it's named only after dangerous causes are ruled out.</li>
+      <li><strong>You have no red-flag symptoms right now.</strong></li>
+    </ol>
+    <p><strong>Call emergency services (911 / 999 / 112) immediately</strong> if chest pain comes with: crushing/pressure or pain spreading to the arm, jaw, neck or back; shortness of breath; sweating, nausea, or dizziness; a racing/irregular heartbeat; pain that worsens with exertion; or you simply feel something is very wrong. These can signal a heart attack and are <em>not</em> costochondritis.</p>
+  </div>
+
+  <p class="lead">Costochondritis is inflammation of the cartilage that joins your ribs to your breastbone (the <strong>costochondral joints</strong>). It's a common, benign cause of chest-wall pain — and it usually improves on its own. The reason a structured exercise program helps is that stiff thoracic joints, tight chest muscles, shallow breathing and slumped posture all keep tugging on those irritated joints. Gently restoring breathing, mobility and posture takes the load off the sore spot so it can settle. A small 2009 trial found patients doing a chest-stretching program had significantly more pain relief than those on usual care alone.</p>
+
+  <p>You'll move through nine steps: first calming an acute flare, then breathing and mobility, then stretching and posture, then self-release, and finally a graded return to real activity — plus a weekly plan you can actually follow. <strong>The golden rule throughout: gentle, controlled, never into sharp pain.</strong></p>
+
+  <!-- ====================== Pain scale diagram ====================== -->
+  <figure class="diagram" aria-label="Anatomy of costochondritis">
+    <svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Front view of the rib cage showing the sternum and costochondral joints where costochondritis occurs">
+      <defs>
+        <linearGradient id="bone" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f3f7f6"/><stop offset="1" stop-color="#e2ece9"/>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="640" height="330" fill="none"/>
+      <!-- sternum -->
+      <rect x="300" y="60" width="40" height="150" rx="14" fill="url(#bone)" stroke="#9fb4af" stroke-width="2"/>
+      <!-- ribs left + right -->
+      <g fill="none" stroke="#9fb4af" stroke-width="9" stroke-linecap="round">
+        <path d="M300 80 C220 70 150 95 110 120"/>
+        <path d="M300 110 C215 105 140 135 100 165"/>
+        <path d="M300 140 C215 138 145 170 110 205"/>
+        <path d="M300 170 C220 172 160 205 130 240"/>
+        <path d="M340 80 C420 70 490 95 530 120"/>
+        <path d="M340 110 C425 105 500 135 540 165"/>
+        <path d="M340 140 C425 138 495 170 530 205"/>
+        <path d="M340 170 C420 172 480 205 510 240"/>
+      </g>
+      <!-- cartilage joints (highlighted) -->
+      <g fill="#1f7a6e">
+        <circle cx="300" cy="80" r="7"/><circle cx="340" cy="80" r="7"/>
+        <circle cx="300" cy="110" r="7"/><circle cx="340" cy="110" r="7"/>
+        <circle cx="300" cy="140" r="7"/><circle cx="340" cy="140" r="7"/>
+        <circle cx="300" cy="170" r="7"/><circle cx="340" cy="170" r="7"/>
+      </g>
+      <!-- inflamed marker -->
+      <circle cx="340" cy="110" r="17" fill="none" stroke="#b3261e" stroke-width="3"/>
+      <circle cx="340" cy="110" r="26" fill="none" stroke="#b3261e" stroke-width="1.5" opacity=".5"/>
+      <text x="392" y="106" font-size="15" fill="#b3261e" font-weight="700">Inflamed joint</text>
+      <text x="392" y="125" font-size="12.5" fill="#5a6b6e">= sharp, tender spot</text>
+      <text x="300" y="245" font-size="13" fill="#5a6b6e" text-anchor="middle">Sternum</text>
+      <text x="150" y="300" font-size="13" fill="#5a6b6e" text-anchor="middle">Ribs</text>
+      <text x="490" y="300" font-size="13" fill="#5a6b6e" text-anchor="middle">Ribs</text>
+      <text x="320" y="35" font-size="16" fill="#1d2a2c" font-weight="700" text-anchor="middle">Costochondral joints (cartilage)</text>
+    </svg>
+    <figcaption>Costochondritis = inflammation where rib cartilage meets the sternum. A telltale sign: pressing directly on the spot reproduces your pain.</figcaption>
+  </figure>
+
+  <div class="tip">
+    <p><strong>Track it.</strong> Rate your pain 0–10 before and after each session. If a session leaves you reliably worse the next morning, it was too much — scale back. You want flat or improving, week over week.</p>
+  </div>
+
+  <!-- ====================== STEP 1 ====================== -->
+  <section class="step">
+    <h2><span class="n">1</span> Confirm it's costochondritis &amp; learn the ground rules</h2>
+    <p class="teaches">What this teaches — how to know exercise is appropriate, and the "traffic-light" pain rule that keeps you safe</p>
+
+    <p>Before loading a sore joint, be sure it <em>is</em> the joint. Classic costochondritis: a dull ache or sharp pain over the upper-left or right breastbone that you can <strong>reproduce by pressing on the spot</strong>, and that worsens with deep breaths, coughing, twisting or reaching overhead. It does <em>not</em> get worse with walking up stairs or exertion, and it doesn't radiate down the arm with sweating — those point to the heart and need urgent assessment.</p>
+
+    <p>The single principle that governs every exercise below is the <strong>pain traffic light</strong>. Mild discomfort while stretching is fine; sharp or lingering pain is your signal to back off.</p>
+
+    <div class="scale">
+      <div class="go"><b>0–3 · Green</b>Mild stretch or ache that eases as you go and settles within minutes. <strong>Continue.</strong></div>
+      <div class="ease"><b>4–5 · Amber</b>Noticeable pain, or it lingers after. <strong>Reduce range/reps</strong>, or hold a gentler version.</div>
+      <div class="stop"><b>6+ · Red</b>Sharp, stabbing, or worse next day. <strong>Stop that exercise</strong> and drop back a step.</div>
+    </div>
+
+    <p>Here's a clear, beginner-friendly overview of the condition and gentle treatment from a physical therapist:</p>
+    <div class="video">
+      <iframe src="https://www.youtube.com/embed/_irAe4_3d38" title="Costochondritis Treatment - Ask Doctor Jo" loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <a class="watch" href="https://www.youtube.com/watch?v=_irAe4_3d38" target="_blank" rel="noopener">▶ Watch on YouTube</a>
+      <p class="vid-meta">"Costochondritis Treatment" — Ask Doctor Jo (licensed physical therapist)</p>
+    </div>
+
+    <div class="ready"><b>Ready to move on when…</b> you've been cleared by a clinician, you can locate your tender spot, and you understand the green/amber/red rule well enough to self-regulate.</div>
+  </section>
+
+  <!-- ====================== STEP 2 ====================== -->
+  <section class="step">
+    <h2><span class="n">2</span> Calm the acute flare (the first ~1–2 weeks)</h2>
+    <p class="teaches">What this teaches — settling inflammation so exercise becomes tolerable</p>
+
+    <p>In a hot, painful flare, don't rush to stretch. First lower the irritation with <strong>relative rest</strong> (not bed rest): keep moving normally but pause the specific activities that spike your pain — heavy pressing, deep push-ups, hauling, big overhead reaches.</p>
+
+    <h3>Settle it</h3>
+    <ul>
+      <li><strong>Heat or ice</strong>, whichever feels better, 10–15 minutes a few times a day. Wrap ice in a thin towel so it's not directly on skin. Ice tends to suit a fresh, angry flare; heat suits stiff, achy muscles around it.</li>
+      <li><strong>Anti-inflammatories</strong> (ibuprofen, naproxen) or acetaminophen can help — but <strong>confirm with your doctor or pharmacist</strong> that they're safe for you, and follow the label.</li>
+      <li><strong>Sleep positioning:</strong> avoid lying on the painful side; a pillow hugged to the chest can reduce night pain.</li>
+    </ul>
+
+    <div class="pitfall">
+      <p><strong>"Rest" doesn't mean "freeze."</strong> Total immobility stiffens the thoracic spine and ribs, which makes costochondritis <em>worse</em> once you move again. Keep walking and doing gentle daily movement from day one — just skip the painful spikes.</p>
+    </div>
+
+    <div class="ready"><b>Ready to move on when…</b> your resting pain is settling and gentle movement no longer triggers sharp pain — usually a handful of days in. You can begin Steps 3–4 even while still using heat/ice.</div>
+  </section>
+
+  <!-- ====================== STEP 3 ====================== -->
+  <section class="step">
+    <h2><span class="n">3</span> Diaphragmatic breathing — start here, day one</h2>
+    <p class="teaches">What this teaches — breathing from the belly so the rib joints stop straining with every breath</p>
+
+    <p>When the chest hurts, most people unconsciously switch to shallow <em>upper-chest</em> breathing, which yanks on the irritated rib joints thousands of times a day. Retraining the diaphragm is the gentlest, highest-value thing you can do — it directly offloads the sore area and you can do it during a flare.</p>
+
+    <div class="howto">
+      <h4>Diaphragmatic (belly) breathing</h4>
+      <p>Lie on your back, knees bent. Place one hand on your <strong>upper chest</strong> and one on your <strong>belly</strong>.</p>
+      <ol>
+        <li>Breathe in slowly through your nose so your <strong>belly rises</strong> and pushes your lower hand out — while the chest hand stays as still as possible.</li>
+        <li>Exhale gently through pursed lips, letting the belly fall.</li>
+        <li>Keep your neck and shoulders relaxed throughout.</li>
+      </ol>
+      <div class="dose"><span>Hold each breath: slow, ~4s in / 6s out</span><span>Reps: 6–10 breaths</span><span>Frequency: 2–3× daily</span></div>
+    </div>
+
+    <p>A simple progression once that feels natural: do the same belly breathing while seated upright, then standing, so it carries over into daily life.</p>
+
+    <p class="vid-meta">Supplementary video (gentle rib-pain breathing + mobility): <a class="ts" href="https://www.youtube.com/watch?v=3MqTsMWTF7k" target="_blank" rel="noopener">▶ "Exercises and Breathing Tips for Rib Pain | Costochondritis" (YouTube)</a></p>
+
+    <div class="ready"><b>Ready to move on when…</b> you can take 8–10 slow breaths with the belly doing the work and the chest staying quiet, pain-free.</div>
+  </section>
+
+  <!-- ====================== STEP 4 ====================== -->
+  <section class="step">
+    <h2><span class="n">4</span> Gentle thoracic &amp; rib mobility</h2>
+    <p class="teaches">What this teaches — freeing the mid-back and ribs so they share the load instead of dumping it on the sore joint</p>
+
+    <p>A stiff thoracic spine forces the costochondral joints to do extra work. These low-range mobility drills restore movement <em>around</em> the painful area. Move slowly, stay in the green zone, and never force end-range.</p>
+
+    <div class="howto">
+      <h4>Cat–Cow (on hands and knees)</h4>
+      <p>Slowly round your back toward the ceiling (exhale), then gently let it sag and lift the chest (inhale). Keep the range small at first — this is about smooth motion, not maximum stretch.</p>
+      <div class="dose"><span>Tempo: slow &amp; controlled</span><span>Reps: 6–10</span><span>1–2× daily</span></div>
+    </div>
+
+    <div class="howto">
+      <h4>Seated thoracic rotation</h4>
+      <p>Sit tall, arms crossed over your chest (or hands behind head). Rotate your upper body gently to one side, then the other, leading with the breastbone, not yanking with the arms.</p>
+      <div class="dose"><span>Hold: 2–3s each side</span><span>Reps: 5–8 per side</span><span>1–2× daily</span></div>
+    </div>
+
+    <div class="howto">
+      <h4>Foam-roller thoracic extension (optional, when not acute)</h4>
+      <p>Lie back with a foam roller across your mid-back (below the shoulder blades), knees bent, hands supporting the head. Gently extend back over the roller a small amount, breathe, then return. Move the roller up/down a few segments. <strong>Keep it gentle</strong> — this should feel like a release, not a crunch.</p>
+      <div class="dose"><span>2–3 spots</span><span>2–3 gentle extensions each</span><span>Most days</span></div>
+    </div>
+
+    <p>This video walks through a sensible rehab progression of stretches and mobility for chest-wall pain — use it to see the form:</p>
+    <div class="video">
+      <iframe src="https://www.youtube.com/embed/cUI53tysUeA" title="Costochondritis Rehab Exercises: Physical Therapy Stretches & Mobility for Chest Pain Relief" loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <a class="watch" href="https://www.youtube.com/watch?v=cUI53tysUeA" target="_blank" rel="noopener">▶ Watch on YouTube</a>
+      <p class="vid-meta">"Costochondritis Rehab Exercises: Physical Therapy Stretches &amp; Mobility" — Rehab Science (Dr. Tom Walters, PT)</p>
+    </div>
+
+    <div class="pitfall">
+      <p>Don't chase a big "crack" or deep stretch in the mid-back during a flare. Aim for small, repeatable, comfortable ranges. Range grows on its own as irritation settles.</p>
+    </div>
+
+    <div class="ready"><b>Ready to move on when…</b> cat-cow and seated rotation feel smooth and pain-free through a comfortable range.</div>
+  </section>
+
+  <!-- ====================== STEP 5 ====================== -->
+  <section class="step">
+    <h2><span class="n">5</span> Chest &amp; pec stretches — the research-backed core</h2>
+    <p class="teaches">What this teaches — lengthening tight chest muscles that pull the rib joints forward</p>
+
+    <p>This is the piece with the most direct evidence. Tight pectoral muscles round the shoulders forward and load the costochondral joints; stretching them was the intervention that beat usual care in the 2009 trial. The classic move is the <strong>doorway / corner pec stretch</strong>.</p>
+
+    <div class="howto">
+      <h4>Doorway (corner) pec stretch</h4>
+      <ol>
+        <li>Stand in a doorway (or facing a corner). Raise both arms and bend the elbows ~90°, forearms flat against the frame, <strong>elbows roughly at shoulder height</strong>.</li>
+        <li>Step one foot through and <strong>lean your body gently forward</strong> until you feel a stretch across the front of the chest and shoulders — never sharp.</li>
+        <li>Breathe slowly and hold. Ease out, rest, repeat.</li>
+      </ol>
+      <div class="dose"><span>Hold: 20–30s</span><span>Reps: 3–5</span><span>1–2× daily</span></div>
+    </div>
+
+    <figure class="diagram" aria-label="Doorway pec stretch">
+      <svg viewBox="0 0 520 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Person standing in a doorway with forearms on the frame, leaning forward to stretch the chest">
+        <!-- door frame -->
+        <rect x="120" y="20" width="280" height="220" rx="6" fill="none" stroke="#9fb4af" stroke-width="6"/>
+        <line x1="160" y1="20" x2="160" y2="240" stroke="#dde7e5" stroke-width="3"/>
+        <line x1="360" y1="20" x2="360" y2="240" stroke="#dde7e5" stroke-width="3"/>
+        <!-- body -->
+        <g stroke="#1f7a6e" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <!-- head -->
+          <circle cx="260" cy="70" r="16" fill="#e2f1ee"/>
+          <!-- torso leaning forward -->
+          <path d="M260 86 L264 150"/>
+          <!-- arms up to frame -->
+          <path d="M260 100 L210 96 L165 110"/>
+          <path d="M260 100 L312 96 L356 110"/>
+          <!-- legs, front foot stepping through -->
+          <path d="M264 150 L240 210"/>
+          <path d="M264 150 L300 205"/>
+        </g>
+        <!-- forward arrow -->
+        <path d="M300 70 q40 0 55 18" fill="none" stroke="#b9821a" stroke-width="3"/>
+        <polygon points="352,82 360,92 348,93" fill="#b9821a"/>
+        <text x="370" y="70" font-size="13" fill="#b9821a" font-weight="700">lean</text>
+        <text x="80" y="135" font-size="13" fill="#5a6b6e" transform="rotate(-90 80 135)">door frame</text>
+        <text x="260" y="255" font-size="12.5" fill="#5a6b6e" text-anchor="middle">elbows ~shoulder height · forearms on frame · step &amp; lean</text>
+      </svg>
+      <figcaption>Doorway pec stretch — the move with the most evidence behind it for costochondritis.</figcaption>
+    </figure>
+
+    <div class="howto">
+      <h4>Straight-arm / single-side pec stretch</h4>
+      <p>Hook your fingers around a door frame or wall corner at about shoulder height, arm straight, then turn your body gently away until you feel a stretch across the front of the shoulder and chest. Great for targeting one tight side.</p>
+      <div class="dose"><span>Hold: 20–30s</span><span>Reps: 3 per side</span><span>1–2× daily</span></div>
+    </div>
+
+    <div class="tip">
+      <p>The 2009 study used a high daily volume (short holds repeated many times through the day). You don't need to start there — begin with 3–5 quality reps once or twice daily and build up. <strong>Consistency over weeks beats intensity in one session.</strong></p>
+    </div>
+
+    <div class="ready"><b>Ready to move on when…</b> you can hold a full doorway stretch for 30 seconds with only a mild (green) stretch sensation, both sides.</div>
+  </section>
+
+  <!-- ====================== STEP 6 ====================== -->
+  <section class="step">
+    <h2><span class="n">6</span> Posture reset &amp; upper-back strength</h2>
+    <p class="teaches">What this teaches — building the postural muscles that hold you out of the slump that aggravates the joints</p>
+
+    <p>Stretching tight muscles only sticks if something holds the new posture. Slouched, rounded shoulders compress the front of the rib cage all day. These gentle activations train the mid-back to keep you upright. Keep loads light — this is endurance and control, not heavy lifting.</p>
+
+    <div class="howto">
+      <h4>Scapular squeezes (shoulder-blade retraction)</h4>
+      <p>Sitting or standing tall, gently draw your shoulder blades down and together — as if pinching a pencil between them. Don't shrug up. Hold, then release.</p>
+      <div class="dose"><span>Hold: 5s</span><span>Reps: 10</span><span>1–2× daily</span></div>
+    </div>
+
+    <div class="howto">
+      <h4>Chin tucks</h4>
+      <p>Gently glide your head straight back (making a "double chin") to stack your head over your shoulders. This counters forward-head posture that drags the upper rib cage down.</p>
+      <div class="dose"><span>Hold: 3–5s</span><span>Reps: 10</span><span>Several times daily</span></div>
+    </div>
+
+    <div class="howto">
+      <h4>Band rows (when pain-free)</h4>
+      <p>Anchor a light resistance band, hold an end in each hand, and row your elbows back, squeezing the shoulder blades. Keep it light and smooth; stop before any chest pain. Progress resistance slowly.</p>
+      <div class="dose"><span>2–3 sets</span><span>10–15 reps</span><span>2–3× weekly</span></div>
+    </div>
+
+    <div class="howto">
+      <h4>Neck side stretch (scalene / SCM) — for the tight front-of-neck muscles</h4>
+      <p>Hook your fingers just above your collarbone, then gently side-bend your head to the opposite side until you feel a mild stretch at the front/side of the neck. These muscles attach near the upper ribs and often get tight with chest pain.</p>
+      <div class="dose"><span>Hold: 20s</span><span>Reps: 2–3 per side</span><span>Daily</span></div>
+    </div>
+
+    <div class="ready"><b>Ready to move on when…</b> you can sit and stand tall with relaxed shoulders without it feeling like effort, and band rows are pain-free.</div>
+  </section>
+
+  <!-- ====================== STEP 7 ====================== -->
+  <section class="step">
+    <h2><span class="n">7</span> Self-release for tight rib &amp; back muscles</h2>
+    <p class="teaches">What this teaches — easing the muscular tension and stiff back joints that keep the front of the chest irritated</p>
+
+    <p>Often the front-of-chest pain is fueled by tightness in the <em>back</em> of the rib cage — stiff joints where the ribs meet the spine. Gentle self-release there can take the tension off the front. A popular approach from physical therapists Bob &amp; Brad uses a ball (or a purpose-made device) against the back rib joints, plus stretches.</p>
+
+    <div class="video">
+      <iframe src="https://www.youtube.com/embed/W9PWTLOQf3w" title="Top 7 Ways To Fix Most Costochondritis & Tietze Syndrome - Bob & Brad" loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <a class="watch" href="https://www.youtube.com/watch?v=W9PWTLOQf3w" target="_blank" rel="noopener">▶ Watch on YouTube</a>
+      <p class="vid-meta">"Top 7 Ways To Fix Most Costochondritis &amp; Tietze Syndrome — Chest Pain (Exercises &amp; Treatments)" — Bob &amp; Brad (PTs), 2018</p>
+    </div>
+
+    <div class="howto">
+      <h4>Back-of-rib release with a ball</h4>
+      <p>Lie on your back on the floor with a softball/lacrosse-style ball placed on a tight spot beside the spine in your upper-mid back. Let your body weight sink in, breathe slowly for 20–30 seconds, then reposition. <strong>Stay off the spine itself and out of the red zone.</strong></p>
+      <div class="dose"><span>20–30s per spot</span><span>A few spots</span><span>Daily, if it helps</span></div>
+    </div>
+
+    <div class="pitfall">
+      <p>Self-release should feel like a "good ache" that eases tension, never sharp or bruising. If pressing the back makes the <em>front</em> pain flare, stop — go back to breathing and gentle mobility. Don't press directly on the inflamed front cartilage.</p>
+    </div>
+
+    <div class="ready"><b>Ready to move on when…</b> gentle back release leaves your chest feeling looser, not more irritated.</div>
+  </section>
+
+  <!-- ====================== STEP 8 ====================== -->
+  <section class="step">
+    <h2><span class="n">8</span> Rebuild cardio &amp; strength gradually</h2>
+    <p class="teaches">What this teaches — returning to real activity without re-flaring the joint</p>
+
+    <p>As pain settles, gentle aerobic exercise keeps blood flowing and prevents deconditioning. Start with <strong>low-impact options that don't jar the chest</strong>: walking first, then stationary cycling, then swimming once strokes are comfortable. Build duration before intensity.</p>
+
+    <p>For strength, reintroduce upper-body and chest loading <strong>slowly and last</strong>:</p>
+    <ul>
+      <li>Begin with the band rows and light pulling from Step 6.</li>
+      <li>Add pressing movements only when stretches and mobility are fully pain-free — start with incline or wall push-ups before floor push-ups, and light weights before heavy.</li>
+      <li>Use the green/amber/red rule on every new exercise, and judge by how you feel the <em>next morning</em>.</li>
+    </ul>
+
+    <div class="pitfall">
+      <p>The most common relapse cause is doing too much too soon — a big chest workout, heavy lifting, or a hard push-up session the moment pain eases. Add one new thing at a time and give it 48 hours before progressing.</p>
+    </div>
+
+    <div class="ready"><b>Ready to move on when…</b> you can do 20–30 minutes of low-impact cardio and light upper-body work with no next-day flare.</div>
+  </section>
+
+  <!-- ====================== STEP 9 ====================== -->
+  <section class="step">
+    <h2><span class="n">9</span> Build your weekly routine &amp; track progress</h2>
+    <p class="teaches">What this teaches — turning the pieces into a sustainable plan over ~6 weeks</p>
+
+    <p>Costochondritis often settles within a few weeks but can linger longer; physical-therapy programs are typically run consistently for <strong>about six weeks</strong>. Daily breathing and mobility form the base; stretching and strengthening sit on top a few times a week. Here's a sensible default once you're past the acute flare:</p>
+
+    <table class="week">
+      <thead>
+        <tr><th>Block</th><th>What</th><th>How often</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Daily base</td><td>Diaphragmatic breathing + cat-cow + seated rotation + chin tucks</td><td>Every day (5–10 min)</td></tr>
+        <tr><td>Stretch</td><td>Doorway pec stretch + neck side stretch</td><td>1–2× daily</td></tr>
+        <tr><td>Strength</td><td>Scapular squeezes daily; band rows (then light pressing)</td><td>2–3× per week</td></tr>
+        <tr><td>Mobility/release</td><td>Foam-roller extension + back-of-rib ball release</td><td>Most days, as tolerated</td></tr>
+        <tr><td>Cardio</td><td>Walking → cycling → swimming, building duration</td><td>3–5× per week</td></tr>
+        <tr><td>Recovery</td><td>Heat/ice as needed; sleep position; manage flares</td><td>As needed</td></tr>
+      </tbody>
+    </table>
+
+    <p>Keep a simple log: date, what you did, pain before/after (0–10), and how you felt next morning. Re-read it weekly — the trend tells you whether to progress or hold.</p>
+
+    <div class="tip">
+      <p><strong>See a physical therapist if you can.</strong> A hands-on assessment tailors this to your body, catches contributing factors (posture, an old injury, breathing patterns), and progresses you faster and more safely than any generic plan.</p>
+    </div>
+
+    <div class="callout safety" style="margin-top:1.2em">
+      <p><strong>Re-check with your doctor if:</strong> pain is getting worse despite 2–3 weeks of gentle work; it isn't improving after ~6 weeks; you develop fever, swelling or redness over the joint (possible Tietze syndrome or infection); or <em>any</em> red-flag/cardiac symptoms appear. And as always — sudden severe chest pain, breathlessness, or pain spreading to arm/jaw means <strong>call emergency services now.</strong></p>
+    </div>
+
+    <div class="ready"><b>You've got the program when…</b> you have a written weekly plan you can follow, you adjust it using the pain traffic light, and your log shows a flat-or-improving trend.</div>
+  </section>
+
+  <hr>
+
+  <!-- ====================== Pitfalls ====================== -->
+  <h2>Common pitfalls &amp; gotchas</h2>
+  <div class="pitfall"><p><strong>Treating chest pain yourself before it's diagnosed.</strong> Never assume costochondritis. Get cleared first — the heart doesn't give do-overs.</p></div>
+  <div class="pitfall"><p><strong>Stretching <em>into</em> sharp pain.</strong> More is not better. Sharp or next-day-worse pain means you overshot. Live in the green zone.</p></div>
+  <div class="pitfall"><p><strong>Skipping breathing because it "isn't a real exercise."</strong> It's the highest-leverage, lowest-risk part — it offloads the joint with every breath.</p></div>
+  <div class="pitfall"><p><strong>Resting completely.</strong> Stiffness from total rest makes it worse. Keep gentle daily movement.</p></div>
+  <div class="pitfall"><p><strong>Going back to heavy chest pressing too early.</strong> The #1 relapse trigger. Reintroduce pushing last and slowly.</p></div>
+  <div class="pitfall"><p><strong>Quitting at week two.</strong> The benefit is cumulative over weeks. Give the program a fair ~6-week run.</p></div>
+
+  <!-- ====================== Glossary ====================== -->
+  <h2>Glossary</h2>
+  <dl class="glossary">
+    <dt>Costochondritis</dt><dd>Inflammation of the cartilage connecting the ribs to the breastbone — a common, benign cause of chest-wall pain.</dd>
+    <dt>Costochondral joints</dt><dd>The cartilage joints where each rib meets the sternum; the site of the pain.</dd>
+    <dt>Tietze syndrome</dt><dd>A close cousin of costochondritis that also involves visible <em>swelling</em> over the joint (usually a single rib). Worth mentioning to your doctor if you see swelling.</dd>
+    <dt>Diaphragmatic breathing</dt><dd>"Belly breathing" — using the diaphragm so the abdomen rises, minimizing strain on the chest wall.</dd>
+    <dt>Thoracic spine</dt><dd>The mid/upper back (where the ribs attach). Its stiffness directly affects rib-cage mechanics.</dd>
+    <dt>Diagnosis of exclusion</dt><dd>A condition confirmed only after more serious causes (cardiac, lung, etc.) have been ruled out.</dd>
+    <dt>NSAID</dt><dd>Non-steroidal anti-inflammatory drug (e.g., ibuprofen, naproxen) — use only as advised by a clinician/pharmacist.</dd>
+  </dl>
+
+  <!-- ====================== Resources ====================== -->
+  <h2>Resources &amp; references</h2>
+  <div class="resources">
+    <ul>
+      <li><a href="https://my.clevelandclinic.org/health/diseases/22167-costochondritis" target="_blank" rel="noopener">Cleveland Clinic — Costochondritis overview</a> (causes, symptoms, when to seek care)</li>
+      <li><a href="https://www.mayoclinic.org/diseases-conditions/costochondritis/diagnosis-treatment/drc-20371180" target="_blank" rel="noopener">Mayo Clinic — Diagnosis &amp; treatment</a> (includes the doorway chest stretch)</li>
+      <li><a href="https://www.goodrx.com/conditions/musculoskeletal/costochondritis-exercises" target="_blank" rel="noopener">GoodRx — Costochondritis exercises</a> (exercise parameters &amp; precautions)</li>
+      <li><a href="https://www.surreyphysio.co.uk/top-5/top-5-exercises-for-costochondritis/" target="_blank" rel="noopener">Surrey Physio — Top 5 exercises for costochondritis</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/19827277/" target="_blank" rel="noopener">PubMed — "Stretching exercises for costochondritis pain" (2009 study)</a></li>
+      <li>Video channels used: <a href="https://www.youtube.com/watch?v=_irAe4_3d38" target="_blank" rel="noopener">Ask Doctor Jo</a> · <a href="https://www.youtube.com/watch?v=cUI53tysUeA" target="_blank" rel="noopener">Rehab Science</a> · <a href="https://www.youtube.com/watch?v=W9PWTLOQf3w" target="_blank" rel="noopener">Bob &amp; Brad</a></li>
+    </ul>
+    <p class="fine">This tutorial summarizes general, publicly available guidance for educational purposes. It is not a substitute for diagnosis or treatment by a qualified healthcare professional who can assess you in person.</p>
+  </div>
+
+</div>
+
+<!-- Library reading-progress tracker. ../../ reaches the repo root. -->
+<script src="../../progress.js"></script>
+</body>
+</html>
