@@ -104,5 +104,38 @@ window.MODULES = [
     href:        "library/pelvic-floor-training/pelvic-floor-training-guide.html",
     steps:       8,
     progress:    0
+  },
+  {
+    title:       "Thoracic Spine Recovery — Tier 1: Foundation",
+    blurb:       "Acute-phase plan: calm costochondritis, gently mobilize the thoracic spine, and wake up a weak rhomboid. Five low-load exercises, Tonal-led.",
+    type:        "Plan",
+    category:    "Health",
+    tags:        ["thoracic spine", "costochondritis", "rhomboid", "mobility"],
+    status:      "learning",
+    href:        "library/thoracic-tier1-foundation/index.html",
+    steps:       5,
+    progress:    0
+  },
+  {
+    title:       "Thoracic Spine Recovery — Tier 2: Rebuild",
+    blurb:       "Subacute plan: load the mid-back, expand thoracic rotation and extension, and build scapular control. Five Tonal-led strength and mobility moves.",
+    type:        "Plan",
+    category:    "Health",
+    tags:        ["thoracic spine", "rhomboid", "scapular control", "mobility"],
+    status:      "learning",
+    href:        "library/thoracic-tier2-rebuild/index.html",
+    steps:       5,
+    progress:    0
+  },
+  {
+    title:       "Thoracic Spine Recovery — Tier 3: Resilience",
+    blurb:       "Return-to-load plan: build robust pulling strength plus loaded thoracic extension and rotation for a durable mid-back. Five Tonal-led advanced moves.",
+    type:        "Plan",
+    category:    "Health",
+    tags:        ["thoracic spine", "rhomboid", "strength", "pulling"],
+    status:      "learning",
+    href:        "library/thoracic-tier3-resilience/index.html",
+    steps:       5,
+    progress:    0
   }
 ];

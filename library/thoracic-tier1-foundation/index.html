@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thoracic Spine Recovery — Tier 1: Foundation</title>
+<meta name="title"    content="Thoracic Spine Recovery — Tier 1: Foundation">
+<meta name="blurb"    content="Acute-phase plan: calm costochondritis, gently mobilize the thoracic spine, and wake up a weak rhomboid. Five low-load exercises, Tonal-led.">
+<meta name="type"     content="Plan">
+<meta name="category" content="Health">
+<meta name="tags"     content="thoracic spine, costochondritis, rhomboid, mobility">
+<meta name="status"   content="learning">
+<meta name="steps"    content="5">
+<meta name="progress" content="0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Archivo:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f2ea;
+    --paper:#fffdf9;
+    --ink:#2a2520;
+    --ink-soft:#5b5249;
+    --line:#e4dccf;
+    --sage:#6d7f63;
+    --sage-soft:#eef0e8;
+    --gold:#b07d39;
+    --gold-soft:#f6ecd9;
+    --clay:#a85a43;
+    --clay-soft:#f6e4dc;
+    --rose:#9c3b3b;
+    --rose-soft:#f7e2df;
+    --shadow:0 1px 2px rgba(42,37,32,.04),0 8px 28px rgba(42,37,32,.07);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    font-size:18px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- Header ---------- */
+  header.hero{
+    background:
+      radial-gradient(120% 90% at 85% -10%, rgba(109,127,99,.18), transparent 60%),
+      radial-gradient(90% 80% at 0% 0%, rgba(176,125,57,.10), transparent 55%),
+      var(--paper);
+    border-bottom:1px solid var(--line);
+    padding:74px 0 60px;
+  }
+  .eyebrow{
+    font-family:"Archivo",sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.22em;
+    font-size:12px;
+    font-weight:600;
+    color:var(--sage);
+    margin:0 0 18px;
+  }
+  h1{
+    font-family:"Fraunces",serif;
+    font-weight:600;
+    font-size:clamp(34px,5.5vw,54px);
+    line-height:1.04;
+    letter-spacing:-.015em;
+    margin:0 0 22px;
+  }
+  h1 em{font-style:italic;color:var(--sage);}
+  .lede{
+    font-size:20px;
+    color:var(--ink-soft);
+    max-width:62ch;
+    margin:0 0 28px;
+  }
+  .meta-row{
+    display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;
+  }
+  .pill{
+    font-family:"Archivo",sans-serif;font-size:12.5px;font-weight:600;
+    letter-spacing:.03em;
+    padding:7px 14px;border-radius:100px;border:1px solid var(--line);
+    background:var(--paper);color:var(--ink-soft);
+  }
+
+  main{padding:18px 0 40px;}
+
+  /* ---------- Section scaffolding ---------- */
+  section{padding:46px 0;border-bottom:1px solid var(--line);}
+  .sec-label{
+    font-family:"Archivo",sans-serif;text-transform:uppercase;letter-spacing:.2em;
+    font-size:12px;font-weight:700;margin:0 0 10px;
+  }
+  h2{
+    font-family:"Fraunces",serif;font-weight:600;font-size:clamp(26px,4vw,38px);
+    line-height:1.1;letter-spacing:-.01em;margin:0 0 12px;
+  }
+  h3{
+    font-family:"Fraunces",serif;font-weight:600;font-size:23px;margin:34px 0 6px;letter-spacing:-.005em;
+  }
+  .goal{color:var(--ink-soft);font-size:18px;margin:0 0 8px;max-width:64ch;}
+  p{margin:0 0 16px;}
+  a{color:var(--sage);text-underline-offset:2px;}
+  strong{font-weight:600;}
+
+  /* ---------- Callout boxes ---------- */
+  .box{
+    border-radius:16px;padding:26px 28px;margin:24px 0;border:1px solid var(--line);
+    box-shadow:var(--shadow);
+  }
+  .box h4{font-family:"Fraunces",serif;font-size:19px;font-weight:600;margin:0 0 12px;}
+  .tldr{background:var(--sage-soft);border-color:#d9e0cf;}
+  .tldr ul{margin:0;padding-left:20px;}
+  .tldr li{margin-bottom:12px;}
+
+  /* ---------- Exercise cards ---------- */
+  .ex{
+    background:var(--paper);border:1px solid var(--line);border-radius:16px;
+    padding:24px 26px;margin:20px 0;box-shadow:var(--shadow);
+  }
+  .ex-title{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;}
+  .ex-no{
+    font-family:"Archivo",sans-serif;font-weight:700;font-size:13px;color:#fff;
+    background:var(--ink);border-radius:7px;padding:3px 9px;flex:none;letter-spacing:.04em;
+  }
+  .ex-title h4{font-family:"Fraunces",serif;font-weight:600;font-size:21px;margin:0;line-height:1.2;}
+  .ex dl{margin:0;display:grid;grid-template-columns:128px 1fr;gap:6px 18px;}
+  .ex dt{
+    font-family:"Archivo",sans-serif;font-size:11.5px;font-weight:700;text-transform:uppercase;
+    letter-spacing:.1em;color:var(--ink-soft);padding-top:4px;
+  }
+  .ex dd{margin:0;font-size:16.5px;}
+  .ex dd.caution{color:var(--clay);}
+  @media(max-width:620px){.ex dl{grid-template-columns:1fr;gap:2px 0;}.ex dt{margin-top:10px;}}
+
+  /* ---------- Safety ---------- */
+  .safety{background:var(--rose-soft);border:1px solid #eccfc9;border-radius:18px;padding:30px 30px 8px;margin:24px 0;}
+  .safety h2{color:var(--rose);}
+  .safety h4{font-family:"Fraunces",serif;font-size:18px;color:var(--rose);margin:22px 0 6px;}
+  .safety ul{margin:0 0 18px;padding-left:20px;}
+  .safety li{margin-bottom:8px;}
+
+  footer{padding:40px 0 70px;color:var(--ink-soft);font-size:14.5px;}
+  footer .disc{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px 26px;}
+  footer h4{font-family:"Archivo",sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:12px;color:var(--ink);margin:0 0 10px;}
+
+  @media(max-width:620px){
+    .wrap{padding:0 20px;}
+    header.hero{padding:52px 0 44px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Thoracic Spine Recovery · Tier 1</p>
+    <h1>Foundation: <em>calm, mobilize, wake up</em></h1>
+    <p class="lede">The acute-phase tier — five low-load exercises to settle costochondritis, gently mobilize the mid-back, and re-activate a weak rhomboid. Pain-free only.</p>
+    <div class="meta-row">
+      <span class="pill">Acute / foundation phase</span>
+      <span class="pill">Five exercises · daily</span>
+      <span class="pill">Tonal-led</span>
+      <span class="pill">Pain-free only</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===== How to use ===== -->
+  <section id="overview" style="border-bottom:none;padding-bottom:14px;">
+    <p class="sec-label" style="color:var(--sage);">Start here</p>
+    <h2>How to use this tier</h2>
+    <div class="box tldr">
+      <h4>The rules for Tier 1</h4>
+      <ul>
+        <li><strong>This is the acute / foundation phase.</strong> Everything stays strictly pain-free — quality and feeling the right muscle matter more than load.</li>
+        <li><strong>Do it daily.</strong> Short, gentle sessions; low load throughout.</li>
+        <li><strong>Progress to Tier 2 only when symptom-free</strong> — these movements should feel easy with no chest or mid-back pain during or after.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== EXERCISES ===== -->
+  <section id="exercises" class="s1">
+    <p class="sec-label" style="color:var(--sage);">The plan</p>
+    <h2>Five exercises</h2>
+
+    <div class="ex">
+      <div class="ex-title"><span class="ex-no">01</span><h4>Supported Thoracic Extension Breath</h4></div>
+      <dl>
+        <dt>Targets</dt><dd>Thoracic extension mobility; rib expansion; gentle decompression of irritated costal joints.</dd>
+        <dt>Setup / How-to</dt><dd>Lie back over a foam roller (or rolled towel) placed across the mid-back around T6–T8, knees bent, hands cradling the head. Breathe wide into the ribs; on each exhale let the spine drape gently over the roller. Shift the roller a few cm up/down and repeat at neighboring segments.</dd>
+        <dt>Dosage</dt><dd>5–8 slow breaths per segment, 2–3 segments. Daily.</dd>
+        <dt>Avoid</dt><dd>Forcing extension; any sharp chest pain; cranking the neck.</dd>
+        <dt>Caution</dt><dd class="caution">Stay strictly pain-free — costochondritis flares with aggressive rib stretch.</dd>
+      </dl>
+    </div>
+
+    <div class="ex">
+      <div class="ex-title"><span class="ex-no">02</span><h4>Prone Scapular Setting ("Rhomboid Wake-Up")</h4></div>
+      <dl>
+        <dt>Targets</dt><dd>Rhomboid and mid-trap activation / re-education.</dd>
+        <dt>Setup / How-to</dt><dd>Lie face down, arms in a "T" or by your sides. Without shrugging, gently draw the shoulder blades down and together — cue: "slide the blades into your back pockets." Hold and feel the muscle between spine and blade switch on, then fully relax. <em>Equipment: bodyweight, or a light band for feedback.</em></dd>
+        <dt>Dosage</dt><dd>10 slow reps × 2, ~5-sec holds. Quality over load.</dd>
+        <dt>Avoid</dt><dd>Shrugging the upper traps; holding the breath; lifting with the arms.</dd>
+        <dt>Caution</dt><dd class="caution">If you can't feel the rhomboid, shrink the range and slow down — activation matters more than reps.</dd>
+      </dl>
+    </div>
+
+    <div class="ex">
+      <div class="ex-title"><span class="ex-no">03</span><h4>Quadruped Cat–Cow (segmental)</h4></div>
+      <dl>
+        <dt>Targets</dt><dd>Gentle segmental thoracic flexion/extension mobility.</dd>
+        <dt>Setup / How-to</dt><dd>On hands and knees, slowly round the upper back toward the ceiling (cat), then sequentially extend (cow), leading from the mid-back rather than the low back. Move slowly, one segment at a time. <em>Equipment: bodyweight, floor.</em></dd>
+        <dt>Dosage</dt><dd>8–10 slow cycles.</dd>
+        <dt>Avoid</dt><dd>Dumping into the low back; rushing; pushing into pain at end range.</dd>
+        <dt>Caution</dt><dd class="caution">Keep the T6–T7 region moving gently — small, controlled range while acute.</dd>
+      </dl>
+    </div>
+
+    <div class="ex">
+      <div class="ex-title"><span class="ex-no">04</span><h4>Tonal Seated Scapular Retraction (light, partial range)</h4></div>
+      <dl>
+        <dt>Targets</dt><dd>Rhomboid / mid-trap re-education under light cable tension.</dd>
+        <dt>Setup / How-to</dt><dd>Set the Tonal arms low-to-mid, attach handles, sit or kneel facing the unit. With arms extended and elbows soft, simply squeeze the shoulder blades together a few inches — no full row, just the retraction. Use the lightest weight (~3–5 lb), Spotter/Chains off, slow tempo. <em>Alt: a very light band held in front, same partial squeeze.</em></dd>
+        <dt>Dosage</dt><dd>12–15 reps × 2, light.</dd>
+        <dt>Avoid</dt><dd>Turning it into a big row; pulling with the biceps; shrugging.</dd>
+        <dt>Caution</dt><dd class="caution">This is activation, not strength — keep the load low while symptoms are acute.</dd>
+      </dl>
+    </div>
+
+    <div class="ex">
+      <div class="ex-title"><span class="ex-no">05</span><h4>Band Pull-Apart (high-rep, light)</h4></div>
+      <dl>
+        <dt>Targets</dt><dd>Rhomboids, rear delts, postural endurance.</dd>
+        <dt>Setup / How-to</dt><dd>Hold a light band at shoulder height, arms straight. Pull the band apart by squeezing the shoulder blades, leading from the mid-back; return slowly. Keep the ribs down — don't flare them (protects the costochondral joints). <em>Tonal alt: very light reverse fly.</em></dd>
+        <dt>Dosage</dt><dd>15–20 reps × 2, light band.</dd>
+        <dt>Avoid</dt><dd>Rib flare / arching; jerking; too-heavy a band.</dd>
+        <dt>Caution</dt><dd class="caution">Stop if it pinches the front of the chest.</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ===== SAFETY ===== -->
+  <section id="safety" style="border-bottom:none;">
+    <p class="sec-label" style="color:var(--rose);">Read before every session</p>
+    <div class="safety">
+      <h2>Safety &amp; Warning Signs</h2>
+      <ul>
+        <li>This is the <strong>acute / foundation tier</strong> — everything stays pain-free. Sharp or lingering chest or mid-back pain means stop.</li>
+        <li>Keep ribs "down," avoid rib flare and breath-holding — this protects the inflamed costochondral joints (costochondritis).</li>
+        <li>No aggressive end-range extension or rotation yet — the T6–T7 subluxation is acute, so keep mid-back motion small and controlled.</li>
+        <li>Prioritize <strong>feeling the rhomboid activate</strong> over adding load; quality first while the muscle re-learns to switch on.</li>
+        <li>Progress to Tier 2 only when these are easy and symptom-free during <em>and</em> after.</li>
+        <li>New loaded movement or worsening symptoms → check with your clinician.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER / DISCLAIMER ===== -->
+  <footer>
+    <div class="disc">
+      <h4>A few honest caveats</h4>
+      <p>This plan is educational and is <strong>not</strong> a substitute for in-person assessment by a clinician who can examine you directly.</p>
+      <p style="margin-bottom:0;">The T6–T7 subluxation is acute. Before adding any new loaded movement — including the Tonal and band work here — clear it with your provider, and let symptoms, not a schedule, lead the progression.</p>
+    </div>
+  </footer>
+
+</main>
+<script src="../../progress.js"></script>
+</body>
+</html>
