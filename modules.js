@@ -83,6 +83,18 @@ window.MODULES = [
     progress:    0
   },
   {
+    title:       "Costochondritis Recovery — A Gentle Exercise Program",
+    blurb:       "A safe, step-by-step routine of breathing, mobility, stretching and strengthening exercises to calm chest-wall pain from costochondritis and rebuild capacity over ~6 weeks.",
+    type:        "Tutorial",
+    category:    "Health",
+    code:        "TUT",
+    tags:        ["costochondritis", "chest pain", "rib pain", "stretching", "physical therapy", "breathing", "posture", "rehab"],
+    status:      "learning",
+    href:        "library/costochondritis-exercises/costochondritis-exercises.html",
+    steps:       9,
+    progress:    0
+  },
+  {
     title:       "Pelvic Floor Training — Postpartum Prolapse to Lifting",
     blurb:       "From symptom relief to confident lifting: a staged pelvic-floor program covering prolapse recovery and load progression.",
     type:        "Tutorial",
