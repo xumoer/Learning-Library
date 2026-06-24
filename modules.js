@@ -12,7 +12,7 @@
  * Required <meta> tags in each document:
  *   <meta name="title"    content="Your Title">
  *   <meta name="blurb"    content="Short description.">
- *   <meta name="type"     content="Tutorial|Exercise|Info|Rules|Plan|…">
+ *   <meta name="type"     content="Tutorial|Info|Rules|Plan|…">
  *
  * Optional:
  *   <meta name="category" content="Topic">
